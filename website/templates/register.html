@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %} Regisztrálás {%endblock%}
+{%block content%}
+<form method="POST">
+    <div class="mb-3">
+        <label for="email" class="form-label">Email cím</label>
+        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">El fogjuk lopni az adataid és eladni a dark weben. :)</div>
+    </div>
+    <div class="mb-3">
+        <label for="username" class="form-label">Felhasználónév</label>
+        <input type="textarea" class="form-control" id="username" name="username">
+    </div>
+    <div class="mb-3">
+        <label for="password1" class="form-label">Jelszó</label>
+        <input type="password" class="form-control" id="password1" name="password1">
+    </div>
+    <div class="mb-3">
+        <label for="password2" class="form-label">Jelszó megerősítése</label>
+        <input type="password" class="form-control" id="password2" name="password2">
+    </div>
+    <button type="submit" class="btn btn-primary">Regisztrálás</button>
+</form>
+{%endblock%}
