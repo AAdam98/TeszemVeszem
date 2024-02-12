@@ -1,6 +1,7 @@
 from . import db
 from flask_login import UserMixin
 
+#Models
 class Advertisement(db.Model):
     advertisementID = db.Column(db.Integer, primary_key=True)
     userID = db.Column(db.Integer, db.ForeignKey)

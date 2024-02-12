@@ -7,7 +7,7 @@ def login():
     data=request.form
     print(data)
     return render_template('login.html')
-
+#Routes
 @auth.route('/logout')
 def logout():
     return('kijelentkezes')
