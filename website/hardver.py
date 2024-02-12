@@ -3,4 +3,4 @@ hardver = Blueprint('hardver', __name__)
 
 @hardver.route("/index.html", methods=['GET'])
 def hardver():
-    return render_template('')
+    return 'ez a hardver'
