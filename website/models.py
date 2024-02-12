@@ -2,7 +2,7 @@ from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
-#Models
+# Models
 class Advertisement(db.Model):
     advertisementID = db.Column(db.Integer, primary_key=True)
     userID = db.Column(db.Integer, db.ForeignKey('user.userID'))
@@ -11,9 +11,7 @@ class Advertisement(db.Model):
     category = db.Column(db.String, nullable=False)
     available = db.Column(db.Boolean, default=True)
     description = db.Column(db.String(1000))
-    price = db.Column(db.Integer(7), nullable=False)
-    advertisements = db.relationship('User', backref='advertisements', foreign_keys=[userID])
-    
+    price = db.Column(db.Integer, nullable=False)
 
 class User(db.Model, UserMixin):
     userID = db.Column(db.Integer, primary_key=True)
@@ -24,13 +22,12 @@ class User(db.Model, UserMixin):
     def get_id(self):
         return (self.userID)
 
-
 class Comment(db.Model):
     commentID = db.Column(db.Integer, primary_key=True)
     userID = db.Column(db.Integer, db.ForeignKey('user.userID'))
-    advertisementID = db.Column(db.Integer, db.ForeignKey)
+    advertisementID = db.Column(db.Integer, db.ForeignKey('advertisement.advertisementID'))
     content = db.Column(db.String(300), nullable=False)
-    date = db.Column(db.Date)
+    date = db.Column(db.DateTime(timezone=True), default=func.now())
 
     user = db.relationship('User', backref='comments', foreign_keys=[userID])
     advertisement = db.relationship('Advertisement', backref='comments', foreign_keys=[advertisementID])
