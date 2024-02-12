@@ -3,7 +3,7 @@ hardver = Blueprint('hardver', __name__)
 
 @hardver.route("/")
 def index():
-    return 'ez az összes hardver'
+    return 'kereses: ki kerdezett'
 
 @hardver.route("/alaplap")
 def alaplap():
