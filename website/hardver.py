@@ -16,4 +16,4 @@ def index():
 def index():
     category = 'nemtom'
     filtered_advertisements = session.query(Advertisement).filter_by(category=category).all()
-    return 'ez az összes hardver'
+    return 'ez az összes hardver', filtered_advertisements
