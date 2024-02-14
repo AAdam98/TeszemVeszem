@@ -3,6 +3,7 @@ auth = Blueprint('auth', __name__)
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
+from flask_login import login_user, login_required, current_user
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -14,6 +15,8 @@ def login():
         if user:
             if check_password_hash(user.password, password):
                 flash('Sikeresen bejelentkeztél!', category='success')
+                
+                return redirect(url_for('views.home'))
             else:
                 flash('Helytelen jelszó.', category='error')
         else:
