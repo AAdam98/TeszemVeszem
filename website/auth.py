@@ -1,10 +1,23 @@
-from flask import Blueprint,render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect,url_for
 auth = Blueprint('auth', __name__)
+from .models import User
+from werkzeug.security import generate_password_hash, check_password_hash
+from . import db
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    data=request.form
-    print(data)
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        
+        user = User.query.filter_by(email=email).first()
+        if user:
+            if check_password_hash(user.password, password):
+                flash('Sikeresen bejelentkeztél!', category='success')
+            else:
+                flash('Helytelen jelszó.', category='error')
+        else:
+            flash('Nincs ilyen e-mail címmel regisztrált felhasználó.', category='error')    
     return render_template('login.html')
 
 #Routes
@@ -20,7 +33,10 @@ def signup():
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
         
-        if len(email) < 3:
+        user = User.query.filter_by(email=email).first()
+        if user:
+            flash('Ezzel az e-mail címmel már regisztráltak.', category='error')
+        elif len(email) < 3:
             flash('Email cím nem lehet rövidebb mint 3 karakter', category='error')
         elif len(username) < 4:
             flash('A felhasználónév nem lehet rövidebb mint 4 karakter', category='error')
@@ -29,6 +45,10 @@ def signup():
         elif len(password1) < 6:
             flash('Jelszó nem lehet rövidebb mint 6 karakter', category='error')
         else:
+            new_user = User(email=email, username = username, password=generate_password_hash(password1,method='pbkdf2:sha256'))
+            db.session.add(new_user)
+            db.session.commit()
             flash('A fiók sikeresen létrehozva', category='success')
+            return redirect(url_for('views.home'))
         
     return render_template('register.html')
