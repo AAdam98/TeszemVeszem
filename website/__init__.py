@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 
 db= SQLAlchemy()
-DB_NAME= "database.db"
+DB_NAME= "database.sqlite"
 
 def create_app():
     app = Flask(__name__)
