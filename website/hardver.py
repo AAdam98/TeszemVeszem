@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template
+from flask import Blueprint,render_template, request
 from sqlalchemy.orm import sessionmaker
 from models import Advertisement, engine
 hardver = Blueprint('hardver', __name__)
@@ -6,14 +6,12 @@ hardver = Blueprint('hardver', __name__)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-@hardver.route("/")
+@hardver.route("/", methods=["GET", "POST"])
 def index():
-    pickCategory = input()
     advertisements = session.query(Advertisement).all()
-    return 'ez az összes hardver', pickCategory, advertisements
+    return 'ez az összes hardver', advertisements
 
-@hardver.route("/{pickCategory}")
-def index():
-    category = 'nemtom'
+@hardver.route("/<category>")
+def index(category):
     filtered_advertisements = session.query(Advertisement).filter_by(category=category).all()
     return 'ez az összes hardver', filtered_advertisements
