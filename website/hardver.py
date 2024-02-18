@@ -1,6 +1,6 @@
 from flask import Blueprint,render_template, request
 from sqlalchemy.orm import sessionmaker
-from models import Advertisement, engine
+from .models import Advertisement, engine
 hardver = Blueprint('hardver', __name__)
 
 Session = sessionmaker(bind=engine)

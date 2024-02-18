@@ -2,6 +2,7 @@ from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
+engine = db.create_engine('sqlite:///database.db')
 # Models
 class Advertisement(db.Model):
     advertisementID = db.Column(db.Integer, primary_key=True)
