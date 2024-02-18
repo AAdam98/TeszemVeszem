@@ -7,12 +7,26 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 @hardver.route("/", methods=["GET", "POST"])
-def index():
-    # összes hírdetés sorba rendezése MEG KELL CSINÁLNI
+def index(order, orderBy):
+    # összes hírdetés sorba rendezése
+    if request.method == "POST":
+        if orderBy == "Ár":
+            if order == "Csökkenő":
+                sorted_advertisements = session.query(Advertisement).order_by(Advertisement.price.desc()).all()
+            elif order == "Növekvő":
+                sorted_advertisements = session.query(Advertisement).order_by(Advertisement.price.asc()).all()
+            
+        elif orderBy == "Dátum":
+            if order == "Csökkenő":
+                sorted_advertisements = session.query(Advertisement).order_by(Advertisement.date.desc()).all()
+            elif order == "Növekvő":
+                sorted_advertisements = session.query(Advertisement).order_by(Advertisement.date.asc()).all()
+
+        return sorted_advertisements
 
     # összes hirdetés
     advertisements = session.query(Advertisement).all()
-    return 'ez az összes hardver', advertisements
+    return advertisements
 
 @hardver.route("/<category>", methods=["GET", "POST"])
 def query(category, min, max, order, orderBy):

@@ -21,7 +21,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(50))
     
     def get_id(self):
-        return (self.userID)
+        return self.userID
 
 class Comment(db.Model):
     commentID = db.Column(db.Integer, primary_key=True)
