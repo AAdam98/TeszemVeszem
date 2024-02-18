@@ -40,13 +40,14 @@
     {%endif%}
     {% endwith %}
 
-    {%block content%}
-    {%endblock%}
+    <div class="sitecontent">
+        {% block content %}{% endblock %}
+    </div>
 
     <footer>
-            <ul class="links">
-                <li><a href="/about" class="hero">Rólunk</a></li>
-            </ul>
+        <ul class="links">
+            <li><a href="/about" class="hero">Rólunk</a></li>
+        </ul>
     </footer>
 
     <script>
