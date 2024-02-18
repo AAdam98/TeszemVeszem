@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'CascadiaMonoBold';
+    src: url('../fonts/CascadiaMonoPL-Bold.otf');
+    font-style: bold;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,11 +13,8 @@
 
 body {
     height: 100vh;
-    background-color: darkslategray;
-    }
-
-li {
-    list-style: none;
+    background: url('../images/alexandre-debieve-FO7JIlwjOtU-unsplash.jpg');
+    backdrop-filter: blur(5px);
 }
 
 a {
@@ -25,7 +28,11 @@ a:hover {
 }
 
 header {
+    position: sticky;
+    top: 0;
     padding: 0 2rem;
+    background-color: #0a0a0a;
+    z-index: 1;
 }
 
 .navbar {
@@ -37,14 +44,10 @@ header {
     justify-content: space-between;
 }
 
-.navbar .logo a {
+.logo {
     font-size: 1.5rem;
     font-weight: bold;
-}
-
-.navbar .links {
-    display: flex;
-    gap: 2rem;
+    font-family: 'CascadiaMonoBold';
 }
 
 .navbar .accountBtn {
@@ -54,11 +57,12 @@ header {
 }
 
 footer {
-    position: relative;
+    position: static;
     bottom: 0;
+    width: 100%;
     padding: 1rem 1rem;
+    background-color: #0a0a0a;
 }
+
 /* dinamikus megjelenítés */
-@media (max-width: 992px) {
-    
-}
+@media (max-width: 992px) {}
