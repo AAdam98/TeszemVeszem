@@ -7,7 +7,7 @@
 
 body {
     height: 100vh;
-    background-color: darkslategray;
+    background-color: #F0F0FF;
     
     }
 
@@ -27,7 +27,7 @@ a:hover {
 
 header {
     padding: 0 2rem;
-    background-color: gray;
+    background-color: #008FFF;
 }
 
 .navbar {
@@ -61,7 +61,7 @@ footer {
     padding: 1rem 1rem;
     color: grey;
     width: 100%;
-    background-color: gray;
+    background-color: #008FFF;
 }
 /* dinamikus megjelenítés */
 @media (max-width: 992px) {
@@ -107,11 +107,12 @@ footer {
     width: 100%;
     flex-direction: column;
     justify-content: center;
-    background-color: gray;
+    background-color: #45ADFF;
     margin: 0 auto; /* A tartalom középre igazítása */
     max-width: 800px; /* Példa: Maximális szélesség a tartalomnak */
     padding: 20px;
     border-radius: 15px;
+    box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.5);
 }
 
 .hardverlogo{
