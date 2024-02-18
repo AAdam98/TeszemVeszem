@@ -6,41 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{%block title %} {% endblock %}</title>
     <link rel="stylesheet" href="../static/site.css">
+    <link rel="stylesheet" href="../static/auth.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="../static/site.js"></script>
 </head>
 
 <body>
     <header>
         <div class="navbar">
-            <div class="logo"><a href="#" class="logo">TeszemVeszem</a></div>
-            <ul class="links">
-                <li><a href="#" class="hero">Kategóriák</a></li>
-                <li><a href="#" class="hero">Rólunk</a></li>
-            </ul>
-            <a href="#" class="accountBtn"><i class="bi bi-person-circle"></i></a>
-            <div class="menuButton">
-                <i class="bi bi-list"></i>
-            </div>
-        </div>
-
-        <div class="aproMenu">
-            <li><a href="#" class="hero">Kategóriák</a></li>
-            <li><a href="#" class="hero">Rólunk</a></li>
-            <li><a href="#" class="accountBtn"><i class="bi bi-person-circle"></i></a></li>
+            <div class="logo"><a href="/" class="logo">TeszemVeszem</a></div>
+            <a href="/auth/login" class="accountBtn"><i class="bi bi-person-circle"></i></a>
         </div>
     </header>
-
-
-    <script>
-        const toggleMenu = document.querySelector('.menuButton')
-        const toggleMenuIcon = document.querySelector('.menuButton i')
-        const toggleAproMenu = document.querySelector('.aproMenu')
-
-        toggleMenu.onclick = function () {
-            toggleAproMenu.classList.toggle('open')
-        }
-    </script>
 
     {% with messages = get_flashed_messages(with_categories=true)%}
     {%if messages%}
@@ -67,6 +43,26 @@
     {%block content%}
     {%endblock%}
 
+    <footer>
+            <ul class="links">
+                <li><a href="/about" class="hero">Rólunk</a></li>
+            </ul>
+    </footer>
+
+    <script>
+        const toggleMenu = document.querySelector('.menuButton')
+        const toggleMenuIcon = document.querySelector('.menuButton i')
+        const toggleAproMenu = document.querySelector('.aproMenu')
+
+        toggleMenu.onclick = function () {
+            toggleAproMenu.classList.toggle('open')
+            const isOpen = toggleAproMenu.classList.contains('open')
+
+            toggleMenuIcon.classList = isOpen
+                ? 'bi bi-x'
+                : 'bi bi-list'
+        }
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,2 @@
+# TODO:
+ - kategóriák lista
