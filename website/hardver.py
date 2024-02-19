@@ -1,9 +1,11 @@
-from flask import Blueprint,render_template
+from flask import Blueprint,render_template, request
+from sqlalchemy.orm import sessionmaker
+from .models import Advertisement, engine
 hardver = Blueprint('hardver', __name__)
 
 @hardver.route("/")
 def index():
-    return 'kereses: ki kerdezett'
+    return 'ez az összes hardver'
 
 @hardver.route("/alaplap")
 def alaplap():
