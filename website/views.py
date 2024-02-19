@@ -13,6 +13,6 @@ def home():
 def adatlap():
     return 'adatlap'
 
-@views.route('/rolunk')
-def about():
+@views.route('/aboutus')
+def aboutus():
     return render_template("about.html")
