@@ -58,4 +58,4 @@ def signup():
             flash('A fiók sikeresen létrehozva', category='success')
             return redirect(url_for('views.home'))
         
-    return render_template('register.html', user=current_user)
+    return render_template('signup.html', user=current_user)
