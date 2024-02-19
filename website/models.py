@@ -1,4 +1,4 @@
-from . import db
+from .db import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
@@ -19,9 +19,15 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(50))
+    is_admin = db.Column(db.Boolean, default=False)
     
     def get_id(self):
         return self.userID
+    def __init__(self, email, username, password, is_admin=False):
+        self.email = email
+        self.username = username
+        self.password = password
+        self.is_admin = is_admin
 
 class Comment(db.Model):
     commentID = db.Column(db.Integer, primary_key=True)

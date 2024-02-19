@@ -23,7 +23,6 @@ def login():
             flash('Nincs ilyen e-mail címmel regisztrált felhasználó.', category='error')    
     return render_template('login.html')
 
-#Routes
 @auth.route('/logout')
 @login_required
 def logout():
