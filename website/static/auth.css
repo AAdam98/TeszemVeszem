@@ -80,3 +80,27 @@ body {
     0 0 50px #003d30,
     0 0 100px #003d30,;
 }
+
+.flash {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    transition: opacity 0.5s ease-out; /* Elhalványítás tranzíciója */
+}
+
+.flash.success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.flash.error {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+/* Elhalványítás beállítása */
+.fade-out {
+    opacity: 0;
+}
