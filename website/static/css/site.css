@@ -3,16 +3,24 @@
     src: url('../fonts/CascadiaMonoPL-Bold.otf');
     font-style: bold;
 }
+@font-face {
+    font-family: 'CascadiaMono';
+    src: url('../fonts/CascadiaMonoPL-Regular.otf');
+    font-style: normal;
+}
 
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'CascadiaMono', sans-serif;
 }
 
 body {
-    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     background: darkslateblue;
+
 }
 
 a {
@@ -54,14 +62,10 @@ header {
 }
 
 section {
-    display: block;
-    padding-bottom: 60px;
+    flex: 1;
 }
 
 footer {
-    position: fixed;
-    bottom: 0;
-    display: block;
-    padding: 1rem 1rem;
+    flex-shrink: 0;
     background-color: #0e0e0e;
 }
