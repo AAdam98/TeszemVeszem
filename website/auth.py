@@ -15,16 +15,17 @@ def login():
         if user:
             if check_password_hash(user.password, password):
                 flash('Sikeresen bejelentkeztél!', category='success')
-                
+                login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
                 flash('Helytelen jelszó.', category='error')
-        else:
+        else: 
             flash('Nincs ilyen e-mail címmel regisztrált felhasználó.', category='error')    
     return render_template('login.html')
 
 #Routes
 @auth.route('/logout')
+@login_required
 def logout():
     logout_user()
     flash('Sikeres kijelentkezés!', category='success')
@@ -53,7 +54,8 @@ def signup():
             new_user = User(email=email, username = username, password=generate_password_hash(password1,method='pbkdf2:sha256'))
             db.session.add(new_user)
             db.session.commit()
+            login_user(user, remember=True)
             flash('A fiók sikeresen létrehozva', category='success')
             return redirect(url_for('views.home'))
         
-    return render_template('signup.html')
+    return render_template('register.html', user=current_user)

@@ -2,12 +2,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Cascadia Mono', sans-serif;
 }
 
 body {
     height: 100vh;
-    background-color: darkslategray;
+    background-color: #F0F0FF;
+    
     }
 
 li {
@@ -26,6 +27,7 @@ a:hover {
 
 header {
     padding: 0 2rem;
+    background-color: #008FFF;
 }
 
 .navbar {
@@ -57,8 +59,62 @@ footer {
     position: relative;
     bottom: 0;
     padding: 1rem 1rem;
+    color: grey;
+    width: 100%;
+    background-color: #008FFF;
 }
 /* dinamikus megjelenítés */
 @media (max-width: 992px) {
     
+}
+
+.sitecontent{
+    background-color: white;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.card {
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.5;
+    margin: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    border-radius: 15px;
+}
+.card.upper-card {
+    height: 300px ;
+    width: 300px;
+}
+
+.card.bottom-card{
+    height: 200px ;
+    width: 200px;
+}
+
+.container {
+    display: flex;
+    /* flex-direction: row; */
+    justify-content: space-evenly;
+}
+
+.hirdetesdoboz {    
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #45ADFF;
+    margin: 0 auto; /* A tartalom középre igazítása */
+    max-width: 800px; /* Példa: Maximális szélesség a tartalomnak */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.5);
+}
+
+.hardverlogo{
+    background-image
 }
