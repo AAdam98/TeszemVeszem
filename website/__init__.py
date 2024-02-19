@@ -16,11 +16,11 @@ def create_app():
     
     from .views import views
     from .auth import auth
-    from .hardver import hardver
+    from .hirdetes import hirdetes
     
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/auth/')
-    app.register_blueprint(hardver, url_prefix='/hardver/')
+    app.register_blueprint(hirdetes, url_prefix='/hirdetes/')
     
     from .models import Advertisement, User, Comment
     

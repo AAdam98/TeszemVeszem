@@ -1,11 +1,11 @@
 from flask import Blueprint,render_template, request
 from sqlalchemy.orm import sessionmaker
 from .models import Advertisement, engine
-hardver = Blueprint('hardver', __name__)
+hirdetes = Blueprint('hirdetes', __name__)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-@hardver.route("/<order>/<orderBy>", methods=["GET", "POST"])
+@hirdetes.route("/<order>/<orderBy>", methods=["GET", "POST"])
 def index(order, orderBy):
     # összes hírdetés sorba rendezése
     if request.method == "POST":
@@ -27,7 +27,7 @@ def index(order, orderBy):
     advertisements = session.query(Advertisement).all()
     return advertisements
 
-@hardver.route("/<category>", methods=["GET", "POST"])
+@hirdetes.route("/<category>", methods=["GET", "POST"])
 def query(category, min, max, order, orderBy):
     if request.method == "POST":
         # szűrés felhasználó által megadott ár alapján 

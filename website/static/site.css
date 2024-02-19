@@ -106,7 +106,7 @@ footer {
 }
 
 .card:hover {
-    transform: scale(1.1); /* A kártya 110%-ra nő, amikor az egér a fölé mozog */
+    transform: scale(1.1);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 

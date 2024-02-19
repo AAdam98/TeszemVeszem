@@ -15,7 +15,3 @@ def adatlap():
 @views.route('/aboutus')
 def aboutus():
     return render_template("about.html")
-
-@views.route('/hirdetes')
-def hirdetes():
-    return render_template('index.html')
