@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{%block title %} TeszemVeszem {% endblock %}
+
+{%block content%}
+
+<h1>Vásárolj, és adj el Magyarország egyik legmegbízhatóbb online piacterén!</h1>
+
+<div class="hirdetesdoboz">
+    <div>
+        <div class="container">
+            <div class="card upper-card" onclick="redirectToPage('/hardver')">
+                <div class="icon">
+                    <i class="bi bi-motherboard"  style="font-size: 90px;"></i>
+                </div>
+                <div class="text">
+                    <p>Hardver</p>
+                </div>
+            </div>
+            <div class="card upper-card" onclick="redirectToPage('/notebook')">
+                <div class="icon">
+                    <i class="bi bi-laptop"  style="font-size: 90px;"></i>
+                </div>
+                <div class="text">
+                    <p>Notebook</p>
+                </div>
+            </div>
+            <div class="card upper-card" onclick="redirectToPage('/mobil')">
+                <div class="icon">
+                    <i class="bi bi-phone"  style="font-size: 85px;"></i>
+                </div>
+                <div class="text">
+                    <p>Mobil</p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="card bottom-card">Small Card 1</div>
+            <div class="card bottom-card">Small Card 2</div>
+            <div class="card bottom-card">Small Card 3</div>
+            <div class="card bottom-card">Small Card 4</div>
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}

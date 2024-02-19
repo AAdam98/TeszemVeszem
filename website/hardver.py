@@ -5,7 +5,7 @@ hardver = Blueprint('hardver', __name__)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-@hardver.route("/", methods=["GET", "POST"])
+@hardver.route("/<order>/<orderBy>", methods=["GET", "POST"])
 def index(order, orderBy):
     # összes hírdetés sorba rendezése
     if request.method == "POST":

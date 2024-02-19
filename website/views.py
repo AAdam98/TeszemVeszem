@@ -6,7 +6,7 @@ views = Blueprint('views', __name__)
 @views.route('/')
 # @login_required
 def home():
-    return render_template("index.html", user=current_user)
+    return render_template("home.html", user=current_user)
 
 @views.route('/adatlap')
 @login_required
@@ -16,3 +16,7 @@ def adatlap():
 @views.route('/rolunk')
 def about():
     return render_template("about.html")
+
+@views.route('/hirdetes')
+def hirdetes():
+    return render_template('index.html')
