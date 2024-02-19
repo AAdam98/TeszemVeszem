@@ -2,6 +2,9 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+from .models import User
+from .db import db
+from werkzeug.security import generate_password_hash
 
 db= SQLAlchemy()
 DB_NAME= "teszemveszem.sqlite"
@@ -16,7 +19,6 @@ def create_app():
     from .auth import auth
     from .hardver import hardver
     
-    #Blueprints
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/auth/')
     app.register_blueprint(hardver, url_prefix='/hardver/')
@@ -39,4 +41,14 @@ def create_database(app):
     if not path.exists('website/' + DB_NAME):
         with app.app_context():
             db.create_all()
+            email = 'admin@admin.com'
+            username = 'admin'
+            password = 'Admin123'
+            user = User.query.filter_by(email=email).first()
+            if user:
+                pass
+            else:
+                admin_user = User(email=email, username = username, password=generate_password_hash(password,method='pbkdf2:sha256'), is_admin=True)
+                db.session.add(admin_user)
+                db.session.commit()
         print('Adatbázis létrehozva!')

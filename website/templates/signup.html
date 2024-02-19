@@ -13,14 +13,19 @@
             <label for="username">Felhasználónév</label>
         </div>
         <div class="user-box">
-            <input type="password" class="form-control" id="password" name="password">
+            <input type="password" class="form-control" id="password1" name="password1">
             <label for="password1">Jelszó</label>
         </div>
         <div class="user-box">
             <input type="password" class="form-control" id="password2" name="password2">
             <label for="password2" class="form-label">Jelszó megerősítése</label>
         </div>
-        <a href="/">Regisztrálás</a>
+
+        <a href="/">
+            <label for="submitBtn">Regisztráció
+                <input type="submit" id="submitBtn" style="display:none;">
+            </label>
+        </a>
     </form>
     <h3>Már van fiókod? <a href="/auth/login">Jelentkezz be!</h3>
 </div>
