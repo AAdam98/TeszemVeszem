@@ -12,3 +12,7 @@ def home():
 @login_required
 def adatlap():
     return 'adatlap'
+
+@views.route('/rolunk')
+def about():
+    return render_template("about.html")
