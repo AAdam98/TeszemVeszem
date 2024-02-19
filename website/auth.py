@@ -54,7 +54,8 @@ def signup():
             new_user = User(email=email, username = username, password=generate_password_hash(password1,method='pbkdf2:sha256'))
             db.session.add(new_user)
             db.session.commit()
-            
+            user = User.query.filter_by(email=email).first()
+            login_user(user, remember=True)
             flash('A fiók sikeresen létrehozva', category='success')
             return redirect(url_for('views.home'))
         
