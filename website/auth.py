@@ -3,7 +3,7 @@ auth = Blueprint('auth', __name__)
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
-from flask_login import login_user, login_required, current_user
+from flask_login import login_user, login_required, current_user, logout_user
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -26,7 +26,9 @@ def login():
 #Routes
 @auth.route('/logout')
 def logout():
-    return('kijelentkezes')
+    logout_user()
+    flash('Sikeres kijelentkezés!', category='success')
+    return redirect(url_for('views.home'))
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -54,4 +56,4 @@ def signup():
             flash('A fiók sikeresen létrehozva', category='success')
             return redirect(url_for('views.home'))
         
-    return render_template('register.html')
+    return render_template('signup.html')

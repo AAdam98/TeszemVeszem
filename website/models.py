@@ -2,6 +2,7 @@ from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
+engine = db.create_engine('sqlite:///database.db')
 # Models
 class Advertisement(db.Model):
     advertisementID = db.Column(db.Integer, primary_key=True)
@@ -20,7 +21,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(50))
     
     def get_id(self):
-        return (self.userID)
+        return self.userID
 
 class Comment(db.Model):
     commentID = db.Column(db.Integer, primary_key=True)
