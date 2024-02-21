@@ -145,7 +145,13 @@ footer {
 }
 
 @keyframes alert {
+    from {
+        width: auto;
+        max-width: auto;
+        height: auto;
+    }
     to {
+        width: 0;
         max-width: 0;
         max-height: 0;
         overflow: hidden;
@@ -153,21 +159,28 @@ footer {
 }
 
 @-webkit-keyframes alert {
-    to {
-        max-width: 0;
-        max-height: 0;
-        visibility: hidden;
-    }
+    from {
+            width: auto;
+            max-width: auto;
+            height: auto;
+        }
+    
+        to {
+            width: 0;
+            max-width: 0;
+            max-height: 0;
+            overflow: hidden;
+        }
 }
 
 .alert {
-    -moz-animation: alert 1s ease-in 5s forwards;
+    -moz-animation: alert 2s ease-in 5s forwards;
     /* Firefox */
-    -webkit-animation: alert 1s ease-in 5s forwards;
+    -webkit-animation: alert 2s ease-in 5s forwards;
     /* Safari and Chrome */
-    -o-animation: alert 1s ease-in 5s forwards;
+    -o-animation: alert 2s ease-in 5s forwards;
     /* Opera */
-    animation: alert 1s ease-in 5s forwards;
+    animation: alert 2s ease-in 5s forwards;
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
 }
