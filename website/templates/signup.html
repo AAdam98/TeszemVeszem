@@ -1,26 +1,33 @@
 {% extends 'base.html' %}
 {% block title %} TeszemVeszem - Regisztráció {%endblock%}
 {%block content%}
-<div class="authPanel">
+<div class="login-box">
+    <h2>Regisztráció</h2>
     <form method="POST">
-        <div class="mb-3">
-            <label for="email" class="form-label">Email cím</label>
-            <input type="email" class="form-control" id="email" name="email">
+        <div class="user-box">
+            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+            <label for="email" >Email</label>
         </div>
-        <div class="mb-3">
-            <label for="username" class="form-label">Felhasználónév</label>
+        <div class="user-box">
             <input type="textarea" class="form-control" id="username" name="username">
+            <label for="username">Felhasználónév</label>
         </div>
-        <div class="mb-3">
-            <label for="password1" class="form-label">Jelszó</label>
+        <div class="user-box">
             <input type="password" class="form-control" id="password1" name="password1">
+            <label for="password1">Jelszó</label>
         </div>
-        <div class="mb-3">
-            <label for="password2" class="form-label">Jelszó megerősítése</label>
+        <div class="user-box">
             <input type="password" class="form-control" id="password2" name="password2">
+            <label for="password2" class="form-label">Jelszó megerősítése</label>
         </div>
-        <button type="submit" class="btn btn-primary">Regisztráció</button>
+
+        <a href="/">
+            <label for="submitBtn">Regisztráció
+                <input type="submit" id="submitBtn" style="display:none;">
+            </label>
+        </a>
     </form>
+    <h3>Már van fiókod? <a href="/auth/login">Jelentkezz be!</h3>
 </div>
 
 

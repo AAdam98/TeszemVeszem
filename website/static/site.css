@@ -12,15 +12,18 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     font-family: 'CascadiaMono', sans-serif;
 }
 
 body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background: darkslateblue;
+    height: 100vh;
+    background-color: #F0F0FF;
+    
+    }
 
+li {
+    list-style: none;
 }
 
 a {
@@ -37,7 +40,12 @@ header {
     position: sticky;
     top: 0;
     padding: 0 2rem;
-    background-color: #0e0e0e;
+    background-color: #008FFF;
+}
+
+h1 {
+    text-align: center;
+    padding: 2rem;
 }
 
 .navbar {
@@ -66,6 +74,86 @@ section {
 }
 
 footer {
-    flex-shrink: 0;
-    background-color: #0e0e0e;
+    position: fixed;
+    bottom: 0;
+    padding: 1rem 1rem;
+    color: grey;
+    width: 100%;
+    background-color: #008FFF;
+}
+/* dinamikus megjelenítés */
+@media (max-width: 992px) {
+    
+}
+
+.sitecontent{
+    background-color: white;
+    margin-left: 20%;
+    margin-right: 20%;
+    height: 100%;
+}
+
+.card {
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.5;
+    margin: 15px;
+    display: flex;
+    
+    align-items: center;
+    flex-direction: column;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.icon{
+    flex-grow: 1;
+}
+
+.text{
+    display: flex;
+    ;
+}
+
+.card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.card.upper-card {
+    height: 13rem ;
+    width: 100%;
+}
+
+.card.bottom-card{
+    height: 10rem ;
+    width: 100%
+}
+
+
+.container {
+    display: flex;
+    /* flex-direction: row; */
+    justify-content: space-evenly;
+    max-height: 15rem;
+}
+
+.hirdetesdoboz {    
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #45ADFF;
+    margin: 0 auto; /* A tartalom középre igazítása */
+    max-width: 800px; /* Példa: Maximális szélesség a tartalomnak */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.5);
+}
+
+.hardverlogo{
+    background-image
 }

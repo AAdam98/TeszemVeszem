@@ -1,20 +1,33 @@
 from flask import Blueprint,render_template, request
 from sqlalchemy.orm import sessionmaker
 from .models import Advertisement, engine
-hardver = Blueprint('hardver', __name__)
-
+hirdetes = Blueprint('hirdetes', __name__)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-@hardver.route("/", methods=["GET", "POST"])
-def index():
-    # összes hírdetés sorba rendezése MEG KELL CSINÁLNI
+@hirdetes.route("/<order>/<orderBy>", methods=["GET", "POST"])
+def index(order, orderBy):
+    # összes hírdetés sorba rendezése
+    if request.method == "POST":
+        if orderBy == "Ár":
+            if order == "Csökkenő":
+                sorted_advertisements = session.query(Advertisement).order_by(Advertisement.price.desc()).all()
+            elif order == "Növekvő":
+                sorted_advertisements = session.query(Advertisement).order_by(Advertisement.price.asc()).all()
+
+        elif orderBy == "Dátum":
+            if order == "Csökkenő":
+                sorted_advertisements = session.query(Advertisement).order_by(Advertisement.date.desc()).all()
+            elif order == "Növekvő":
+                sorted_advertisements = session.query(Advertisement).order_by(Advertisement.date.asc()).all()
+
+        return sorted_advertisements
 
     # összes hirdetés
     advertisements = session.query(Advertisement).all()
-    return 'ez az összes hardver', advertisements
+    return advertisements
 
-@hardver.route("/<category>", methods=["GET", "POST"])
+@hirdetes.route("/<category>", methods=["GET", "POST"])
 def query(category, min, max, order, orderBy):
     if request.method == "POST":
         # szűrés felhasználó által megadott ár alapján 
@@ -42,12 +55,10 @@ def query(category, min, max, order, orderBy):
                 sorted_advertisements = session.query(Advertisement).filter_by(category=category).order_by(Advertisement.date.desc()).all()
             elif order == "Növekvő":
                 sorted_advertisements = session.query(Advertisement).filter_by(category=category).order_by(Advertisement.date.asc()).all()
-
         return sorted_advertisements
     
     # redirecteket MEG KELL CSINÁLNI
             
-
     # összes hirdetés egy adott kategóriában
     filtered_advertisements = session.query(Advertisement).filter_by(category=category).all()
     return 'ez az összes hardver', filtered_advertisements
