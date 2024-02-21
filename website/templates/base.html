@@ -23,30 +23,33 @@
             <div class="logo"><a href="/" class="logo">TeszemVeszem</a></div>
             <div class="dropdown">
                 {% if current_user.is_authenticated %}
-                <div class="dropdown">
+                <div class="accountMenu">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         Fiókom <i class="bi bi-person-circle"></i>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <a href="">
-                            <li><button class="dropdown-item" type="button">Bejelentkezés</button></li>
-                        </a>
-                        <a href="">
-                            <li><button class="dropdown-item" type="button">Regisztráció</button></li>
-                        </a>
-                        <a href="">
-                            <li><button class="dropdown-item" type="button">Kijelentkezés</button></li>
-                        </a>
-                    <li><button class="dropdown-item" type="button">Profil</button></li>
-                    <li><a href="/auth/logout"><button class="dropdown-item" type="button">Kijelentkezés</button></a></li>
+                        <li><button class="dropdown-item" type="button">Profil</button></li>
+                        <li><a href="/auth/logout"><button class="dropdown-item"
+                                    type="button">Kijelentkezés</button></a></li>
                     </ul>
                 </div>
                 {% else %}
-                <a class="btn btn-primary" href="/auth/signup" role="button">Regisztráció</a>
-                <a class="btn btn-light" href="/auth/login" role="button">Bejelentkezés</a>
+                <div class="accountMenu">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Fiókom <i class="bi bi-person-circle"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <a href="/auth/login">
+                            <li><button class="dropdown-item" type="button">Bejelentkezés</button></li>
+                        </a>
+                        <a href="/auth/signup">
+                            <li><button class="dropdown-item" type="button">Regisztráció</button></li>
+                        </a>
+                    </ul>
+                </div>
                 {% endif %}
-
             </div>
         </div>
     </header>
