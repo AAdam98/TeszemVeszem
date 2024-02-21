@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{%block title %} TeszemVeszem {% endblock %}
+
+{%block content%}
+
+<div class="login-box">
+    <h2>Jelszó megváltoztatása</h2>
+    <form method="POST">
+        <div class="user-box">
+            <input type="password" class="form-control" id="curPassw" name="curPassw">
+            <label for="curPassw">Jelenlegi elszó</label>
+        </div>
+        <div class="user-box">
+            <input type="password" class="form-control" id="newPassw1" name="newPassw1">
+            <label for="newPassw1">Új elszó</label>
+        </div>
+        <div class="user-box">
+            <input type="password" class="form-control" id="newPassw2" name="newPassw2">
+            <label for="newPassw2" class="form-label">Jelszó megerősítése</label>
+        </div>
+
+        <a href="/profile">
+            <label for="submitBtn">Mentés
+                <input type="submit" id="submitBtn" style="display:none;">
+            </label>
+        </a>
+    </form>
+</div>
+
+
+{%endblock%}

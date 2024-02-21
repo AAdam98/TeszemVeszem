@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{%block title %} TeszemVeszem {% endblock %}
+
+{%block content%}
+
+<div class="hirdetesdoboz">
+    <div>
+        <div class="container">
+            <div class="card upper-card" onclick="redirectToPage('/password')">
+                <div class="text">
+                    <p>Email</p>
+                    <br>
+                    <p>Kezelés</p>
+                </div>
+            </div>
+            <div class="card upper-card" onclick="redirectToPage('/notebook')">
+                <div class="text">
+                    <p>Felhasználónév</p>
+                </div>
+            </div>
+            <div class="card upper-card" onclick="redirectToPage('/password')">
+                <div class="text">
+                    <p>Jelszó</p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="card bottom-card">Small Card 1</div>
+            <div class="card bottom-card">Small Card 2</div>
+            <div class="card bottom-card">Small Card 3</div>
+            <div class="card bottom-card">Small Card 4</div>
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}
