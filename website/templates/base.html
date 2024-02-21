@@ -30,7 +30,8 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                         <li><a href="/profile"><button class="dropdown-item" type="button">Profil</button></a></li>
-                        <li><a href="/auth/logout"><button class="dropdown-item"type="button">Kijelentkezés</button></a></li>
+                        <li><a href="/auth/logout"><button class="dropdown-item"
+                                    type="button">Kijelentkezés</button></a></li>
                     </ul>
                 </div>
                 {% else %}
@@ -57,15 +58,12 @@
     {%if messages%}
     {% for category, message in messages %}
     {%if category == 'error'%}
-    <div id="error-flash" class="alert alert-danger alter-dismissable fade show" role="alert">
+    <div id="error-flash" class="alert alert-danger alter-dismissable show" role="alert">
         {{message}}
-
-        <span aria-hidden="true">&times;</span>
     </div>
     {%else%}
-    <div id="success-flash" class="alert alert-success alter-dismissable fade show" role="alert">
+    <div id="success-flash" class="alert alert-success alter-dismissable show" role="alert">
         {{message}}
-        <span aria-hidden="true">&times;</span>
     </div>
     {%endif%}
     {%endfor%}
