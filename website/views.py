@@ -1,16 +1,40 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
+from .db import db
 views = Blueprint('views', __name__)
+from werkzeug.security import generate_password_hash, check_password_hash
 
 @views.route('/')
 # @login_required
 def home():
     return render_template("home.html", user=current_user)
 
-@views.route('/adatlap')
+@views.route('/profile')
 @login_required
 def adatlap():
-    return 'adatlap'
+    user = current_user
+    print(user.username)
+    return render_template("profile.html", user=current_user)
+
+@views.route('/password', methods=['GET','POST'])
+@login_required
+def password():
+    user = current_user
+    if request.method == 'POST':
+        curpassw = request.form.get('curPassw')
+        if check_password_hash(user.password, curpassw):
+            newpassw1 = request.form.get('newPassw1')
+            newpassw2 = request.form.get('newPassw2')
+            if newpassw1 == newpassw2:
+                user.password = generate_password_hash(newpassw1,method='pbkdf2:sha256')
+                db.session.commit()
+                flash('A jelszavad sikeresen megváltoztattad')
+                return redirect(url_for('views.home'))
+            else:
+                flash('A megadott jelszavak nem egyeznek', category='error')
+        else:
+            flash('Hibás jelszó', category='error')
+    return render_template("profile_passw.html", user=current_user)
 
 @views.route('/aboutus')
 def aboutus():
