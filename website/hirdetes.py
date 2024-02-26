@@ -65,4 +65,15 @@ def query(category, min, max, order, orderBy):
 
 @hirdetes.route('/hirdetesfeladas', methods=['GET','POST'])
 def ujhirdetes():
-    pass
+    if request.method == 'POST':
+        title = request.form.get('title')
+        category = request.form.get('category')
+        description = request.form.get('description')
+        price = request.form.get('price')
+    else:
+        import sqlite3
+        connection = sqlite3.connect('database.sqlite')
+        with connection:
+            c = connection.cursor()
+            categories = c.execute('SELECT * FROM Category')
+        return render_template('new_adv.html', categories=categories)
