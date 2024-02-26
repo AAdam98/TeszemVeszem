@@ -62,3 +62,7 @@ def query(category, min, max, order, orderBy):
     # összes hirdetés egy adott kategóriában
     filtered_advertisements = session.query(Advertisement).filter_by(category=category).all()
     return 'ez az összes hardver', filtered_advertisements
+
+@hirdetes.route('/hirdetesfeladas', methods=['GET','POST'])
+def ujhirdetes():
+    pass

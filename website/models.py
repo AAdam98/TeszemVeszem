@@ -11,7 +11,7 @@ class Advertisement(db.Model):
     title = db.Column(db.String(60), nullable=False)
     category = db.Column(db.Integer, db.ForeignKey('category.categoryID'))
     available = db.Column(db.Boolean, default=True)
-    description = db.Column(db.String(1000))
+    description = db.Column(db.Text(1000))
     price = db.Column(db.Integer, nullable=False)
 
 class User(db.Model, UserMixin):
