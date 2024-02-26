@@ -55,7 +55,5 @@ def create_database(app):
                 for category in categories:
                     newCat = Category(name=category)
                     db.session.add(newCat)
-                    if category == "Nyomtató, szkenner":
-                        break
             db.session.commit()
         print('Adatbázis létrehozva!')
