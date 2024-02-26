@@ -26,10 +26,13 @@ def password():
             newpassw1 = request.form.get('newPassw1')
             newpassw2 = request.form.get('newPassw2')
             if newpassw1 == newpassw2:
-                user.password = generate_password_hash(newpassw1,method='pbkdf2:sha256')
-                db.session.commit()
-                flash('A jelszavad sikeresen megváltoztattad')
-                return redirect(url_for('views.home'))
+                if curpassw == newpassw1:
+                    flash("A jelenlegi és az új jelszó megegyezik!", category='error')
+                else:
+                    user.password = generate_password_hash(newpassw1,method='pbkdf2:sha256')
+                    db.session.commit()
+                    flash('A jelszavad sikeresen megváltoztattad')
+                    return redirect(url_for('views.home'))
             else:
                 flash('A megadott jelszavak nem egyeznek', category='error')
         else:
