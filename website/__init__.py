@@ -5,6 +5,7 @@ from flask_login import LoginManager
 from .models import User, Category
 from .db import db
 from werkzeug.security import generate_password_hash
+from flask_migrate import Migrate
 
 DB_NAME= "database.sqlite"
 
@@ -13,6 +14,7 @@ def create_app():
     app.config['SECRET_KEY'] = 'macskajaj'
     app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
+    migrate = Migrate(app, db)
     
     from .views import views
     from .auth import auth
