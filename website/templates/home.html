@@ -8,14 +8,18 @@
 <div class="hirdetesdoboz">
     <div>
         <div class="container">
-            <div class="card upper-card" onclick="redirectToPage('/hardver')">
-                <div class="icon">
-                    <i class="bi bi-motherboard" style="font-size: 90px;"></i>
+            <form method="post" action="{{ url_for('hirdetes.query', category='hardver') }}">
+                <div class="card upper-card">
+                    <div class="icon">
+                        <i class="bi bi-motherboard" style="font-size: 90px;"></i>
+                    </div>
+                    <div class="text">
+                        <p>Hardver</p>
+                    </div>
                 </div>
-                <div class="text">
-                    <p>Hardver</p>
-                </div>
-            </div>
+                <input type="hidden" name="category" value="hardver">
+
+            </form>
             <div class="card upper-card" onclick="redirectToPage('/notebook')">
                 <div class="icon">
                     <i class="bi bi-laptop" style="font-size: 90px;"></i>

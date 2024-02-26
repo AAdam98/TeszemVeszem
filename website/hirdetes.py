@@ -1,6 +1,9 @@
-from flask import Blueprint,render_template, request
+from flask import Blueprint,render_template, request, flash, redirect, url_for
 from sqlalchemy.orm import sessionmaker
-from .models import Advertisement, engine
+from .models import Advertisement, engine, Category, User
+from flask_login import current_user
+from .db import db
+
 hirdetes = Blueprint('hirdetes', __name__)
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -28,8 +31,17 @@ def index(order, orderBy):
     return advertisements
 
 @hirdetes.route("/<category>", methods=["GET", "POST"])
-def query(category, min, max, order, orderBy):
+def query():
+    min = 0
+    max = 5000000
+    order = 'Csökkenő'
+    orderBy = 'Dátum'
     if request.method == "POST":
+        min = request.form.get('min')
+        max = request.form.get('max')
+        order = request.form.get('order')
+        orderBy = request.form.get('orderBy')
+        category = request.form.get('category')
         # szűrés felhasználó által megadott ár alapján 
         query = session.query(Advertisement).filter_by(category=category)
         done = False
@@ -68,12 +80,22 @@ def ujhirdetes():
     if request.method == 'POST':
         title = request.form.get('title')
         category = request.form.get('category')
+        categoryID = Category.query.filter_by(name=category).first()
         description = request.form.get('description')
         price = request.form.get('price')
+        userID = current_user.id
+
+        if len(title) < 5:
+            flash('A címnek legalább 5 karakter hosszúnak kell lennie.', category='error')
+        elif len(description) < 10:
+            flash('A leírásnak legalább 10 karakter hosszúnak kell lennie.', category='error')
+        elif not price.isdigit() or int(price) < 0:
+            flash('Az árnak pozitív egész számnak kell lennie.', category='error')
+        else:
+            newAdv = Advertisement(userID=userID, title=title,category=categoryID, description=description, price=int(price))
+            db.session.add(newAdv)
+            db.session.commit()
+            return redirect(url_for('hirdetes.ujhirdetes'))
     else:
-        import sqlite3
-        connection = sqlite3.connect('database.sqlite')
-        with connection:
-            c = connection.cursor()
-            categories = c.execute('SELECT * FROM Category')
+        categories = Category.query.all()
         return render_template('new_adv.html', categories=categories)
