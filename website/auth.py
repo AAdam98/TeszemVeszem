@@ -58,7 +58,7 @@ def signup():
             db.session.commit()
             user = User.query.filter_by(email=email).first()
             login_user(user, remember=True)
-            flash('A fiók sikeresen létrehozva, mostmár bejelentkezhetsz.', category='success')
+            flash('A fiók sikeresen létrehozva.', category='success')
             return redirect(url_for('views.home'))
         
     return render_template('signup.html', user=current_user)
