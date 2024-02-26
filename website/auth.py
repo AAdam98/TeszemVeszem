@@ -39,8 +39,11 @@ def signup():
         password2 = request.form.get('password2')
         
         user = User.query.filter_by(email=email).first()
+        userName = User.query.filter_by(username=username).first()
         if user:
             flash('Ezzel az e-mail címmel már regisztráltak.', category='error')
+        elif userName:
+            flash('Ez a felhasználónév már foglalt.', category='error')
         elif len(email) < 3:
             flash('Email cím nem lehet rövidebb mint 3 karakter', category='error')
         elif len(username) < 4:
