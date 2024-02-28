@@ -12,15 +12,13 @@ def home():
 @views.route('/profile')
 @login_required
 def adatlap():
-    user = current_user
-    print(user.username)
     return render_template("profile.html", user=current_user)
 
-@views.route('/password', methods=['GET','POST'])
+@views.route('/password', methods=['GET','PUT'])
 @login_required
 def password():
     user = current_user
-    if request.method == 'POST':
+    if request.method == 'PUT':
         curpassw = request.form.get('curPassw')
         if check_password_hash(user.password, curpassw):
             newpassw1 = request.form.get('newPassw1')
