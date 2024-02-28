@@ -12,8 +12,6 @@ def home():
 @views.route('/profile')
 @login_required
 def adatlap():
-    user = current_user
-    print(user.username)
     return render_template("profile.html", user=current_user)
 
 @views.route('/password', methods=['GET','PUT'])
