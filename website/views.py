@@ -29,10 +29,13 @@ def password():
                 if curpassw == newpassw1:
                     flash("A jelenlegi és az új jelszó megegyezik!", category='error')
                 else:
-                    user.password = generate_password_hash(newpassw1,method='pbkdf2:sha256')
-                    db.session.commit()
-                    flash('A jelszavad sikeresen megváltoztattad')
-                    return redirect(url_for('views.home'))
+                    if len(newpassw1) < 6:
+                        flash('Az új jelszó túl rövid!', category='error')
+                    else:
+                        user.password = generate_password_hash(newpassw1,method='pbkdf2:sha256')
+                        db.session.commit()
+                        flash('A jelszavad sikeresen megváltoztattad')
+                        return redirect(url_for('views.home'))
             else:
                 flash('A megadott jelszavak nem egyeznek', category='error')
         else:
