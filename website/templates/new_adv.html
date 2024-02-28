@@ -35,11 +35,9 @@
       <label for="category">Kategória:</label>
       <select class="form-control" id="category">
         <option value="">Válasszon kategóriát</option>
-        <option value="1">Elektronika</option>
-        <option value="2">Ruha</option>
-        <option value="3">Autó</option>
-        <option value="4">Ingatlan</option>
-        <!-- további kategóriák -->
+        {% for category in categories %}
+          <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
       </select>
     </div>
     <button type="submit" class="btn btn-primary">Hirdetés feladása</button>
