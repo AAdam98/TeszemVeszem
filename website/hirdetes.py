@@ -8,8 +8,10 @@ hirdetes = Blueprint('hirdetes', __name__)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-@hirdetes.route("/<order>/<orderBy>", methods=["GET", "POST"])
-def index(order, orderBy):
+@hirdetes.route("/hirdetesek", methods=["GET", "POST"])
+def index():
+    orderBy = request.form.get("orderBy")
+    order = request.form.get("order")
     # összes hírdetés sorba rendezése
     if request.method == "POST":
         if orderBy == "Ár":
