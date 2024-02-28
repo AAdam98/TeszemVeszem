@@ -1,36 +1,41 @@
 from flask import Blueprint,render_template, request, flash, redirect, url_for
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from .models import Advertisement, engine, Category, User
 from flask_login import current_user
 from .db import db
 
 hirdetes = Blueprint('hirdetes', __name__)
-Session = sessionmaker(bind=engine)
+Session = scoped_session(sessionmaker(bind=engine))
 session = Session()
 
 @hirdetes.route("/hirdetesek", methods=["GET", "POST"])
 def index():
     orderBy = request.form.get("orderBy")
     order = request.form.get("order")
-    # összes hírdetés sorba rendezése
+
     if request.method == "POST":
         if orderBy == "Ár":
             if order == "Csökkenő":
-                sorted_advertisements = session.query(Advertisement).order_by(Advertisement.price.desc()).all()
+                sorted_advertisements = Advertisement.query.order_by(Advertisement.price.desc()).all()
             elif order == "Növekvő":
-                sorted_advertisements = session.query(Advertisement).order_by(Advertisement.price.asc()).all()
+                sorted_advertisements = Advertisement.query.order_by(Advertisement.price.asc()).all()
 
         elif orderBy == "Dátum":
             if order == "Csökkenő":
-                sorted_advertisements = session.query(Advertisement).order_by(Advertisement.date.desc()).all()
+                sorted_advertisements = Advertisement.query.order_by(Advertisement.date.desc()).all()
             elif order == "Növekvő":
-                sorted_advertisements = session.query(Advertisement).order_by(Advertisement.date.asc()).all()
+                sorted_advertisements = Advertisement.query.order_by(Advertisement.date.asc()).all()
 
         return sorted_advertisements
 
-    # összes hirdetés
-    advertisements = session.query(Advertisement).all()
+    advertisements=Advertisement.query.all()
     return advertisements
+
+
+
+@hirdetes.route("/nemtom")
+def nemtom():
+    return "megvan"
 
 @hirdetes.route("/<category>", methods=["GET", "POST"])
 def query():
@@ -101,3 +106,6 @@ def ujhirdetes():
     else:
         categories = Category.query.all()
         return render_template('new_adv.html', categories=categories)
+    
+
+
