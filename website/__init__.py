@@ -61,10 +61,10 @@ def create_database(app):
                             ("VR","static/icons/vr.svg"),
                             ("Billentyűzet, egér(pad)","static/icons/billentyuzet.svg"),
                             ("Egyéb hardverek","static/icons/egyebhardver.svg"),
-                            ("Retró hardverek","static/icons/retrohardver.svg")
-                            ("Videókártya","static/icons/videkartya.svg")
-                            ("Monitor","Merevlemez, SSD","static/icons/monitor.svg")
-                            ("Adathordozó","static/icons/adathordozo.svg")
+                            ("Retró hardverek","static/icons/retrohardver.svg"),
+                            ("Videókártya","static/icons/videkartya.svg"),
+                            ("Monitor","Merevlemez, SSD","static/icons/monitor.svg"),
+                            ("Adathordozó","static/icons/adathordozo.svg"),
                             ("Hálózati termékek","static/icons/halozati.svg"),
                             ("Nyomtató, szkenner", "static/icons/nyomtato.svg")
                             ]
