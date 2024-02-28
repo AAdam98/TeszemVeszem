@@ -1,0 +1,49 @@
+{% extends "base.html" %} {%block title %} Hírdetésfeladás {% endblock %}
+{%block content%}
+
+<div class="">
+  <h2>Hirdetésfeladás</h2>
+  <form>
+    <div class="form-group">
+      <label for="title">Cím:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        placeholder="Írja be a hirdetés címét"
+      />
+    </div>
+    <div class="form-group">
+      <label for="description">Leírás:</label>
+      <textarea
+        class="form-control"
+        id="description"
+        rows="3"
+        placeholder="Írja le a hirdetést"
+      ></textarea>
+    </div>
+    <div class="form-group">
+      <label for="price">Ár:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="price"
+        placeholder="Írja be az árat"
+      />
+    </div>
+    <div class="form-group">
+      <label for="category">Kategória:</label>
+      <select class="form-control" id="category">
+        <option value="">Válasszon kategóriát</option>
+        <option value="1">Elektronika</option>
+        <option value="2">Ruha</option>
+        <option value="3">Autó</option>
+        <option value="4">Ingatlan</option>
+        <!-- további kategóriák -->
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Hirdetés feladása</button>
+  </form>
+</div>
+
+{%endblock%}
