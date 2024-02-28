@@ -33,11 +33,6 @@ def index():
     return advertisements
 
 
-
-@hirdetes.route("/nemtom")
-def nemtom():
-    return "megvan"
-
 @hirdetes.route("/<category>", methods=["GET", "POST"])
 def query():
     min = 0
@@ -88,26 +83,20 @@ def query():
 def ujhirdetes():
     if request.method == 'POST':
         title = request.form.get('title')
-        category = request.form.get('category')
-        categoryID = Category.query.filter_by(name=category).first()
+        category_name = request.form.get('category')
         description = request.form.get('description')
         price = request.form.get('price')
-        userID = current_user.id
+        userID = current_user.get_id()
 
-        if len(title) < 5:
-            flash('A címnek legalább 5 karakter hosszúnak kell lennie.', category='error')
-        elif len(description) < 10:
-            flash('A leírásnak legalább 10 karakter hosszúnak kell lennie.', category='error')
-        elif not price.isdigit() or int(price) < 0:
-            flash('Az árnak pozitív egész számnak kell lennie.', category='error')
+        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0:
+            flash('Hiba a hirdetés feladásakor.', category='error')
         else:
-            newAdv = Advertisement(userID=userID, title=title,category=categoryID, description=description, price=int(price))
+            newAdv = Advertisement(userID=userID, title=title, category=category_name, description=description, price=int(price))
             db.session.add(newAdv)
             db.session.commit()
-            return redirect(url_for('hirdetes.ujhirdetes'))
+            flash('Hirdetés sikeresen feladva!', category='success')
+
+        return redirect(url_for('views.home'))
     else:
         categories = Category.query.all()
         return render_template('new_adv.html', categories=categories)
-    
-
-

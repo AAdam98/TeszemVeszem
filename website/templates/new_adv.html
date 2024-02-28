@@ -1,47 +1,33 @@
-{% extends "base.html" %} {%block title %} Hírdetésfeladás {% endblock %}
-{%block content%}
+{% extends "base.html" %}
+{% block title %} Hírdetésfeladás {% endblock %}
+{% block content %}
 
 <div class="">
   <h2>Hirdetésfeladás</h2>
-  <form>
+  <form method="POST" action="{{ url_for('hirdetes.ujhirdetes') }}">
     <div class="form-group">
       <label for="title">Cím:</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        placeholder="Írja be a hirdetés címét"
-      />
+      <input type="text" class="form-control" id="title" name="title" placeholder="Írja be a hirdetés címét">
     </div>
     <div class="form-group">
       <label for="description">Leírás:</label>
-      <textarea
-        class="form-control"
-        id="description"
-        rows="3"
-        placeholder="Írja le a hirdetést"
-      ></textarea>
+      <textarea class="form-control" id="description" name="description" rows="3" placeholder="Írja le a hirdetést"></textarea>
     </div>
     <div class="form-group">
       <label for="price">Ár:</label>
-      <input
-        type="text"
-        class="form-control"
-        id="price"
-        placeholder="Írja be az árat"
-      />
+      <input type="text" class="form-control" id="price" name="price" placeholder="Írja be az árat">
     </div>
     <div class="form-group">
       <label for="category">Kategória:</label>
-      <select class="form-control" id="category">
-        <option value="">Válasszon kategóriát</option>
-        {% for category in categories %}
-          <option value="{{ category.id }}">{{ category.name }}</option>
-        {% endfor %}
+      <select class="form-control" id="category" name="category">
+          <option value="">Válasszon kategóriát</option>
+          {% for category in categories %}
+              <option value="{{ category.name }}" {% if category.name == selectedCategory %}selected{% endif %}>{{ category.name }}</option>
+          {% endfor %}
       </select>
     </div>
     <button type="submit" class="btn btn-primary">Hirdetés feladása</button>
   </form>
 </div>
 
-{%endblock%}
+{% endblock %}
