@@ -3,6 +3,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from .models import Advertisement, engine, Category, User
 from flask_login import current_user
 from .db import db
+from flask_login import login_required, current_user
 
 hirdetes = Blueprint('hirdetes', __name__)
 Session = scoped_session(sessionmaker(bind=engine))
@@ -83,6 +84,7 @@ def query():
     return 'ez az összes hardver', filtered_advertisements
 
 @hirdetes.route('/hirdetesfeladas', methods=['GET','POST'])
+@login_required
 def ujhirdetes():
     if request.method == 'POST':
         title = request.form.get('title')
