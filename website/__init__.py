@@ -52,9 +52,22 @@ def create_database(app):
             else:
                 admin_user = User(email=email, username = username, password=generate_password_hash(password,method='pbkdf2:sha256'), is_admin=True)
                 db.session.add(admin_user)
-                categories = ["Alaplap","Processzor","Memória","Hűtés","Ház, táp","Játékvezérlő, szimulátor",
-                              "VR", "Billentyűzet, egér(pad)","Egyéb hardverek","Retró hardverek","Videókártya", 
-                              "Monitor","Merevlemez, SSD","Adathordozó","Hálózati termékek","Nyomtató, szkenner"]
+                categories = [("Alaplap", "static/icons/alaplap.svg"),
+                            ("Processzor","static/icons/processzor.svg"),
+                            ("Memória","static/icons/memoria.svg"),
+                            ("Hűtés","static/icons/hutes.svg"),
+                            ("Ház, táp","static/icons/haz.svg"),
+                            ("Játékvezérlő, szimulátor","static/icons/jatekvezerlo.svg"),
+                            ("VR","static/icons/vr.svg"),
+                            ("Billentyűzet, egér(pad)","static/icons/billentyuzet.svg"),
+                            ("Egyéb hardverek","static/icons/egyebhardver.svg"),
+                            ("Retró hardverek","static/icons/retrohardver.svg")
+                            ("Videókártya","static/icons/videkartya.svg")
+                            ("Monitor","Merevlemez, SSD","static/icons/monitor.svg")
+                            ("Adathordozó","static/icons/adathordozo.svg")
+                            ("Hálózati termékek","static/icons/halozati.svg"),
+                            ("Nyomtató, szkenner", "static/icons/nyomtato.svg")
+                            ]
                 for category in categories:
                     newCat = Category(name=category)
                     db.session.add(newCat)
