@@ -8,7 +8,7 @@
 <div class="hirdetesdoboz">
     <div>
         <div class="container">
-            <div class="card upper-card" onclick="redirectToPage('/hardver')">
+            <div class="card upper-card" onclick="redirectToPage('/hirdetes/hardver')">
                 <div class="icon">
                     <i class="bi bi-motherboard" style="font-size: 90px;"></i>
                 </div>
@@ -16,7 +16,7 @@
                     <p>Hardver</p>
                 </div>
             </div>
-            <div class="card upper-card" onclick="redirectToPage('/notebook')">
+            <div class="card upper-card" onclick="redirectToPage('/hirdetes/notebook')">
                 <div class="icon">
                     <i class="bi bi-laptop" style="font-size: 90px;"></i>
                 </div>
@@ -24,7 +24,7 @@
                     <p>Notebook</p>
                 </div>
             </div>
-            <div class="card upper-card" onclick="redirectToPage('/mobil')">
+            <div class="card upper-card" onclick="redirectToPage('/hirdetes/mobil')">
                 <div class="icon">
                     <i class="bi bi-phone" style="font-size: 85px;"></i>
                 </div>
@@ -34,17 +34,17 @@
             </div>
         </div>
         <div class="container">
-            <div class="card bottom-card">
+            {% for category in random_categories %}
+            <div class="card bottom-card" onclick="redirectToPage('/hirdetes/{{category.endpoint_name}}')">
                 <div class="icon">
-                    <!-- ikon adatbázisból -->
+                    <img src="{{ url_for('static', filename=category.icon_path) }}" style="object-fit: cover; width: 100%; height: 100%;">
                 </div>
                 <div class="text">
-                    <p>Alkategória</p>
+                    <p>{{ category.name }}</p>
                 </div>
             </div>
-            <div class="card bottom-card">Small Card 2</div>
-            <div class="card bottom-card">Small Card 3</div>
-            <div class="card bottom-card">Small Card 4</div>
+        
+            {% endfor %}
         </div>
     </div>
 </div>

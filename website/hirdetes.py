@@ -8,8 +8,9 @@ hirdetes = Blueprint('hirdetes', __name__)
 Session = scoped_session(sessionmaker(bind=engine))
 session = Session()
 
+
 @hirdetes.route("/hirdetesek", methods=["GET", "POST"])
-def index():
+def hirdetesek():
     orderBy = request.form.get("orderBy")
     order = request.form.get("order")
 
