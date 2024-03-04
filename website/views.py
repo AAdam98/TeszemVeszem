@@ -18,7 +18,7 @@ def get_random_categories(num_categories=4):
 
 
 @views.route('/')
-def index():
+def home():
     random_categories = get_random_categories()
     return render_template('home.html', random_categories=random_categories)
 
