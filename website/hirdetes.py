@@ -1,35 +1,55 @@
-from flask import Blueprint,render_template, request
-from sqlalchemy.orm import sessionmaker
-from .models import Advertisement, engine
+from flask import Blueprint,render_template, request, flash, redirect, url_for
+from sqlalchemy.orm import sessionmaker, scoped_session
+from .models import Advertisement, engine, Category, User
+from flask_login import current_user
+from .db import db
+
 hirdetes = Blueprint('hirdetes', __name__)
-Session = sessionmaker(bind=engine)
+Session = scoped_session(sessionmaker(bind=engine))
 session = Session()
 
-@hirdetes.route("/<order>/<orderBy>", methods=["GET", "POST"])
-def index(order, orderBy):
-    # összes hírdetés sorba rendezése
+
+@hirdetes.route("/hirdetesek", methods=["GET", "POST"])
+def hirdetesek():
+    orderBy = request.form.get("orderBy")
+    order = request.form.get("order")
+
     if request.method == "POST":
         if orderBy == "Ár":
             if order == "Csökkenő":
-                sorted_advertisements = session.query(Advertisement).order_by(Advertisement.price.desc()).all()
+                sorted_advertisements = Advertisement.query.order_by(Advertisement.price.desc()).all()
             elif order == "Növekvő":
-                sorted_advertisements = session.query(Advertisement).order_by(Advertisement.price.asc()).all()
+                sorted_advertisements = Advertisement.query.order_by(Advertisement.price.asc()).all()
 
         elif orderBy == "Dátum":
             if order == "Csökkenő":
-                sorted_advertisements = session.query(Advertisement).order_by(Advertisement.date.desc()).all()
+                sorted_advertisements = Advertisement.query.order_by(Advertisement.date.desc()).all()
             elif order == "Növekvő":
-                sorted_advertisements = session.query(Advertisement).order_by(Advertisement.date.asc()).all()
+                sorted_advertisements = Advertisement.query.order_by(Advertisement.date.asc()).all()
 
         return sorted_advertisements
 
-    # összes hirdetés
-    advertisements = session.query(Advertisement).all()
+    advertisements=Advertisement.query.all()
     return advertisements
 
+
+
+@hirdetes.route("/nemtom")
+def nemtom():
+    return "megvan"
+
 @hirdetes.route("/<category>", methods=["GET", "POST"])
-def query(category, min, max, order, orderBy):
+def query():
+    min = 0
+    max = 5000000
+    order = 'Csökkenő'
+    orderBy = 'Dátum'
     if request.method == "POST":
+        min = request.form.get('min')
+        max = request.form.get('max')
+        order = request.form.get('order')
+        orderBy = request.form.get('orderBy')
+        category = request.form.get('category')
         # szűrés felhasználó által megadott ár alapján 
         query = session.query(Advertisement).filter_by(category=category)
         done = False
@@ -65,4 +85,28 @@ def query(category, min, max, order, orderBy):
 
 @hirdetes.route('/hirdetesfeladas', methods=['GET','POST'])
 def ujhirdetes():
-    pass
+    if request.method == 'POST':
+        title = request.form.get('title')
+        category = request.form.get('category')
+        categoryID = Category.query.filter_by(name=category).first()
+        description = request.form.get('description')
+        price = request.form.get('price')
+        userID = current_user.id
+
+        if len(title) < 5:
+            flash('A címnek legalább 5 karakter hosszúnak kell lennie.', category='error')
+        elif len(description) < 10:
+            flash('A leírásnak legalább 10 karakter hosszúnak kell lennie.', category='error')
+        elif not price.isdigit() or int(price) < 0:
+            flash('Az árnak pozitív egész számnak kell lennie.', category='error')
+        else:
+            newAdv = Advertisement(userID=userID, title=title,category=categoryID, description=description, price=int(price))
+            db.session.add(newAdv)
+            db.session.commit()
+            return redirect(url_for('hirdetes.ujhirdetes'))
+    else:
+        categories = Category.query.all()
+        return render_template('new_adv.html', categories=categories)
+    
+
+

@@ -2,9 +2,12 @@ from .db import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
-engine = db.create_engine('sqlite:///database.db')
+engine = db.create_engine('sqlite:///database.sqlite')
+
 # Models
 class Advertisement(db.Model):
+    __tablename__ = 'advertisement'
+
     advertisementID = db.Column(db.Integer, primary_key=True)
     userID = db.Column(db.Integer, db.ForeignKey('user.userID'))
     date = db.Column(db.DateTime(timezone=True), default=func.now())
@@ -41,6 +44,10 @@ class Comment(db.Model):
 class Category(db.Model):
     categoryID = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-     
-    def __init__(self, name):
-         self.name = name
+    icon_path = db.Column(db.String(255), nullable=False)
+    endpoint_name = db.Column(db.String(255), nullable=False)
+    
+    def __init__(self, name, icon_path, endpoint_name):
+        self.name = name
+        self.icon_path = icon_path
+        self.endpoint_name = endpoint_name
