@@ -90,13 +90,14 @@ def ujhirdetes():
 
         if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0:
             flash('Hiba a hirdetés feladásakor.', category='error')
+            categories = Category.query.all()
+            return render_template('new_adv.html', categories=categories)
         else:
             newAdv = Advertisement(userID=userID, title=title, category=category_name, description=description, price=int(price))
             db.session.add(newAdv)
             db.session.commit()
             flash('Hirdetés sikeresen feladva!', category='success')
-
-        return redirect(url_for('views.home'))
+            return redirect(url_for('views.home'))
     else:
         categories = Category.query.all()
         return render_template('new_adv.html', categories=categories)
