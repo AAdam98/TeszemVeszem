@@ -9,7 +9,7 @@ hirdetes = Blueprint('hirdetes', __name__)
 Session = scoped_session(sessionmaker(bind=engine))
 session = Session()
 
-@hirdetes.route("/hirdetesek", methods=["GET", "POST"])
+@hirdetes.route("/osszes", methods=["GET", "POST"])
 def index():
     orderBy = request.form.get("orderBy")
     order = request.form.get("order")
@@ -30,7 +30,7 @@ def index():
         return sorted_advertisements
 
     advertisements=Advertisement.query.all()
-    return advertisements
+    return render_template("index.html", advertisements=advertisements)
 
 
 @hirdetes.route("/<category>", methods=["GET", "POST"])
@@ -77,6 +77,11 @@ def query():
     # összes hirdetés egy adott kategóriában
     filtered_advertisements = session.query(Advertisement).filter_by(category=category).all()
     return 'ez az összes hardver', filtered_advertisements
+
+@hirdetes.route('/<int:id>', methods=['GET','POST'])
+def adv_details(id):
+    advertisement = Advertisement.query.filter_by(advertisementID=id).first()
+    return render_template('advertisement.html', advertisement=advertisement)
 
 @hirdetes.route('/hirdetesfeladas', methods=['GET','POST'])
 @login_required
