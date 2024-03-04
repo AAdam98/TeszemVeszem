@@ -12,7 +12,7 @@ class Advertisement(db.Model):
     userID = db.Column(db.Integer, db.ForeignKey('user.userID'))
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     title = db.Column(db.String(60), nullable=False)
-    category = db.Column(db.Integer, db.ForeignKey('category.categoryID'))
+    category = db.Column(db.String(100), nullable=False)
     available = db.Column(db.Boolean, default=True)
     description = db.Column(db.Text(1000))
     price = db.Column(db.Integer, nullable=False)

@@ -3,14 +3,20 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from .models import Advertisement, engine, Category, User
 from flask_login import current_user
 from .db import db
+from flask_login import login_required, current_user
 
 hirdetes = Blueprint('hirdetes', __name__)
 Session = scoped_session(sessionmaker(bind=engine))
 session = Session()
 
 
+@hirdetes.route("/osszes", methods=["GET", "POST"])
+def index():
+
+
 @hirdetes.route("/hirdetesek", methods=["GET", "POST"])
 def hirdetesek():
+
     orderBy = request.form.get("orderBy")
     order = request.form.get("order")
 
@@ -30,16 +36,11 @@ def hirdetesek():
         return sorted_advertisements
 
     advertisements=Advertisement.query.all()
-    return advertisements
+    return render_template("index.html", advertisements=advertisements)
 
-
-
-@hirdetes.route("/nemtom")
-def nemtom():
-    return "megvan"
 
 @hirdetes.route("/<category>", methods=["GET", "POST"])
-def query():
+def query(category):
     min = 0
     max = 5000000
     order = 'Csökkenő'
@@ -80,33 +81,34 @@ def query():
     # redirecteket MEG KELL CSINÁLNI
             
     # összes hirdetés egy adott kategóriában
-    filtered_advertisements = session.query(Advertisement).filter_by(category=category).all()
-    return 'ez az összes hardver', filtered_advertisements
+    filtered_advertisements = Advertisement.query.filter_by(category=category).all()
+    return render_template('adv_by_category.html', filtered_advertisements=filtered_advertisements)
+
+@hirdetes.route('/<int:id>', methods=['GET','POST'])
+def adv_details(id):
+    advertisement = Advertisement.query.filter_by(advertisementID=id).first()
+    return render_template('advertisement.html', advertisement=advertisement)
 
 @hirdetes.route('/hirdetesfeladas', methods=['GET','POST'])
+@login_required
 def ujhirdetes():
     if request.method == 'POST':
         title = request.form.get('title')
-        category = request.form.get('category')
-        categoryID = Category.query.filter_by(name=category).first()
+        category_name = request.form.get('category')
         description = request.form.get('description')
         price = request.form.get('price')
-        userID = current_user.id
+        userID = current_user.get_id()
 
-        if len(title) < 5:
-            flash('A címnek legalább 5 karakter hosszúnak kell lennie.', category='error')
-        elif len(description) < 10:
-            flash('A leírásnak legalább 10 karakter hosszúnak kell lennie.', category='error')
-        elif not price.isdigit() or int(price) < 0:
-            flash('Az árnak pozitív egész számnak kell lennie.', category='error')
+        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0:
+            flash('Hiba a hirdetés feladásakor.', category='error')
+            categories = Category.query.all()
+            return render_template('new_adv.html', categories=categories)
         else:
-            newAdv = Advertisement(userID=userID, title=title,category=categoryID, description=description, price=int(price))
+            newAdv = Advertisement(userID=userID, title=title, category=category_name, description=description, price=int(price))
             db.session.add(newAdv)
             db.session.commit()
-            return redirect(url_for('hirdetes.ujhirdetes'))
+            flash('Hirdetés sikeresen feladva!', category='success')
+            return redirect(url_for('views.home'))
     else:
         categories = Category.query.all()
         return render_template('new_adv.html', categories=categories)
-    
-
-
