@@ -92,7 +92,6 @@ def ujhirdetes():
             flash('Hiba a hirdetés feladásakor.', category='error')
             categories = Category.query.all()
             return render_template('new_adv.html', categories=categories)
-
         else:
             newAdv = Advertisement(userID=userID, title=title, category=category_name, description=description, price=int(price))
             db.session.add(newAdv)

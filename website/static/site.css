@@ -146,30 +146,30 @@ footer {
 
 @keyframes alert {
     to {
-        max-width: 0;
-        max-height: 0;
-        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        opacity: 0;
+        height: 0;
     }
 }
 
 @-webkit-keyframes alert {
     to {
-        max-width: 0;
-        max-height: 0;
-        visibility: hidden;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        opacity: 0;
+        height: 0;
     }
 }
 
 .alert {
-    -moz-animation: alert 1s ease-in 5s forwards;
-    /* Firefox */
-    -webkit-animation: alert 1s ease-in 5s forwards;
-    /* Safari and Chrome */
-    -o-animation: alert 1s ease-in 5s forwards;
-    /* Opera */
-    animation: alert 1s ease-in 5s forwards;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards;
+    text-align: center;
+    position: fixed;
+    top: 60;
+    width: 100%;
+    animation: alert 0.5s ease-out 5s 1 normal forwards;
 }
 
 /* dinamikus megjelenítés */
