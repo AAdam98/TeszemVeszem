@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
@@ -12,9 +12,10 @@ DB_NAME= "database.sqlite"
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'macskajaj'
-    app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{DB_NAME}'
+    app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{path.join(app.instance_path, DB_NAME)}'
     db.init_app(app)
     migrate = Migrate(app, db)
+    
     
     from .views import views
     from .auth import auth
@@ -34,12 +35,18 @@ def create_app():
     def load_user(id):
         return User.query.get(int(id))
     
+    @login_manager.unauthorized_handler
+    def unauthorized_callback():
+        flash('Ehhez az oldalhoz be kell jelentkezned!', 'warning')
+        return redirect(url_for('auth.login'))
+    
     create_database(app)
     
     return app
 
 def create_database(app):
-    if not path.exists('website/' + DB_NAME):
+    db_path = path.join(app.instance_path, DB_NAME)
+    if not path.exists(db_path):
         with app.app_context():
             db.create_all()
             email = 'admin@admin.com'

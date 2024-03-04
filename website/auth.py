@@ -44,8 +44,8 @@ def signup():
             flash('Ezzel az e-mail címmel már regisztráltak.', category='error')
         elif userName:
             flash('Ez a felhasználónév már foglalt.', category='error')
-        elif len(email) < 3:
-            flash('Email cím nem lehet rövidebb mint 3 karakter', category='error')
+        elif len(email) < 3 or not '@' in email or not '.' in email:
+            flash('Nem megfelelő email cím formátum!', category='error')
         elif len(username) < 4:
             flash('A felhasználónév nem lehet rövidebb mint 4 karakter', category='error')
         elif password1 != password2:
