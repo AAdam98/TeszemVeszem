@@ -60,25 +60,26 @@ def create_database(app):
                 db.session.add(admin_user)
                 
                 categories = [
-                            ("Alaplap", "static/icons/alaplap.svg"),
-                            ("Processzor","static/icons/processzor.svg"),
-                            ("Memória","static/icons/memoria.svg"),
-                            ("Hűtés","static/icons/hutes.svg"),
-                            ("Ház, táp","static/icons/haz.svg"),
-                            ("Játékvezérlő, szimulátor","static/icons/jatekvezerlo.svg"),
-                            ("VR","static/icons/vr.svg"),
-                            ("Billentyűzet, egér(pad)","static/icons/billentyuzet.svg"),
-                            ("Egyéb hardverek","static/icons/egyebhardver.svg"),
-                            ("Retró hardverek","static/icons/retrohardver.svg"),
-                            ("Videókártya","static/icons/videkartya.svg"),
-                            ("Monitor","static/icons/monitor.svg"),
-                            ("Merevlemez, SSD","static/icons/merevlemezssd.svg"),
-                            ("Adathordozó","static/icons/adathordozo.svg"),
-                            ("Hálózati termékek","static/icons/halozati.svg"),
-                            ("Nyomtató, szkenner", "static/icons/nyomtato.svg")
-                            ]
-                for name, icon_path in categories:
-                    newCat = Category(name=name, icon_path=icon_path)
+                            ("Alaplap", "icons/alaplap.svg", "alaplap"),
+                            ("Processzor", "icons/processzor.svg", "processzor"),
+                            ("Memória", "icons/memoria.svg", "memoria"),
+                            ("Hűtés", "icons/hutes.svg", "hutes"),
+                            ("Ház, táp", "icons/haz.svg", "haz_tap"),
+                            ("Játékvezérlő, szimulátor", "icons/jatekvezerlo.svg", "jatekvezerlo_szimulator"),
+                            ("VR", "icons/vr.svg", "vr"),
+                            ("Billentyűzet, egér(pad)", "icons/billentyuzet.svg", "billentyuzet_eger"),
+                            ("Egyéb hardverek", "icons/egyebhardver.svg", "egyeb_hardverek"),
+                            ("Retró hardverek", "icons/retrohardver.svg", "retro_hardverek"),
+                            ("Videókártya", "icons/videokartya.svg", "videokartya"),
+                            ("Monitor", "icons/monitor.svg", "monitor"),
+                            ("Merevlemez, SSD", "icons/merevlemezssd.svg", "merevlemez_ssd"),
+                            ("Adathordozó", "icons/adathordozo.svg", "adathordozo"),
+                            ("Hálózati termékek", "icons/halozati.svg", "halozati_termekek"),
+                            ("Nyomtató, szkenner", "icons/nyomtato.svg", "nyomtato_szkenner")
+]
+
+                for name, icon_path, endpoint_name in categories:
+                    newCat = Category(name=name, icon_path=icon_path, endpoint_name = endpoint_name)
                     db.session.add(newCat)
             db.session.commit()
         print('Adatbázis létrehozva!')

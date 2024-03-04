@@ -1,13 +1,28 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
+from sqlalchemy import func
 from .db import db
+from .models import Category
 views = Blueprint('views', __name__)
 from werkzeug.security import generate_password_hash, check_password_hash
 
+def get_random_categories(num_categories=4):
+    """Véletlenszerűen kiválaszt néhány különböző kategóriát az adatbázisból."""
+    random_categories = []
+    categories = Category.query.order_by(func.random()).limit(num_categories).all()
+    for category in categories:
+        if category not in random_categories:
+            random_categories.append(category)
+    return random_categories
+
+
+
 @views.route('/')
-# @login_required
-def home():
-    return render_template("home.html", user=current_user)
+def index():
+    random_categories = get_random_categories()
+    return render_template('home.html', random_categories=random_categories)
+
+
 
 @views.route('/profile')
 @login_required
