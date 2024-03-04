@@ -5,7 +5,7 @@
 
 <div class="content">
     <h1>Hírdetések</h1>
-    {% for advertisement in advertisements %}
+    {% for advertisement in filtered_advertisements %}
     {% if advertisement.available %}
         <div class="container">
             <a href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}">

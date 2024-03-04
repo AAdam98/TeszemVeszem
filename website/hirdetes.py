@@ -34,7 +34,7 @@ def index():
 
 
 @hirdetes.route("/<category>", methods=["GET", "POST"])
-def query():
+def query(category):
     min = 0
     max = 5000000
     order = 'Csökkenő'
@@ -75,8 +75,8 @@ def query():
     # redirecteket MEG KELL CSINÁLNI
             
     # összes hirdetés egy adott kategóriában
-    filtered_advertisements = session.query(Advertisement).filter_by(category=category).all()
-    return 'ez az összes hardver', filtered_advertisements
+    filtered_advertisements = Advertisement.query.filter_by(category=category).all()
+    return render_template('adv_by_category.html', filtered_advertisements=filtered_advertisements)
 
 @hirdetes.route('/<int:id>', methods=['GET','POST'])
 def adv_details(id):
