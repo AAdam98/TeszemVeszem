@@ -9,7 +9,8 @@ hirdetes = Blueprint('hirdetes', __name__)
 Session = scoped_session(sessionmaker(bind=engine))
 session = Session()
 
-@hirdetes.route("/hirdetesek", methods=["GET", "POST"])
+
+@hirdetes.route("/osszes", methods=["GET", "POST"])
 def index():
     orderBy = request.form.get("orderBy")
     order = request.form.get("order")
@@ -30,11 +31,11 @@ def index():
         return sorted_advertisements
 
     advertisements=Advertisement.query.all()
-    return advertisements
+    return render_template("index.html", advertisements=advertisements)
 
 
 @hirdetes.route("/<category>", methods=["GET", "POST"])
-def query():
+def query(category):
     min = 0
     max = 5000000
     order = 'Csökkenő'
@@ -75,8 +76,15 @@ def query():
     # redirecteket MEG KELL CSINÁLNI
             
     # összes hirdetés egy adott kategóriában
-    filtered_advertisements = session.query(Advertisement).filter_by(category=category).all()
-    return 'ez az összes hardver', filtered_advertisements
+    filtered_category = Category.query.filter_by(endpoint_name=category).first()
+    name = filtered_category.name
+    filtered_advertisements = Advertisement.query.filter_by(category=name).all()
+    return render_template('adv_by_category.html', filtered_advertisements=filtered_advertisements)
+
+@hirdetes.route('/<int:id>', methods=['GET','POST'])
+def adv_details(id):
+    advertisement = Advertisement.query.filter_by(advertisementID=id).first()
+    return render_template('advertisement.html', advertisement=advertisement)
 
 @hirdetes.route('/hirdetesfeladas', methods=['GET','POST'])
 @login_required

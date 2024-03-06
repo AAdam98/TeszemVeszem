@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{%block title %} Rólunk {% endblock %}
+
+{%block content%}
+
+<div class="content">
+    <h1>Hírdetések</h1>
+    {% for advertisement in filtered_advertisements %}
+    {% if advertisement.available %}
+        <div class="container">
+            <a href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}">
+                <div class="card upper-card">
+                    <div class="text">
+                        <p>{{ advertisement.date }}</p>
+                        <p>{{ advertisement.title }}</p>
+                        <p>{{ advertisement.category }}</p>
+                        <p>{{ advertisement.description }}</p>
+                        <p>{{ advertisement.price }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+{%endblock%}

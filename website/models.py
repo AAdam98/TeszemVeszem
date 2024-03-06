@@ -50,9 +50,14 @@ class Comment(db.Model):
 
 class Category(db.Model):
     categoryID = db.Column(db.Integer, primary_key=True)
+    main_category = db.Column(db.String(255), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     icon_path = db.Column(db.String(255), nullable=False)
+    endpoint_name = db.Column(db.String(255), nullable=False)
 
-    def __init__(self, name, icon_path):
+    def __init__(self, name, main_category, icon_path, endpoint_name):
         self.name = name
+        self.main_category = main_category
         self.icon_path = icon_path
+
+        self.endpoint_name = endpoint_name
