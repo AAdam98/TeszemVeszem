@@ -33,14 +33,11 @@ def adatlap():
 @login_required
 def password():
     user = current_user
-
     if request.method == 'POST' or (request.method == 'GET' and request.args.get('_method') == 'PUT'):
         curpassw = request.form.get('curPassw')
-        
         if check_password_hash(user.password, curpassw):
             newpassw1 = request.form.get('newPassw1')
             newpassw2 = request.form.get('newPassw2')
-
             if not newpassw1 and not newpassw2:
                 flash('Az új jelszó mezők nem lehetnek üresek!', category='error')
             elif newpassw1 == newpassw2:
@@ -57,7 +54,6 @@ def password():
                 flash('A megadott jelszavak nem egyeznek', category='error')
         else:
             flash('Hibás jelszó', category='error')
-
     return render_template("profile_passw.html", user=current_user)
 
 @views.route('/aboutus')
