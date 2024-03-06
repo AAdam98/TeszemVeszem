@@ -6,6 +6,10 @@
   <h2>Hirdetésfeladás</h2>
   <form method="POST" action="{{ url_for('hirdetes.ujhirdetes') }}">
     <div class="form-group">
+      <label for="image">Kép feltöltése:</label>
+      <input type="file" class="form-control-file" id="image" name="image">
+    </div>
+    <div class="form-group">
       <label for="title">Cím:</label>
       <input type="text" class="form-control" id="title" name="title" placeholder="Írja be a hirdetés címét">
     </div>

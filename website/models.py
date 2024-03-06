@@ -16,6 +16,7 @@ class Advertisement(db.Model):
     available = db.Column(db.Boolean, default=True)
     description = db.Column(db.Text(1000))
     price = db.Column(db.Integer, nullable=False)
+    image_path = db.Column(db.Text(255), nullable=False)
 
 class User(db.Model, UserMixin):
     userID = db.Column(db.Integer, primary_key=True)

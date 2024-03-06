@@ -13,6 +13,8 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'macskajaj'
     app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{path.join(app.instance_path, DB_NAME)}'
+    UPLOAD_FOLDER = 'uploads'
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     db.init_app(app)
     migrate = Migrate(app, db)
     
