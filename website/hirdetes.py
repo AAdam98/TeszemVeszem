@@ -92,7 +92,6 @@ def adv_details(id):
 @hirdetes.route('/hirdetesfeladas', methods=['GET','POST'])
 @login_required
 def ujhirdetes():
-    filename = None
     
     if request.method == 'POST':
         title = request.form.get('title')
@@ -100,11 +99,14 @@ def ujhirdetes():
         description = request.form.get('description')
         price = request.form.get('price')
         userID = current_user.get_id()
+        print("kezdes")
         if 'image' in request.files:
             image = request.files['image']
             if image.filename != '':
+                print("benne")
                 filename = secure_filename(image.filename)
-                image.save(os.path.join(hirdetes.config['UPLOAD_FOLDER'], filename))
+                image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+        print("vege", request.files)
 
         if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0:
             flash('Hiba a hirdetés feladásakor.', category='error')
