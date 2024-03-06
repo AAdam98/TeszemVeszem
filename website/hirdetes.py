@@ -12,23 +12,18 @@ session = Session()
 
 @hirdetes.route("/osszes", methods=["GET", "POST"])
 def index():
-    orderBy = request.form.get("orderBy")
-    order = request.form.get("order")
-
     if request.method == "POST":
-        if orderBy == "Ár":
-            if order == "Csökkenő":
-                sorted_advertisements = Advertisement.query.order_by(Advertisement.price.desc()).all()
-            elif order == "Növekvő":
-                sorted_advertisements = Advertisement.query.order_by(Advertisement.price.asc()).all()
-
-        elif orderBy == "Dátum":
-            if order == "Csökkenő":
-                sorted_advertisements = Advertisement.query.order_by(Advertisement.date.desc()).all()
-            elif order == "Növekvő":
-                sorted_advertisements = Advertisement.query.order_by(Advertisement.date.asc()).all()
-
-        return sorted_advertisements
+        date_sort = request.form['dateSort']
+        price_sort = request.form['priceSort']
+        if date_sort == 'asc':
+            advertisements = Advertisement.query.order_by(Advertisement.date.asc()).all()
+        else:
+            advertisements = Advertisement.query.order_by(Advertisement.date.desc()).all()
+        if price_sort == 'asc':
+            advertisements = sorted(advertisements, key=lambda x: x.price)
+        else:
+            advertisements = sorted(advertisements, key=lambda x: x.price, reverse=True)
+        return render_template('index.html', advertisements=advertisements)
     # összes hirdetés rendezés nélkül
     advertisements=Advertisement.query.all()
     return render_template("index.html", advertisements=advertisements)
