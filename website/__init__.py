@@ -162,6 +162,7 @@ def create_database(app):
                         "nagymeretu_notebook",
                     ),
                 ]
+
                 for main_category, name, icon_path, endpoint_name in categories:
                     newCat = Category(
                         main_category=main_category,
