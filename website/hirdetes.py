@@ -74,14 +74,21 @@ def query(category):
         return sorted_advertisements
             
     # összes hirdetés egy fő kategóriában
-    filtered_category = Category.query.filter_by(main_category=category).first()
+    filtered_categories = Category.query.filter_by(main_category=category).all()
 
-    if filtered_category:
-        filtered_advertisements = Advertisement.query.filter(Advertisement.category.in_(db.session.query(Category.name).filter_by(main_category=filtered_category.main_category))).all()
-        return render_template('adv_by_category.html', filtered_advertisements=filtered_advertisements)
+    if not filtered_categories:
+        filtered_categories = Category.query.filter_by(endpoint_name=category).all()
+    if filtered_categories:
+        all_advertisements = Advertisement.query.filter(Advertisement.category.in_([cat.name for cat in filtered_categories])).all()
+        if all_advertisements:
+            return render_template('adv_by_category.html', filtered_advertisements=all_advertisements)
+        else:
+            flash('Nincs hirdetés a kiválasztott kategóriában.', category='error')
     else:
-        flash('A kiválasztott fő kategória nem található.', category='error')
-        return redirect(url_for('views.home'))
+        flash('A kiválasztott kategória nem található.', category='error')
+    return redirect(url_for('views.home'))
+
+
 
 
 # 1 hirdetés megjelenítése
