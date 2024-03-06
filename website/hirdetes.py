@@ -29,7 +29,7 @@ def index():
                 sorted_advertisements = Advertisement.query.order_by(Advertisement.date.asc()).all()
 
         return sorted_advertisements
-
+    # összes hirdetés rendezés nélkül
     advertisements=Advertisement.query.all()
     return render_template("index.html", advertisements=advertisements)
 
@@ -72,15 +72,26 @@ def query(category):
             elif order == "Növekvő":
                 sorted_advertisements = session.query(Advertisement).filter_by(category=category).order_by(Advertisement.date.asc()).all()
         return sorted_advertisements
-    
-    # redirecteket MEG KELL CSINÁLNI
             
-    # összes hirdetés egy adott kategóriában
-    filtered_category = Category.query.filter_by(endpoint_name=category).first()
-    name = filtered_category.name
-    filtered_advertisements = Advertisement.query.filter_by(category=name).all()
-    return render_template('adv_by_category.html', filtered_advertisements=filtered_advertisements)
+    # összes hirdetés egy fő kategóriában
+    filtered_categories = Category.query.filter_by(main_category=category).all()
 
+    if not filtered_categories:
+        filtered_categories = Category.query.filter_by(endpoint_name=category).all()
+    if filtered_categories:
+        all_advertisements = Advertisement.query.filter(Advertisement.category.in_([cat.name for cat in filtered_categories])).all()
+        if all_advertisements:
+            return render_template('adv_by_category.html', filtered_advertisements=all_advertisements)
+        else:
+            flash('Nincs hirdetés a kiválasztott kategóriában.', category='error')
+    else:
+        flash('A kiválasztott kategória nem található.', category='error')
+    return redirect(url_for('views.home'))
+
+
+
+
+# 1 hirdetés megjelenítése
 @hirdetes.route('/<int:id>', methods=['GET','POST'])
 def adv_details(id):
     advertisement = Advertisement.query.filter_by(advertisementID=id).first()
