@@ -75,9 +75,29 @@ def create_database(app):
                             ("hardver", "Merevlemez, SSD", "icons/merevlemezssd.svg", "merevlemez_ssd"),
                             ("hardver", "Adathordozó", "icons/adathordozo.svg", "adathordozo"),
                             ("hardver", "Hálózati termékek", "icons/halozati.svg", "halozati_termekek"),
-                            ("hardver", "Nyomtató, szkenner", "icons/nyomtato.svg", "nyomtato_szkenner")
-                            ("mobil", "Samsung", "#", "samsung")
-                            ("")
+                            ("hardver", "Nyomtató, szkenner", "icons/nyomtato.svg", "nyomtato_szkenner"),
+                            ("mobil", "IPhone", "icons/mobil.svg", "iphone"),
+                            ("mobil", "Samsung", "icons/mobil.svg", "samsung"),
+                            ("mobil", "Sony", "icons/mobil.svg", "sony"),
+                            ("mobil", "LG", "icons/mobil.svg", "lg"),
+                            ("mobil", "Asus", "icons/mobil.svg", "asus"),
+                            ("mobil", "Google", "icons/mobil.svg", "google"),
+                            ("mobil", "Xiaomi, Redmi, Poco", "icons/mobil.svg", "xiaomi_redmi_poco"),
+                            ("mobil", "Huawei", "icons/mobil.svg", "huawei"),
+                            ("mobil", "Honor", "icons/mobil.svg", "honor"),
+                            ("mobil", "Realme", "icons/mobil.svg", "realme"),
+                            ("mobil", "OnePlus", "icons/mobil.svg", "oneplus"),
+                            ("mobil", "Oppo", "icons/mobil.svg", "oppo"),
+                            ("mobil", "Nokia", "icons/mobil.svg", "nokia"),
+                            ("mobil", "Motorola", "icons/mobil.svg", "motorola"),
+                            ("mobil", "Lenovo", "icons/mobil.svg", "lenovo"),
+                            ("notebook", "MacBook", "icons/notebook.svg", "macbook"),
+                            ("notebook", "MacBook Air", "icons/notebook.svg", "macbook_air"),
+                            ("notebook", "MacBook Pro", "icons/notebook.svg", "macbook_pro"),
+                            ("notebook", "Subnotebook", "icons/notebook.svg", "subnotebook"),
+                            ("notebook", "Könnyű notebook", "icons/notebook.svg", "konnyu_notebook"),
+                            ("notebook", "Asztali notebook", "icons/notebook.svg", "asztali_notebook"),
+                            ("notebook", "Nagyméretű notebook", "icons/notebook.svg", "nagymeretu_notebook")
                         ]
 
 
