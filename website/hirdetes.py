@@ -31,11 +31,9 @@ def index():
 
 @hirdetes.route("/<category>", methods=["GET", "POST"])
 def query(category):
-    min = 0
-    max = 5000000
-    order = 'Csökkenő'
-    orderBy = 'Dátum'
     if request.method == "POST":
+        date_sort = request.form['dateSort']
+        price_sort = request.form['priceSort']
         min = request.form.get('min')
         max = request.form.get('max')
         order = request.form.get('order')
