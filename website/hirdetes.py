@@ -15,14 +15,16 @@ def index():
     if request.method == "POST":
         date_sort = request.form['dateSort']
         price_sort = request.form['priceSort']
+        query = Advertisement.query
         if date_sort == 'asc':
-            advertisements = Advertisement.query.order_by(Advertisement.date.asc()).all()
+            query = query.order_by(Advertisement.date.asc())
         else:
-            advertisements = Advertisement.query.order_by(Advertisement.date.desc()).all()
+            query = query.order_by(Advertisement.date.desc())
         if price_sort == 'asc':
-            advertisements = sorted(advertisements, key=lambda x: x.price)
+            query = query.order_by(Advertisement.price.asc())
         else:
-            advertisements = sorted(advertisements, key=lambda x: x.price, reverse=True)
+            query = query.order_by(Advertisement.price.desc())
+        advertisements = query.all()
         return render_template('index.html', advertisements=advertisements)
     # összes hirdetés rendezés nélkül
     advertisements=Advertisement.query.all()
@@ -34,37 +36,37 @@ def query(category):
     if request.method == "POST":
         date_sort = request.form['dateSort']
         price_sort = request.form['priceSort']
-        min = request.form.get('min')
-        max = request.form.get('max')
-        order = request.form.get('order')
-        orderBy = request.form.get('orderBy')
-        category = request.form.get('category')
-        # szűrés felhasználó által megadott ár alapján 
-        query = session.query(Advertisement).filter_by(category=category)
-        done = False
-        if min is not None:
-            query = query.filter(Advertisement.price >= min)
-            done = True
-        elif max is not None:
-            query = query.filter(Advertisement.price <= max)
-            done = True
-        if done:
-            filtered_advertisements = query.all()
-            return filtered_advertisements
-        
-        # szűrés a felhasználótól sorba rendezés alapján adott kategóriában
-        if orderBy == "Ár":
-            if order == "Csökkenő":
-                sorted_advertisements = session.query(Advertisement).filter_by(category=category).order_by(Advertisement.price.desc()).all()
-            elif order == "Növekvő":
-                sorted_advertisements = session.query(Advertisement).filter_by(category=category).order_by(Advertisement.price.asc()).all()
-            
-        elif orderBy == "Dátum":
-            if order == "Csökkenő":
-                sorted_advertisements = session.query(Advertisement).filter_by(category=category).order_by(Advertisement.date.desc()).all()
-            elif order == "Növekvő":
-                sorted_advertisements = session.query(Advertisement).filter_by(category=category).order_by(Advertisement.date.asc()).all()
-        return sorted_advertisements
+        min_price = request.form['min_price']
+        max_price = request.form['max_price']
+
+        filtered_categories = Category.query.filter_by(main_category=category).all()
+        if not filtered_categories:
+            filtered_categories = Category.query.filter_by(endpoint_name=category).all()
+
+        advertisements = Advertisement.query.filter(Advertisement.category.in_([cat.name for cat in filtered_categories]))
+
+        # Árszűrés
+        if min_price and max_price and min_price <= max_price:
+            advertisements = advertisements.filter(Advertisement.price.between(min_price, max_price))
+        elif min_price:
+            advertisements = advertisements.filter(Advertisement.price >= min_price)
+        elif max_price:
+            advertisements = advertisements.filter(Advertisement.price <= max_price)
+
+        # Rendezés
+        if date_sort == 'asc':
+            advertisements = advertisements.order_by(Advertisement.date.asc())
+        else:
+            advertisements = advertisements.order_by(Advertisement.date.desc())
+
+        if price_sort == 'asc':
+            advertisements = advertisements.order_by(Advertisement.price.asc())
+        else:
+            advertisements = advertisements.order_by(Advertisement.price.desc())
+
+        advertisements = advertisements.all()
+        return render_template('adv_by_category.html', filtered_advertisements=advertisements, category=category)
+
             
     # összes hirdetés egy fő kategóriában
     filtered_categories = Category.query.filter_by(main_category=category).all()
@@ -74,7 +76,7 @@ def query(category):
     if filtered_categories:
         all_advertisements = Advertisement.query.filter(Advertisement.category.in_([cat.name for cat in filtered_categories])).all()
         if all_advertisements:
-            return render_template('adv_by_category.html', filtered_advertisements=all_advertisements)
+            return render_template('adv_by_category.html', filtered_advertisements=all_advertisements, category=category)
         else:
             flash('Nincs hirdetés a kiválasztott kategóriában.', category='error')
     else:
