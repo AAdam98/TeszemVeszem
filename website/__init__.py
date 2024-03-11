@@ -60,26 +60,47 @@ def create_database(app):
                 db.session.add(admin_user)
                 
                 categories = [
-                            ("Alaplap", "icons/alaplap.svg", "alaplap"),
-                            ("Processzor", "icons/processzor.svg", "processzor"),
-                            ("Memória", "icons/memoria.svg", "memoria"),
-                            ("Hűtés", "icons/hutes.svg", "hutes"),
-                            ("Ház, táp", "icons/haz.svg", "haz_tap"),
-                            ("Játékvezérlő, szimulátor", "icons/jatekvezerlo.svg", "jatekvezerlo_szimulator"),
-                            ("VR", "icons/vr.svg", "vr"),
-                            ("Billentyűzet, egér(pad)", "icons/billentyuzet.svg", "billentyuzet_eger"),
-                            ("Egyéb hardverek", "icons/egyebhardver.svg", "egyeb_hardverek"),
-                            ("Retró hardverek", "icons/retrohardver.svg", "retro_hardverek"),
-                            ("Videókártya", "icons/videokartya.svg", "videokartya"),
-                            ("Monitor", "icons/monitor.svg", "monitor"),
-                            ("Merevlemez, SSD", "icons/merevlemezssd.svg", "merevlemez_ssd"),
-                            ("Adathordozó", "icons/adathordozo.svg", "adathordozo"),
-                            ("Hálózati termékek", "icons/halozati.svg", "halozati_termekek"),
-                            ("Nyomtató, szkenner", "icons/nyomtato.svg", "nyomtato_szkenner")
-]
-
-                for name, icon_path, endpoint_name in categories:
-                    newCat = Category(name=name, icon_path=icon_path, endpoint_name = endpoint_name)
+                            ("hardver", "Alaplap", "icons/alaplap.svg", "alaplap"),
+                            ("hardver", "Processzor", "icons/processzor.svg", "processzor"),
+                            ("hardver", "Memória", "icons/memoria.svg", "memoria"),
+                            ("hardver", "Hűtés", "icons/hutes.svg", "hutes"),
+                            ("hardver", "Ház, táp", "icons/haz.svg", "haz_tap"),
+                            ("hardver", "Játékvezérlő, szimulátor", "icons/jatekvezerlo.svg", "jatekvezerlo_szimulator"),
+                            ("hardver", "VR", "icons/vr.svg", "vr"),
+                            ("hardver", "Billentyűzet, egér(pad)", "icons/billentyuzet.svg", "billentyuzet_eger"),
+                            ("hardver", "Egyéb hardverek", "icons/egyebhardver.svg", "egyeb_hardverek"),
+                            ("hardver", "Retró hardverek", "icons/retrohardver.svg", "retro_hardverek"),
+                            ("hardver", "Videókártya", "icons/videokartya.svg", "videokartya"),
+                            ("hardver", "Monitor", "icons/monitor.svg", "monitor"),
+                            ("hardver", "Merevlemez, SSD", "icons/merevlemezssd.svg", "merevlemez_ssd"),
+                            ("hardver", "Adathordozó", "icons/adathordozo.svg", "adathordozo"),
+                            ("hardver", "Hálózati termékek", "icons/halozati.svg", "halozati_termekek"),
+                            ("hardver", "Nyomtató, szkenner", "icons/nyomtato.svg", "nyomtato_szkenner"),
+                            ("mobil", "IPhone", "icons/mobil.svg", "iphone"),
+                            ("mobil", "Samsung", "icons/mobil.svg", "samsung"),
+                            ("mobil", "Sony", "icons/mobil.svg", "sony"),
+                            ("mobil", "LG", "icons/mobil.svg", "lg"),
+                            ("mobil", "Asus", "icons/mobil.svg", "asus"),
+                            ("mobil", "Google", "icons/mobil.svg", "google"),
+                            ("mobil", "Xiaomi, Redmi, Poco", "icons/mobil.svg", "xiaomi_redmi_poco"),
+                            ("mobil", "Huawei", "icons/mobil.svg", "huawei"),
+                            ("mobil", "Honor", "icons/mobil.svg", "honor"),
+                            ("mobil", "Realme", "icons/mobil.svg", "realme"),
+                            ("mobil", "OnePlus", "icons/mobil.svg", "oneplus"),
+                            ("mobil", "Oppo", "icons/mobil.svg", "oppo"),
+                            ("mobil", "Nokia", "icons/mobil.svg", "nokia"),
+                            ("mobil", "Motorola", "icons/mobil.svg", "motorola"),
+                            ("mobil", "Lenovo", "icons/mobil.svg", "lenovo"),
+                            ("notebook", "MacBook", "icons/notebook.svg", "macbook"),
+                            ("notebook", "MacBook Air", "icons/notebook.svg", "macbook_air"),
+                            ("notebook", "MacBook Pro", "icons/notebook.svg", "macbook_pro"),
+                            ("notebook", "Subnotebook", "icons/notebook.svg", "subnotebook"),
+                            ("notebook", "Könnyű notebook", "icons/notebook.svg", "konnyu_notebook"),
+                            ("notebook", "Asztali notebook", "icons/notebook.svg", "asztali_notebook"),
+                            ("notebook", "Nagyméretű notebook", "icons/notebook.svg", "nagymeretu_notebook")
+                        ]
+                for main_category, name, icon_path, endpoint_name in categories:
+                    newCat = Category(main_category = main_category, name=name, icon_path=icon_path, endpoint_name = endpoint_name)
                     db.session.add(newCat)
             db.session.commit()
         print('Adatbázis létrehozva!')
