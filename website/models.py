@@ -4,7 +4,6 @@ from sqlalchemy.sql import func
 
 engine = db.create_engine('sqlite:///database.sqlite')
 
-# Models
 class Advertisement(db.Model):
     __tablename__ = 'advertisement'
 
