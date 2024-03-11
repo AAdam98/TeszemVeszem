@@ -92,23 +92,26 @@ def adv_details(id):
 @hirdetes.route('/hirdetesfeladas', methods=['GET','POST'])
 @login_required
 def ujhirdetes():
-    
+    image_error = False
     if request.method == 'POST':
         title = request.form.get('title')
         category_name = request.form.get('category')
         description = request.form.get('description')
         price = request.form.get('price')
         userID = current_user.get_id()
-        print("kezdes")
         if 'image' in request.files:
             image = request.files['image']
             if image.filename != '':
-                print("benne")
+                allowed_extensions = {'jpg', 'jpeg', 'png', 'gif'}
                 filename = secure_filename(image.filename)
-                image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-        print("vege", request.files)
-
-        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0:
+                if '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions:
+                    image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+                    print("A kép sikeresen feltöltve!")
+                else:
+                    image_error = True
+        print(image_error)
+        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0 or image_error == True:
+            print("benne")
             flash('Hiba a hirdetés feladásakor.', category='error')
             categories = Category.query.all()
             return render_template('new_adv.html', categories=categories)
