@@ -7,7 +7,6 @@ views = Blueprint('views', __name__)
 from werkzeug.security import generate_password_hash, check_password_hash
 
 def get_random_categories(num_categories=4):
-    """Véletlenszerűen kiválaszt néhány különböző kategóriát az adatbázisból."""
     random_categories = []
     categories = Category.query.order_by(func.random()).limit(num_categories).all()
     for category in categories:
