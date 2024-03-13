@@ -24,10 +24,6 @@ body {
     overflow-y: auto;
 }
 
-li {
-    list-style: none;
-}
-
 a {
     text-decoration: none;
     color: white;
@@ -71,20 +67,11 @@ h1 {
     cursor: pointer;
 }
 
-footer {
-    position: fixed;
-    bottom: 0;
-    padding: 1rem 1rem;
-    color: grey;
-    width: 100%;
-    background-color: #008FFF;
-}
-
 .sitecontent {
     background-color: white;
     margin-left: 20%;
     margin-right: 20%;
-    height: 100%;
+    height: 100vh;
 }
 
 .card {
@@ -102,27 +89,13 @@ footer {
     transition: transform 0.3s ease;
 }
 
-.icon {
-    flex-grow: 1;
-}
-
-.text {
-    display: flex;
-}
-
-.card:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-
-.card.upper-card {
-    height: 13rem;
+footer {
+    position: relative;
+    bottom: 0;
+    padding: 1rem 1rem;
+    color: grey;
     width: 100%;
-}
-
-.card.bottom-card {
-    height: 10rem;
-    width: 100%;
+    background-color: #008FFF;
 }
 
 .container {
@@ -142,6 +115,50 @@ footer {
     padding: 20px;
     border-radius: 15px;
     box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.card.upper-card {
+    height: 13rem;
+    width: 100%;
+}
+
+.card.bottom-card {
+    height: 10rem;
+    width: 100%;
+}
+
+.catIcon {
+    flex-grow: 1;
+}
+
+.catName {
+    display: flex;
+}
+
+.ujhirdetes {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ujhirdetes h2 {
+    text-align: center;
+}
+
+.ujhirdetes label,
+.ujhirdetes button {
+    margin-top: 20px;
+}
+
+.ujhirdetes button {
+    align-self: center;
 }
 
 @keyframes alert {
@@ -169,7 +186,7 @@ footer {
     position: fixed;
     top: 60;
     width: 100%;
-    animation: alert 0.5s ease-out 5s 1 normal forwards;
+    animation: alert 0.5s ease-out 3s 1 normal forwards;
 }
 
 /* dinamikus megjelenítés */

@@ -1,20 +1,18 @@
 {% extends "base.html" %}
-{%block title %} Rólunk {% endblock %}
+{% block title %} Hirdetés részletei {% endblock %}
 
-{%block content%}
-
+{% block content %}
+{% if advertisement.userID == userID %}
+    <a href="{{ url_for('hirdetes.adv_edit', id=advertisement.advertisementID) }}"><p>Hirdetés szerkesztése</p></a>
+{% endif %}
 <div class="content">
     <div class="text">
-        <p></p>
-        <p>{{ advertisement.userID }}</p>
-        <p>{{ advertisement.date }}</p>
-        <p>{{ advertisement.title }}</p>
-        <p>{{ advertisement.category }}</p>
-        <p>{{ advertisement.description }}</p>
-        <p>{{ advertisement.price }}</p>
+        <p>Felhasználó ID: {{ advertisement.userID }}</p>
+        <p>Dátum: {{ advertisement.date }}</p>
+        <p>Cím: {{ advertisement.title }}</p>
+        <p>Kategória: {{ advertisement.category }}</p>
+        <p>Leírás: {{ advertisement.description }}</p>
+        <p>Ár: {{ advertisement.price }}</p>
     </div>
 </div>
-
-
-
-{%endblock%}
+{% endblock %}

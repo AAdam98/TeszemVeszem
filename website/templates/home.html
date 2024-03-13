@@ -37,13 +37,14 @@
             {% for category in random_categories %}
             <div class="card bottom-card" onclick="redirectToPage('/hirdetes/{{category.endpoint_name}}')">
                 <div class="icon">
-                    <img src="{{ url_for('static', filename=category.icon_path) }}" style="object-fit: cover; width: 100%; height: 100%;">
+                    <img src="{{ url_for('static', filename=category.icon_path) }}"
+                        style="object-fit: cover; width: 100%; height: 100%;">
                 </div>
                 <div class="text">
                     <p>{{ category.name }}</p>
                 </div>
             </div>
-        
+
             {% endfor %}
         </div>
     </div>
@@ -51,7 +52,8 @@
 
 <div class="position-relative">
     <div class="position-absolute top-0 start-50 translate-middle-x">
-        <a href="/hirdetes/hirdetesfeladas"><button type="button" class="btn btn-primary btn-lg">Hírdetésfeladás</button></a>
+        <a href="/hirdetes/hirdetesfeladas"><button type="button"
+                class="btn btn-primary btn-lg">Hírdetésfeladás</button></a>
     </div>
 </div>
 
