@@ -105,7 +105,7 @@ def create_database(app):
                             ("notebook", "Nagyméretű notebook", "icons/notebook.svg", "nagymeretu_notebook")
                         ]
 
-
+               
                 for main_category, name, icon_path, endpoint_name in categories:
                     newCat = Category(main_category = main_category, name=name, icon_path=icon_path, endpoint_name = endpoint_name)
                     db.session.add(newCat)

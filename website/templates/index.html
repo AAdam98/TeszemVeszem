@@ -5,6 +5,17 @@
 
 <div class="content">
     <h1>Hírdetések</h1>
+    <form action="{{ url_for('hirdetes.index') }}" method="post">
+        <label for="sortBy">Rendezés:</label>
+        <select id="sortBy" name="dateSort">
+            <option value="price_desc">Csökkenő (Ár szerint)</option>
+            <option value="price_asc">Növekvő (Ár szerint)</option> 
+            <option value="date_desc">Csökkenő (Dátum szerint)</option>
+            <option value="date_asc">Növekvő (Dátum szerint)</option>
+        </select>
+    
+        <button type="submit">Küldés</button>
+    </form>
     {% for advertisement in advertisements %}
     {% if advertisement.available %}
         <div class="container">

@@ -4,7 +4,6 @@ from sqlalchemy.sql import func
 
 engine = db.create_engine('sqlite:///database.sqlite')
 
-# Models
 class Advertisement(db.Model):
     __tablename__ = 'advertisement'
 
@@ -49,8 +48,9 @@ class Category(db.Model):
     icon_path = db.Column(db.String(255), nullable=False)
     endpoint_name = db.Column(db.String(255), nullable=False)
     
-    def __init__(self, main_category ,name, icon_path, endpoint_name):
+    def __init__(self, main_category, name, icon_path, endpoint_name):
         self.main_category = main_category
         self.name = name
+        self.main_category = main_category
         self.icon_path = icon_path
         self.endpoint_name = endpoint_name
