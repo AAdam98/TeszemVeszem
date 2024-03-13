@@ -16,29 +16,40 @@ session = Session()
 @hirdetes.route("/osszes", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        date_sort = request.form['dateSort']
-        price_sort = request.form['priceSort']
-        query = Advertisement.query
-        if date_sort == 'asc':
-            query = query.order_by(Advertisement.date.asc())
-        else:
-            query = query.order_by(Advertisement.date.desc())
-        if price_sort == 'asc':
-            query = query.order_by(Advertisement.price.asc())
-        else:
-            query = query.order_by(Advertisement.price.desc())
-        advertisements = query.all()
+        sortBy = request.form['sortBy']
+        min_price = request.form['min_price']
+        max_price = request.form['max_price']
+
+        advertisements = Advertisement.query
+
+        if min_price and max_price and min_price <= max_price:
+            advertisements = advertisements.filter(Advertisement.price.between(min_price, max_price))
+        elif min_price:
+            advertisements = advertisements.filter(Advertisement.price >= min_price)
+        elif max_price:
+            advertisements = advertisements.filter(Advertisement.price <= max_price)
+
+        if sortBy == 'price_desc':
+            advertisements = advertisements.order_by(Advertisement.price.desc())
+        elif sortBy == 'price_asc':
+            advertisements = advertisements.order_by(Advertisement.price.asc())
+        elif sortBy == 'date_desc':
+            advertisements = advertisements.order_by(Advertisement.date.desc())
+        elif sortBy == 'date_asc':
+            advertisements = advertisements.order_by(Advertisement.date.asc())
+
+        advertisements = advertisements.all()
         return render_template('index.html', advertisements=advertisements)
+
     # összes hirdetés rendezés nélkül
-    advertisements=Advertisement.query.all()
+    advertisements = Advertisement.query.all()
     return render_template("index.html", advertisements=advertisements)
 
 
 @hirdetes.route("/<category>", methods=["GET", "POST"])
 def query(category):
     if request.method == "POST":
-        date_sort = request.form['dateSort']
-        price_sort = request.form['priceSort']
+        sortBy = request.form['sortBy']
         min_price = request.form['min_price']
         max_price = request.form['max_price']
 
@@ -57,15 +68,14 @@ def query(category):
             advertisements = advertisements.filter(Advertisement.price <= max_price)
 
         # Rendezés
-        if date_sort == 'asc':
-            advertisements = advertisements.order_by(Advertisement.date.asc())
-        else:
-            advertisements = advertisements.order_by(Advertisement.date.desc())
-
-        if price_sort == 'asc':
-            advertisements = advertisements.order_by(Advertisement.price.asc())
-        else:
+        if sortBy == 'price_desc':
             advertisements = advertisements.order_by(Advertisement.price.desc())
+        elif sortBy == 'price_asc':
+            advertisements = advertisements.order_by(Advertisement.price.asc())
+        elif sortBy == 'date_desc':
+            advertisements = advertisements.order_by(Advertisement.date.desc())
+        elif sortBy == 'date_asc':
+            advertisements = advertisements.order_by(Advertisement.date.asc())
 
         advertisements = advertisements.all()
         return render_template('adv_by_category.html', filtered_advertisements=advertisements, category=category)
@@ -148,11 +158,37 @@ def adv_edit(id):
 
 
 
-@hirdetes.route("/sajathirdetesek", methods=['GET'])
+@hirdetes.route("/sajathirdetesek", methods=['GET', 'POST'])
 @login_required
 def ownAdv_details():
-    advertisements = Advertisement.query.filter_by(userID=current_user.get_id()).all()
-    return render_template('index.html', advertisements=advertisements)
+    if request.method == "POST":
+        sortBy = request.form['sortBy']
+        min_price = request.form['min_price']
+        max_price = request.form['max_price']
+
+        advertisements = Advertisement.query.filter_by(userID=current_user.get_id())
+
+        if min_price and max_price and min_price <= max_price:
+            advertisements = advertisements.filter(Advertisement.price.between(min_price, max_price))
+        elif min_price:
+            advertisements = advertisements.filter(Advertisement.price >= min_price)
+        elif max_price:
+            advertisements = advertisements.filter(Advertisement.price <= max_price)
+
+        if sortBy == 'price_desc':
+            advertisements = advertisements.order_by(Advertisement.price.desc())
+        elif sortBy == 'price_asc':
+            advertisements = advertisements.order_by(Advertisement.price.asc())
+        elif sortBy == 'date_desc':
+            advertisements = advertisements.order_by(Advertisement.date.desc())
+        elif sortBy == 'date_asc':
+            advertisements = advertisements.order_by(Advertisement.date.asc())
+
+        advertisements = advertisements.all()
+        return render_template('own_adv.html', advertisements=advertisements)
+    else:
+        advertisements = Advertisement.query.filter_by(userID=current_user.get_id()).all()
+        return render_template('own_adv.html', advertisements=advertisements)
 
 
 
