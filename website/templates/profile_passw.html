@@ -2,24 +2,29 @@
 {% block title %} Jelszó módosítás - {% endblock %}
 
 {% block content %}
+
 <div class="login-box">
     <h2>Jelszó megváltoztatása</h2>
     <form method="post" action="/password">
         <input type="hidden" name="_method" value="PUT">
         <div class="user-box">
-            <input type="password" class="form-control" id="curPassw" name="curPassw">
+            <input type="password" id="curPassw" name="curPassw">
             <label for="curPassw">Jelenlegi jelszó</label>
         </div>
         <div class="user-box">
-            <input type="password" class="form-control" id="newPassw1" name="newPassw1">
+            <input type="password" id="newPassw1" name="newPassw1">
             <label for="newPassw1">Új jelszó</label>
         </div>
         <div class="user-box">
-            <input type="password" class="form-control" id="newPassw2" name="newPassw2">
-            <label for="newPassw2" class="form-label">Jelszó megerősítése</label>
+            <input type="password" id="newPassw2" name="newPassw2">
+            <label for="newPassw2">Jelszó megerősítése</label>
         </div>
 
-        <button type="submit">Mentés</button>
+        <a href="/">
+            <label for="submitBtn">Mentés
+                <input type="submit" id="submitBtn" style="display:none;">
+            </label>
+        </a>
     </form>
 </div>
 {% endblock %}

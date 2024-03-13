@@ -437,11 +437,12 @@ footer {
 }
 
 .login-box .user-box input:focus~label,
-.login-box .user-box input:valid~label {
+.login-box .user-box input:not(:placeholder-shown)~label {
     top: -20px;
     left: 0;
     color: white;
     font-size: 12px;
+    transition: none;
 }
 
 .login-box a {
