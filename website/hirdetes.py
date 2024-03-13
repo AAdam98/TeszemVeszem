@@ -1,11 +1,14 @@
-from flask import Blueprint,render_template, request, flash, redirect, url_for
+from flask import Blueprint,render_template, request, flash, redirect, url_for, current_app
 from sqlalchemy.orm import sessionmaker, scoped_session
 from .models import Advertisement, engine, Category, User
 from flask_login import current_user
 from .db import db
 from flask_login import login_required, current_user
+from werkzeug.utils import secure_filename
+import os
 
 hirdetes = Blueprint('hirdetes', __name__)
+
 Session = scoped_session(sessionmaker(bind=engine))
 session = Session()
 
@@ -95,19 +98,31 @@ def adv_details(id):
 @hirdetes.route('/hirdetesfeladas', methods=['GET','POST'])
 @login_required
 def ujhirdetes():
+    image_error = False
     if request.method == 'POST':
         title = request.form.get('title')
         category_name = request.form.get('category')
         description = request.form.get('description')
         price = request.form.get('price')
         userID = current_user.get_id()
-
-        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0:
+        if 'image' in request.files:
+            image = request.files['image']
+            if image.filename != '':
+                allowed_extensions = {'jpg', 'jpeg', 'png', 'gif'}
+                filename = secure_filename(image.filename)
+                if '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions:
+                    image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+                    print("A kép sikeresen feltöltve!")
+                else:
+                    image_error = True
+        print(image_error)
+        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0 or image_error == True:
+            print("benne")
             flash('Hiba a hirdetés feladásakor.', category='error')
             categories = Category.query.all()
             return render_template('new_adv.html', categories=categories)
         else:
-            newAdv = Advertisement(userID=userID, title=title, category=category_name, description=description, price=int(price))
+            newAdv = Advertisement(userID=userID, title=title, category=category_name, description=description, price=int(price), image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
             db.session.add(newAdv)
             db.session.commit()
             flash('Hirdetés sikeresen feladva!', category='success')

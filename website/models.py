@@ -15,6 +15,7 @@ class Advertisement(db.Model):
     available = db.Column(db.Boolean, default=True)
     description = db.Column(db.Text(1000))
     price = db.Column(db.Integer, nullable=False)
+    image_path = db.Column(db.Text(255), nullable=False)
 
 class User(db.Model, UserMixin):
     userID = db.Column(db.Integer, primary_key=True)
@@ -47,7 +48,8 @@ class Category(db.Model):
     icon_path = db.Column(db.String(255), nullable=False)
     endpoint_name = db.Column(db.String(255), nullable=False)
     
-    def __init__(self, name, main_category ,icon_path, endpoint_name):
+    def __init__(self, main_category, name, icon_path, endpoint_name):
+        self.main_category = main_category
         self.name = name
         self.main_category = main_category
         self.icon_path = icon_path
