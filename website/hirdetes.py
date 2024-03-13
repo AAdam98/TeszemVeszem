@@ -130,3 +130,9 @@ def ujhirdetes():
     else:
         categories = Category.query.all()
         return render_template('new_adv.html', categories=categories)
+    
+@hirdetes.route("/sajathirdetesek", methods=['GET','POST'])
+@login_required
+def ownAdv_details():
+    advertisements = Advertisement.query.filter_by(userID=current_user.get_id()).all()
+    return render_template('index.html', advertisements=advertisements)
