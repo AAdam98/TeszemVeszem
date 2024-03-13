@@ -6,17 +6,14 @@
 <div class="content">
     <h1>Hírdetések</h1>
     <form action="{{ url_for('hirdetes.query', category=category) }}" method="post">
-        <label for="dateSort">Dátum szerint:</label>
-        <select id="dateSort" name="dateSort">
-            <option value="desc">Csökkenő</option>
-            <option value="asc">Növekvő</option> 
+        <label for="sortBy">Rendezés:</label>
+        <select id="sortBy" name="dateSort">
+            <option value="price_desc">Csökkenő (Ár szerint)</option>
+            <option value="price_asc">Növekvő (Ár szerint)</option> 
+            <option value="date_desc">Csökkenő (Dátum szerint)</option>
+            <option value="date_asc">Növekvő (Dátum szerint)</option>
         </select>
     
-        <label for="priceSort">Ár szerint:</label>
-        <select id="priceSort" name="priceSort">
-            <option value="desc">Csökkenő</option>
-            <option value="asc">Növekvő</option>
-        </select>
 
         <label for="min_price">Minimum Ár:</label>
         <input type="number" id="min_price" name="min_price" placeholder="Minimum ár" required>
