@@ -178,7 +178,7 @@ def ujhirdetes():
                     print("A kép sikeresen feltöltve!")
                 else:
                     image_error = True
-        print(image_error)
+        
         if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0 or image_error == True:
             print("benne")
             flash('Hiba a hirdetés feladásakor.', category='error')
@@ -191,5 +191,8 @@ def ujhirdetes():
             flash('Hirdetés sikeresen feladva!', category='success')
             return redirect(url_for('views.home'))
     else:
-        categories = Category.query.all()
-        return render_template('new_adv.html', categories=categories)
+        hardver_categories = Category.query.filter_by(main_category='hardver').all()
+        notebook_categories = Category.query.filter_by(main_category='notebook').all()
+        mobil_categories = Category.query.filter_by(main_category='mobil').all()
+        
+        return render_template('new_adv.html', hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)

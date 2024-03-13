@@ -26,11 +26,22 @@
     <div class="form-group">
       <label for="category">Kategória:</label>
       <select class="form-control" id="category" name="category">
-        <option value="">Válasszon kategóriát</option>
-        {% for category in categories %}
-        <option value="{{ category.name }}" {% if category.name==selectedCategory %}selected{% endif %}>{{ category.name
-          }}</option>
-        {% endfor %}
+          <option value="">Válasszon kategóriát</option>
+          <optgroup label="Hardver">
+            {% for category in hardver_categories %}
+              <option value="{{ category.name }}" {% if category.name == selectedCategory %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+          </optgroup>
+          <optgroup label="Notebook">
+            {% for category in notebook_categories %}
+              <option value="{{ category.name }}" {% if category.name == selectedCategory %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+          </optgroup>
+          <optgroup label="Mobil">
+            {% for category in mobil_categories %}
+              <option value="{{ category.name }}" {% if category.name == selectedCategory %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+          </optgroup>
       </select>
     </div>
     <button type="submit" class="btn btn-primary">Hirdetés feladása</button>
