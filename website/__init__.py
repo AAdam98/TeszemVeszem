@@ -1,5 +1,6 @@
 from flask import Flask, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
+import os
 from os import path
 from flask_login import LoginManager
 from .models import User, Category
@@ -16,6 +17,10 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = (
         f"sqlite:///{path.join(app.instance_path, DB_NAME)}"
     )
+    UPLOAD_FOLDER = "website/uploads"
+    if not os.path.exists(UPLOAD_FOLDER):
+        os.makedirs(UPLOAD_FOLDER)
+    app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
     db.init_app(app)
     migrate = Migrate(app, db)
 

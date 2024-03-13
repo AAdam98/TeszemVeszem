@@ -5,7 +5,6 @@ from sqlalchemy.sql import func
 engine = db.create_engine("sqlite:///database.sqlite")
 
 
-# Models
 class Advertisement(db.Model):
     __tablename__ = "advertisement"
 
@@ -17,6 +16,7 @@ class Advertisement(db.Model):
     available = db.Column(db.Boolean, default=True)
     description = db.Column(db.Text(1000))
     price = db.Column(db.Integer, nullable=False)
+    image_path = db.Column(db.Text(255), nullable=False)
 
 
 class User(db.Model, UserMixin):
@@ -58,7 +58,5 @@ class Category(db.Model):
     def __init__(self, main_category, name, icon_path, endpoint_name):
         self.main_category = main_category
         self.name = name
-        self.main_category = main_category
         self.icon_path = icon_path
-
         self.endpoint_name = endpoint_name
