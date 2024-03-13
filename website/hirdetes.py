@@ -90,10 +90,73 @@ def query(category):
 
 
 # 1 hirdetés megjelenítése
-@hirdetes.route('/<int:id>', methods=['GET','POST'])
+@hirdetes.route('/<int:id>', methods=['GET'])
 def adv_details(id):
-    advertisement = Advertisement.query.filter_by(advertisementID=id).first()
-    return render_template('advertisement.html', advertisement=advertisement)
+    advertisement = Advertisement.query.get(id)
+    if advertisement:
+        if current_user.is_authenticated and advertisement.userID == current_user.get_id():
+            editable = True
+            return render_template('advertisement.html', advertisement=advertisement, editable=editable, userID = current_user.get_id())
+        else:
+            editable = False
+            return render_template('advertisement.html', advertisement=advertisement, userID = current_user.get_id())
+    else:
+        flash('Nem található ilyen hirdetés', category='error')
+        return redirect(url_for('hirdetes.index'))
+    
+
+
+@hirdetes.route("//<int:id>/szerkesztes", methods=["GET","POST"])
+@login_required
+def adv_edit(id):
+    advertisement = Advertisement.query.get(id)
+    categories = Category.query.all()
+    if request.method == "POST":
+        image_error = False
+        title = request.form.get('title')
+        category_name = request.form.get('category')
+        description = request.form.get('description')
+        price = request.form.get('price')
+        if 'image' in request.files:
+            image = request.files['image']
+            if image.filename != '':
+                allowed_extensions = {'jpg', 'jpeg', 'png', 'gif'}
+                filename = secure_filename(image.filename)
+                if '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions:
+                    image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+                    print("A kép sikeresen feltöltve!")
+                else:
+                    image_error = True
+        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0 or image_error == True:
+            print("benne")
+            flash('Hiba a hirdetés feladásakor.', category='error')
+            return render_template('new_adv.html', categories=categories)
+        else:
+            advertisement.title = title
+            advertisement.category = category_name
+            advertisement.description = description
+            advertisement.price = int(price)
+            advertisement.image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+            db.session.commit()
+            flash('Hirdetés sikeresen szerkesztve!', category='success')
+            return redirect(url_for('views.home'))
+    else:
+        categories = Category.query.all()
+        return render_template('adv_edit.html', advertisement=advertisement, categories=categories)
+
+    
+
+
+
+@hirdetes.route("/sajathirdetesek", methods=['GET'])
+@login_required
+def ownAdv_details():
+    advertisements = Advertisement.query.filter_by(userID=current_user.get_id()).all()
+    return render_template('index.html', advertisements=advertisements)
+
+
+
+
 
 @hirdetes.route('/hirdetesfeladas', methods=['GET','POST'])
 @login_required
@@ -130,9 +193,3 @@ def ujhirdetes():
     else:
         categories = Category.query.all()
         return render_template('new_adv.html', categories=categories)
-    
-@hirdetes.route("/sajathirdetesek", methods=['GET','POST'])
-@login_required
-def ownAdv_details():
-    advertisements = Advertisement.query.filter_by(userID=current_user.get_id()).all()
-    return render_template('index.html', advertisements=advertisements)

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %} Hirdetés szerkesztése {% endblock %}
+
+
+{% block content %}
+
+<div class="ujhirdetes">
+  <h2>Hirdetés szerkesztése</h2>
+  <form method="POST" enctype="multipart/form-data" action="{{ url_for('hirdetes.adv_edit', id=advertisement.advertisementID) }}">
+    <div class="form-group">
+      <label for="image">Kép feltöltése:</label>
+      <input type="file" class="form-control-file" id="image" name="image">
+    </div>
+    <div class="form-group">
+      <label for="title">Cím:</label>
+      <input type="text" class="form-control" id="title" name="title" placeholder="Írja be a hirdetés címét" value="{{ advertisement.title }}">
+    </div>
+    <div class="form-group">
+      <label for="description">Leírás:</label>
+      <textarea class="form-control" id="description" name="description" rows="3" placeholder="Írja le a hirdetést">{{ advertisement.description }}</textarea>
+    </div>
+    <div class="form-group">
+      <label for="price">Ár:</label>
+      <input type="text" class="form-control" id="price" name="price" placeholder="Írja be az árat" value="{{ advertisement.price }}">
+    </div>
+    <div class="form-group">
+        <label for="category">Kategória:</label>
+        <select class="form-control" id="category" name="category">
+            <option value="">Válasszon kategóriát</option>
+            {% for category in categories %}
+                <option value="{{ category.name }}" {% if category.name == selectedCategory %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+        </select>
+      </div>
+    <button type="submit" class="btn btn-primary">Hirdetés szerkesztése</button>
+  </form>
+</div>
+
+{% endblock %}
