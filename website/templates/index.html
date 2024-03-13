@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{%block title %} Rólunk {% endblock %}
+{%block title %} Találatok - {% endblock %}
 
 {%block content%}
 
@@ -9,32 +9,32 @@
         <label for="dateSort">Dátum szerint:</label>
         <select id="dateSort" name="dateSort">
             <option value="desc">Csökkenő</option>
-            <option value="asc">Növekvő</option> 
+            <option value="asc">Növekvő</option>
         </select>
-    
+
         <label for="priceSort">Ár szerint:</label>
         <select id="priceSort" name="priceSort">
             <option value="desc">Csökkenő</option>
             <option value="asc">Növekvő</option>
         </select>
-    
+
         <button type="submit">Küldés</button>
     </form>
     {% for advertisement in advertisements %}
     {% if advertisement.available %}
-        <div class="container">
-            <a href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}">
-                <div class="card upper-card">
-                    <div class="text">
-                        <p>{{ advertisement.date }}</p>
-                        <p>{{ advertisement.title }}</p>
-                        <p>{{ advertisement.category }}</p>
-                        <p>{{ advertisement.description }}</p>
-                        <p>{{ advertisement.price }}</p>
-                    </div>
+    <div class="container">
+        <a href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}">
+            <div class="card upper-card">
+                <div class="text">
+                    <p>{{ advertisement.date }}</p>
+                    <p>{{ advertisement.title }}</p>
+                    <p>{{ advertisement.category }}</p>
+                    <p>{{ advertisement.description }}</p>
+                    <p>{{ advertisement.price }}</p>
                 </div>
-            </a>
-        </div>
+            </div>
+        </a>
+    </div>
     {% endif %}
     {% endfor %}
 </div>
