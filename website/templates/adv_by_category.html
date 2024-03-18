@@ -3,7 +3,7 @@
 
 {%block content%}
 
-<div class="content">
+
     <h1>Hírdetések</h1>
     <form action="{{ url_for('hirdetes.query', category=category) }}" method="post">
         <label for="sortBy">Rendezés:</label>
@@ -24,7 +24,7 @@
     </form>
     {% for advertisement in filtered_advertisements %}
     {% if advertisement.available %}
-        <div class="container">
+        <div class="cardContainer">
             <a href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}">
                 <div class="card upper-card">
                     <div class="text">
@@ -39,6 +39,5 @@
         </div>
     {% endif %}
     {% endfor %}
-</div>
 
 {%endblock%}
