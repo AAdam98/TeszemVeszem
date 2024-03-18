@@ -72,12 +72,14 @@
     {%endif%}
     {% endwith %}
 
-    <div class="sitecontent">
+    <main class="container">
         {% block content %}{% endblock %}
-    </div>
+    </main>
 
     <footer>
-        <a href="/aboutus" class="hero">Rólunk</a>
+        <div class="container-fluid">
+            <a href="/aboutus" class="hero">Rólunk</a>
+        </div>
     </footer>
 
 </body>
