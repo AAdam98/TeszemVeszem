@@ -38,11 +38,17 @@
                     <p>(?)</p>
                 </div>
             </div>
-            <div class="card bottom-card">Kedvencek
-                <div class="text">
-                    <p>(Hamarosan)</p>
+            {% if current_user.is_admin %}
+                <div class="card bottom-card" onclick="redirectToPage('/hirdetes/osszes')">Hirdetések kezelése
+                    <!-- Ide jöhet bármilyen további tartalom, ami a hirdetések kezeléséhez szükséges -->
                 </div>
-            </div>
+            {% else %}
+                <div class="card bottom-card">Kedvencek
+                    <div class="text">
+                        <p>(Hamarosan)</p>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

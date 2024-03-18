@@ -2,11 +2,17 @@
 {% block title %} Hirdetés részletei {% endblock %}
 
 {% block content %}
-{% if advertisement.userID == userID %}
-    <a href="{{ url_for('hirdetes.adv_edit', id=advertisement.advertisementID) }}"><p>Hirdetés szerkesztése</p></a>
-    <form action="{{ url_for('hirdetes.adv_delete', id=advertisement.advertisementID) }}" method="post">
-        <button type="submit">Hirdetés törlése</button>
-    </form>
+{% if advertisement.userID == userID or user.is_admin %}
+    {% if user.is_admin %}
+        <form action="{{ url_for('hirdetes.adv_delete', id=advertisement.advertisementID) }}" method="post">
+            <button type="submit">Hirdetés törlése</button>
+        </form>
+    {% else %}
+        <a href="{{ url_for('hirdetes.adv_edit', id=advertisement.advertisementID) }}"><p>Hirdetés szerkesztése</p></a>
+        <form action="{{ url_for('hirdetes.adv_delete', id=advertisement.advertisementID) }}" method="post">
+            <button type="submit">Hirdetés törlése</button>
+        </form>
+    {% endif %}
 {% endif %}
 <div class="content">
     <div class="text">

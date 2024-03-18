@@ -105,13 +105,14 @@ def query(category):
 @hirdetes.route('/<int:id>', methods=['GET'])
 def adv_details(id):
     advertisement = Advertisement.query.get(id)
+    user = current_user
     if advertisement:
         if current_user.is_authenticated and advertisement.userID == current_user.get_id():
             editable = True
-            return render_template('advertisement.html', advertisement=advertisement, editable=editable, userID = current_user.get_id())
+            return render_template('advertisement.html', advertisement=advertisement, editable=editable, user=user, userID=current_user.get_id())
         else:
             editable = False
-            return render_template('advertisement.html', advertisement=advertisement, userID = current_user.get_id())
+            return render_template('advertisement.html', advertisement=advertisement, userID=current_user.get_id(), user=user)
     else:
         flash('Nem található ilyen hirdetés', category='error')
         return redirect(url_for('hirdetes.index'))
@@ -121,13 +122,18 @@ def adv_details(id):
 @hirdetes.route('/torles/<int:id>', methods=['POST'])
 def adv_delete(id):
     advertisement = Advertisement.query.get(id)
+    user = current_user
     if advertisement:
         if current_user.is_authenticated and advertisement.userID == current_user.get_id():
             db.session.delete(advertisement)
             db.session.commit()
             flash('A hirdetésed törlésre került', category='success')
             return redirect(url_for('hirdetes.ownAdv_details'))
-    
+        elif user.is_admin:
+            db.session.delete(advertisement)
+            db.session.commit()
+            flash('A hirdetés törlésre került', category='success')
+            return redirect(url_for('hirdetes.index'))
 
 
 
