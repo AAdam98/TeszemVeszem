@@ -46,6 +46,8 @@ def index():
     return render_template("index.html", advertisements=advertisements)
 
 
+
+
 @hirdetes.route("/<category>", methods=["GET", "POST"])
 def query(category):
     if request.method == "POST":
@@ -134,11 +136,9 @@ def adv_edit(id):
                 filename = secure_filename(image.filename)
                 if '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions:
                     image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-                    print("A kép sikeresen feltöltve!")
                 else:
                     image_error = True
         if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0 or image_error == True:
-            print("benne")
             flash('Hiba a hirdetés feladásakor.', category='error')
             return render_template('new_adv.html', categories=categories)
         else:
@@ -211,15 +211,15 @@ def ujhirdetes():
                 filename = secure_filename(image.filename)
                 if '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions:
                     image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-                    print("A kép sikeresen feltöltve!")
                 else:
                     image_error = True
         
-        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0 or image_error == True:
-            print("benne")
+        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0 or image_error == True or len(category_name) == 0:
             flash('Hiba a hirdetés feladásakor.', category='error')
-            categories = Category.query.all()
-            return render_template('new_adv.html', categories=categories)
+            hardver_categories = Category.query.filter_by(main_category='hardver').all()
+            notebook_categories = Category.query.filter_by(main_category='notebook').all()
+            mobil_categories = Category.query.filter_by(main_category='mobil').all()
+            return render_template('new_adv.html', hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)
         else:
             newAdv = Advertisement(userID=userID, title=title, category=category_name, description=description, price=int(price), image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
             db.session.add(newAdv)

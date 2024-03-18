@@ -177,4 +177,3 @@ def create_database(app):
                     )
                     db.session.add(newCat)
             db.session.commit()
-        print("Adatbázis létrehozva!")
