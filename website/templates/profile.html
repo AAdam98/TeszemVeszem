@@ -6,11 +6,9 @@
 <div class="hirdetesdoboz">
     <div>
         <div class="container">
-            <div class="card upper-card" onclick="redirectToPage('/email')">
+            <div class="card upper-card" onclick="redirectToPage('/hirdetes/hirdetesfeladas')">
                 <div class="text">
-                    <p>Email</p>
-                    <br>
-                    <p>Kezelés</p>
+                    <p>Hirdetésfeladás</p>
                 </div>
             </div>
             <div class="card upper-card" onclick="redirectToPage('/felhasznalonev')">
@@ -18,17 +16,39 @@
                     <p>Felhasználónév</p>
                 </div>
             </div>
-            <div class="card upper-card" onclick="redirectToPage('/password')">
+            <div class="card upper-card" onclick="redirectToPage('/jelszokezeles')">
                 <div class="text">
                     <p>Jelszó</p>
                 </div>
             </div>
         </div>
         <div class="container">
-            <div class="card bottom-card">Small Card 1</div>
-            <div class="card bottom-card">Small Card 2</div>
-            <div class="card bottom-card">Small Card 3</div>
-            <div class="card bottom-card">Small Card 4</div>
+            <div class="card bottom-card">Small Card
+                <div class="text">
+                    <p>(?)</p>
+                </div>
+            </div>
+            <div class="card bottom-card">Small Card
+                <div class="text">
+                    <p>(?)</p>
+                </div>
+            </div>
+            <div class="card bottom-card">Small Card
+                <div class="text">
+                    <p>(?)</p>
+                </div>
+            </div>
+            {% if current_user.is_admin %}
+                <div class="card bottom-card" onclick="redirectToPage('/hirdetes/osszes')">Hirdetések kezelése
+                    <!-- Ide jöhet bármilyen további tartalom, ami a hirdetések kezeléséhez szükséges -->
+                </div>
+            {% else %}
+                <div class="card bottom-card">Kedvencek
+                    <div class="text">
+                        <p>(Hamarosan)</p>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

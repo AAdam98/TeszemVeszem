@@ -23,13 +23,13 @@ def home():
     return render_template("home.html", random_categories=random_categories)
 
 
-@views.route("/profile")
+@views.route("/profil")
 @login_required
 def adatlap():
     return render_template("profile.html", user=current_user)
 
 
-@views.route("/password", methods=["GET", "PUT", "POST"])
+@views.route("/jelszokezeles", methods=["GET", "PUT", "POST"])
 @login_required
 def password():
     user = current_user

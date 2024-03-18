@@ -16,29 +16,42 @@ session = Session()
 @hirdetes.route("/osszes", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        date_sort = request.form['dateSort']
-        price_sort = request.form['priceSort']
-        query = Advertisement.query
-        if date_sort == 'asc':
-            query = query.order_by(Advertisement.date.asc())
-        else:
-            query = query.order_by(Advertisement.date.desc())
-        if price_sort == 'asc':
-            query = query.order_by(Advertisement.price.asc())
-        else:
-            query = query.order_by(Advertisement.price.desc())
-        advertisements = query.all()
+        sortBy = request.form['sortBy']
+        min_price = request.form['min_price']
+        max_price = request.form['max_price']
+
+        advertisements = Advertisement.query
+
+        if min_price and max_price and min_price <= max_price:
+            advertisements = advertisements.filter(Advertisement.price.between(min_price, max_price))
+        elif min_price:
+            advertisements = advertisements.filter(Advertisement.price >= min_price)
+        elif max_price:
+            advertisements = advertisements.filter(Advertisement.price <= max_price)
+
+        if sortBy == 'price_desc':
+            advertisements = advertisements.order_by(Advertisement.price.desc())
+        elif sortBy == 'price_asc':
+            advertisements = advertisements.order_by(Advertisement.price.asc())
+        elif sortBy == 'date_desc':
+            advertisements = advertisements.order_by(Advertisement.date.desc())
+        elif sortBy == 'date_asc':
+            advertisements = advertisements.order_by(Advertisement.date.asc())
+
+        advertisements = advertisements.all()
         return render_template('index.html', advertisements=advertisements)
+
     # összes hirdetés rendezés nélkül
-    advertisements=Advertisement.query.all()
+    advertisements = Advertisement.query.all()
     return render_template("index.html", advertisements=advertisements)
+
+
 
 
 @hirdetes.route("/<category>", methods=["GET", "POST"])
 def query(category):
     if request.method == "POST":
-        date_sort = request.form['dateSort']
-        price_sort = request.form['priceSort']
+        sortBy = request.form['sortBy']
         min_price = request.form['min_price']
         max_price = request.form['max_price']
 
@@ -57,15 +70,14 @@ def query(category):
             advertisements = advertisements.filter(Advertisement.price <= max_price)
 
         # Rendezés
-        if date_sort == 'asc':
-            advertisements = advertisements.order_by(Advertisement.date.asc())
-        else:
-            advertisements = advertisements.order_by(Advertisement.date.desc())
-
-        if price_sort == 'asc':
-            advertisements = advertisements.order_by(Advertisement.price.asc())
-        else:
+        if sortBy == 'price_desc':
             advertisements = advertisements.order_by(Advertisement.price.desc())
+        elif sortBy == 'price_asc':
+            advertisements = advertisements.order_by(Advertisement.price.asc())
+        elif sortBy == 'date_desc':
+            advertisements = advertisements.order_by(Advertisement.date.desc())
+        elif sortBy == 'date_asc':
+            advertisements = advertisements.order_by(Advertisement.date.asc())
 
         advertisements = advertisements.all()
         return render_template('adv_by_category.html', filtered_advertisements=advertisements, category=category)
@@ -93,17 +105,36 @@ def query(category):
 @hirdetes.route('/<int:id>', methods=['GET'])
 def adv_details(id):
     advertisement = Advertisement.query.get(id)
+    user = current_user
     if advertisement:
         if current_user.is_authenticated and advertisement.userID == current_user.get_id():
             editable = True
-            return render_template('advertisement.html', advertisement=advertisement, editable=editable, userID = current_user.get_id())
+            return render_template('advertisement.html', advertisement=advertisement, editable=editable, user=user, userID=current_user.get_id())
         else:
             editable = False
-            return render_template('advertisement.html', advertisement=advertisement, userID = current_user.get_id())
+            return render_template('advertisement.html', advertisement=advertisement, userID=current_user.get_id(), user=user)
     else:
         flash('Nem található ilyen hirdetés', category='error')
         return redirect(url_for('hirdetes.index'))
     
+
+
+@hirdetes.route('/torles/<int:id>', methods=['POST'])
+def adv_delete(id):
+    advertisement = Advertisement.query.get(id)
+    user = current_user
+    if advertisement:
+        if current_user.is_authenticated and advertisement.userID == current_user.get_id():
+            db.session.delete(advertisement)
+            db.session.commit()
+            flash('A hirdetésed törlésre került', category='success')
+            return redirect(url_for('hirdetes.ownAdv_details'))
+        elif user.is_admin:
+            db.session.delete(advertisement)
+            db.session.commit()
+            flash('A hirdetés törlésre került', category='success')
+            return redirect(url_for('hirdetes.index'))
+
 
 
 @hirdetes.route("//<int:id>/szerkesztes", methods=["GET","POST"])
@@ -124,11 +155,9 @@ def adv_edit(id):
                 filename = secure_filename(image.filename)
                 if '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions:
                     image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-                    print("A kép sikeresen feltöltve!")
                 else:
                     image_error = True
         if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0 or image_error == True:
-            print("benne")
             flash('Hiba a hirdetés feladásakor.', category='error')
             return render_template('new_adv.html', categories=categories)
         else:
@@ -148,11 +177,37 @@ def adv_edit(id):
 
 
 
-@hirdetes.route("/sajathirdetesek", methods=['GET'])
+@hirdetes.route("/sajathirdetesek", methods=['GET', 'POST'])
 @login_required
 def ownAdv_details():
-    advertisements = Advertisement.query.filter_by(userID=current_user.get_id()).all()
-    return render_template('index.html', advertisements=advertisements)
+    if request.method == "POST":
+        sortBy = request.form['sortBy']
+        min_price = request.form['min_price']
+        max_price = request.form['max_price']
+
+        advertisements = Advertisement.query.filter_by(userID=current_user.get_id())
+
+        if min_price and max_price and min_price <= max_price:
+            advertisements = advertisements.filter(Advertisement.price.between(min_price, max_price))
+        elif min_price:
+            advertisements = advertisements.filter(Advertisement.price >= min_price)
+        elif max_price:
+            advertisements = advertisements.filter(Advertisement.price <= max_price)
+
+        if sortBy == 'price_desc':
+            advertisements = advertisements.order_by(Advertisement.price.desc())
+        elif sortBy == 'price_asc':
+            advertisements = advertisements.order_by(Advertisement.price.asc())
+        elif sortBy == 'date_desc':
+            advertisements = advertisements.order_by(Advertisement.date.desc())
+        elif sortBy == 'date_asc':
+            advertisements = advertisements.order_by(Advertisement.date.asc())
+
+        advertisements = advertisements.all()
+        return render_template('own_adv.html', advertisements=advertisements)
+    else:
+        advertisements = Advertisement.query.filter_by(userID=current_user.get_id()).all()
+        return render_template('own_adv.html', advertisements=advertisements)
 
 
 
@@ -175,15 +230,15 @@ def ujhirdetes():
                 filename = secure_filename(image.filename)
                 if '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions:
                     image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-                    print("A kép sikeresen feltöltve!")
                 else:
                     image_error = True
         
-        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0 or image_error == True:
-            print("benne")
+        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0 or image_error == True or len(category_name) == 0:
             flash('Hiba a hirdetés feladásakor.', category='error')
-            categories = Category.query.all()
-            return render_template('new_adv.html', categories=categories)
+            hardver_categories = Category.query.filter_by(main_category='hardver').all()
+            notebook_categories = Category.query.filter_by(main_category='notebook').all()
+            mobil_categories = Category.query.filter_by(main_category='mobil').all()
+            return render_template('new_adv.html', hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)
         else:
             newAdv = Advertisement(userID=userID, title=title, category=category_name, description=description, price=int(price), image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
             db.session.add(newAdv)
