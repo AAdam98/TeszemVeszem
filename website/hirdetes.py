@@ -118,6 +118,19 @@ def adv_details(id):
     
 
 
+@hirdetes.route('/torles/<int:id>', methods=['POST'])
+def adv_delete(id):
+    advertisement = Advertisement.query.get(id)
+    if advertisement:
+        if current_user.is_authenticated and advertisement.userID == current_user.get_id():
+            db.session.delete(advertisement)
+            db.session.commit()
+            flash('A hirdetésed törlésre került', category='success')
+            return redirect(url_for('hirdetes.ownAdv_details'))
+    
+
+
+
 @hirdetes.route("//<int:id>/szerkesztes", methods=["GET","POST"])
 @login_required
 def adv_edit(id):
