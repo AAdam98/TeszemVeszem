@@ -3,7 +3,7 @@
 
 {%block content%}
 
-<div class="content">
+
     <h1>Hírdetések</h1>
     <form method="POST" action="{{ url_for('hirdetes.index') }}">
         <label for="sortBy">Rendezés:</label>
@@ -21,21 +21,24 @@
     
         <button type="submit">Küldés</button>
     </form>
+    <div class="hirdetesLista">
     {% for advertisement in advertisements %}
     {% if advertisement.available %}
-    <div class="cardContainer">
-        <a href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}">
-            <div class="card upper-card">
-                <div class="text">
-                    <p>{{ advertisement.date }}</p>
+        
+            <div class="hirdetesCard">
+                <div class="hirdetesImage">
+                    <img src="{{advertisement.image_path}}" alt="kepHiba">
+                </div>
+                <div class="hirdetesText">
                     <p>{{ advertisement.title }}</p>
-                    <p>{{ advertisement.category }}</p>
-                    <p>{{ advertisement.description }}</p>
-                    <p>{{ advertisement.price }}</p>
+                </div>
+                <div class= "hirdetesInfos"></div>
+                <div class= "feladoInfos">
+                    <p>{{ advertisement.price }} Ft</p>
+                    <p>{{ advertisement.date }}</p>
                 </div>
             </div>
         </a>
-    </div>
     {% endif %}
     {% endfor %}
 </div>

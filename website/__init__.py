@@ -17,7 +17,7 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = (
         f"sqlite:///{path.join(app.instance_path, DB_NAME)}"
     )
-    UPLOAD_FOLDER = "website/uploads"
+    UPLOAD_FOLDER = "/cdn"
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
     app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
