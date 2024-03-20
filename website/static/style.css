@@ -17,8 +17,13 @@
     font-family: "CascadiaMono", sans-serif;
 }
 
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 body {
-    height: 100vh;
+    margin-bottom: 60px; /*footer magassága*/
     background-color: #f0f0ff;
     overflow: hidden;
     overflow-y: auto;
@@ -39,11 +44,21 @@ header {
     top: 0;
     padding: 0 2rem;
     background-color: #008fff;
+    height: ;
 }
 
 h1 {
     text-align: center;
     padding: 2rem;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    padding: 1rem 1rem;
+    color: grey;
+    width: 100%;
+    background-color: #008fff;
 }
 
 .navbar {
@@ -67,11 +82,10 @@ h1 {
     cursor: pointer;
 }
 
-.sitecontent {
-    background-color: white;
-    margin-left: 20%;
-    margin-right: 20%;
-    height: 100vh;
+.cardContainer {
+    display: flex;
+    justify-content: space-evenly;
+    max-height: 15rem;
 }
 
 .card {
@@ -89,17 +103,11 @@ h1 {
     transition: transform 0.3s ease;
 }
 
-footer {
-    position: relative;
-    bottom: 0;
-    padding: 1rem 1rem;
-    color: grey;
-    width: 100%;
-    background-color: #008fff;
-}
+
 
 .container {
     background-color: white;
+    min-height: calc(100vh - 100px - 50px);
 }
 
 .hirdetesdoboz {
