@@ -138,13 +138,13 @@ def adv_delete(id):
 @login_required
 def adv_edit(id):
     advertisement = Advertisement.query.get(id)
-    categories = Category.query.all()
     if request.method == "POST":
         image_error = False
         title = request.form.get('title')
         category_name = request.form.get('category')
         description = request.form.get('description')
         price = request.form.get('price')
+        filename = ""
         if 'image' in request.files:
             image = request.files['image']
             if image.filename != '':
@@ -154,9 +154,12 @@ def adv_edit(id):
                     image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
                 else:
                     image_error = True
-        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0 or image_error == True:
+        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0 or image_error == True or len(category_name) == 0 or filename == "":
             flash('Hiba a hirdetés feladásakor.', category='error')
-            return render_template('new_adv.html', categories=categories)
+            hardver_categories = Category.query.filter_by(main_category='hardver').all()
+            notebook_categories = Category.query.filter_by(main_category='notebook').all()
+            mobil_categories = Category.query.filter_by(main_category='mobil').all()
+            return render_template('adv_edit.html', advertisement=advertisement, hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)
         else:
             advertisement.title = title
             advertisement.category = category_name
@@ -167,8 +170,10 @@ def adv_edit(id):
             flash('Hirdetés sikeresen szerkesztve!', category='success')
             return redirect(url_for('views.home'))
     else:
-        categories = Category.query.all()
-        return render_template('adv_edit.html', advertisement=advertisement, categories=categories)
+        hardver_categories = Category.query.filter_by(main_category='hardver').all()
+        notebook_categories = Category.query.filter_by(main_category='notebook').all()
+        mobil_categories = Category.query.filter_by(main_category='mobil').all()
+        return render_template('adv_edit.html', advertisement=advertisement, hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)
 
     
 
@@ -220,6 +225,7 @@ def ujhirdetes():
         description = request.form.get('description')
         price = request.form.get('price')
         userID = current_user.get_id()
+        filename = ""
         if 'image' in request.files:
             image = request.files['image']
             if image.filename != '':
@@ -230,7 +236,7 @@ def ujhirdetes():
                 else:
                     image_error = True
         
-        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0 or image_error == True or len(category_name) == 0:
+        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0 or image_error == True or len(category_name) == 0 or filename == "":
             flash('Hiba a hirdetés feladásakor.', category='error')
             hardver_categories = Category.query.filter_by(main_category='hardver').all()
             notebook_categories = Category.query.filter_by(main_category='notebook').all()
