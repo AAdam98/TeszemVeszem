@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %} Hirdetés részletei {% endblock %}
+{%block title %} {{ advertisement.title }} - {% endblock %}
 
 {% block content %}
 {% if advertisement.userID == userID or user.is_admin %}
