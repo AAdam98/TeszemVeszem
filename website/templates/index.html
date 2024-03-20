@@ -23,7 +23,7 @@
     </form>
     {% for advertisement in advertisements %}
     {% if advertisement.available %}
-    <div class="container">
+    <div class="cardContainer">
         <a href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}">
             <div class="card upper-card">
                 <div class="text">
