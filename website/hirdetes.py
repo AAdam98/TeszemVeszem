@@ -248,7 +248,7 @@ def ujhirdetes():
             mobil_categories = Category.query.filter_by(main_category='mobil').all()
             return render_template('new_adv.html', hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)
         else:
-            newAdv = Advertisement(userID=userID, title=title, category=category_name, description=description, price=int(price), image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+            newAdv = Advertisement(userID=userID, title=title, category=category_name, description=description, price=int(price), image_path = filename)
             db.session.add(newAdv)
             db.session.commit()
             flash('Hirdetés sikeresen feladva!', category='success')

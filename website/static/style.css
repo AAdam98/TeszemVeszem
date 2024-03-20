@@ -124,16 +124,22 @@ footer {
 .hirdetesCard {
     background-color: #f0f0f0;
     border-bottom: solid 1px #ddd;
-    
+    padding: 1rem;
     margin: 1rem;
     flex-wrap: wrap;
     overflow: hidden;
-    position: relative;
     min-height: 6rem;
 
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.hirdetesImage {
+    width: 100px;
+    height: 60px;
 }
 
 .card {

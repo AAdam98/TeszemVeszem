@@ -26,16 +26,19 @@
     {% if advertisement.available %}
         
             <div class="hirdetesCard">
-                <div class="hirdetesImage">
-                    <img src="{{advertisement.image_path}}" alt="kepHiba">
+                <div>
+                    <img class="hirdetesImage" src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba">
                 </div>
                 <div class="hirdetesText">
-                    <p>{{ advertisement.title }}</p>
+                    {{ advertisement.title }}
                 </div>
-                <div class= "hirdetesInfos"></div>
-                <div class= "feladoInfos">
-                    <p>{{ advertisement.price }} Ft</p>
-                    <p>{{ advertisement.date }}</p>
+                <div class= "hirdetesInfok">
+                    {{ advertisement.price }} Ft
+                    <br>
+                    {{ advertisement.date }}
+                </div>
+                <div class= "feladoInfok">
+                    {{ advertisement.userID }}
                 </div>
             </div>
         </a>
