@@ -1,0 +1,292 @@
+@font-face {
+    font-family: "CascadiaMonoBold";
+    src: url("CascadiaMonoPL-Bold.otf");
+    font-style: bold;
+}
+
+@font-face {
+    font-family: "CascadiaMono";
+    src: url("CascadiaMonoPL-Regular.otf");
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "CascadiaMono", sans-serif;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px; /*footer magassága*/
+    background-color: #f0f0ff;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+}
+
+a:hover {
+    color: orange;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    padding: 0 2rem;
+    background-color: #008fff;
+    min-height: 4rem ;
+    max-height: 4rem;
+}
+
+h1 {
+    text-align: center;
+    padding: 2rem;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    padding: 0 2rem;
+    color: grey;
+    width: 100%;
+    background-color: #008fff;
+    min-height: 4rem ;
+    max-height: 4rem;
+}
+
+.navbar {
+    width: 100%;
+    height: 60px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-family: "CascadiaMonoBold";
+    font-weight: bold;
+}
+
+.navbar .accountBtn {
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.cardContainer {
+    display: flex;
+    justify-content: space-evenly;
+    max-height: 15rem;
+}
+
+.card {
+    position: static ;
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.5;
+    margin: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+
+
+.container {
+    background-color: white;
+    min-height: calc(100vh - 4rem - 4rem);
+}
+
+.hirdetesdoboz {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #45adff;
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.card.upper-card {
+    height: 13rem;
+    width: 100%;
+}
+
+.card.middle-card {
+    height: 10rem;
+    width: 100%;
+}
+
+.card.upper-card:hover,
+.card.middle-card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 1);
+}
+
+.card.bottom-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 1);
+}
+
+.catIcon {
+    flex-grow: 1;
+}
+
+.catName {
+    display: flex;
+}
+
+.ujhirdetes {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ujhirdetes h2 {
+    text-align: center;
+}
+
+.ujhirdetes label,
+.ujhirdetes button {
+    margin-top: 20px;
+}
+
+.ujhirdetes button {
+    align-self: center;
+}
+
+@keyframes alert {
+    to {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        opacity: 0;
+        height: 0;
+    }
+}
+
+@-webkit-keyframes alert {
+    to {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        opacity: 0;
+        height: 0;
+    }
+}
+
+.alert {
+    text-align: center;
+    position: fixed;
+    top: 60;
+    width: 100%;
+    animation: alert 0.5s ease-out 3s 1 normal forwards;
+}
+
+.login-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    background: #45adff;
+    box-sizing: border-box;
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+}
+
+.login-box h2 {
+    margin: 0 0 30px;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+}
+
+.login-box h3 {
+    color: #fff;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.login-box .user-box {
+    position: relative;
+}
+
+.login-box .user-box input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    font-size: #fff;
+    margin-bottom: 30px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}
+
+.login-box .user-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.login-box .user-box input:focus~label,
+.login-box .user-box input:not(:placeholder-shown)~label {
+    top: -20px;
+    left: 0;
+    color: white;
+    font-size: 12px;
+    transition: none;
+}
+
+.login-box a {
+    text-align: center;
+}
+
+.login-box a:hover {
+    background: #003d30;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #003d30, 0 0 25px #003d30, 0 0 50px #003d30,
+        0 0 100px #003d30;
+}
+
+.flash.success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.flash.error {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}

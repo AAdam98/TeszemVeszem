@@ -1,19 +1,19 @@
 {% extends "base.html" %}
-{%block title %} Rólunk {% endblock %}
+{%block title %} Találatok - {% endblock %}
 
 {%block content%}
 
 
     <h1>Hírdetések</h1>
-    <form action="{{ url_for('hirdetes.query', category=category) }}" method="post">
+    <h3>{{ category }}</h3>
+    <form method="POST" action="{{ url_for('hirdetes.query', category=category) }}">
         <label for="sortBy">Rendezés:</label>
-        <select id="sortBy" name="dateSort">
+        <select id="sortBy" name="sortBy">
             <option value="price_desc">Csökkenő (Ár szerint)</option>
             <option value="price_asc">Növekvő (Ár szerint)</option> 
             <option value="date_desc">Csökkenő (Dátum szerint)</option>
             <option value="date_asc">Növekvő (Dátum szerint)</option>
         </select>
-    
 
         <label for="min_price">Minimum Ár:</label>
         <input type="number" id="min_price" name="min_price" placeholder="Minimum ár">

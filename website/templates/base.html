@@ -2,75 +2,99 @@
 <html lang="hu">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{%block title %} {% endblock %}</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>{%block title %} {% endblock %}TeszemVeszem</title>
     <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../static/site.css">
-    <link rel="stylesheet" href="../static/auth.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-    <script src="static/script.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+		crossorigin="anonymous"></script>
+	<script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
 
 <body>
-    <header>
-        <div class="navbar">
-            <div class="logo"><a href="/" class="logo">TeszemVeszem</a></div>
-            <div class="dropdown">
-                {% if current_user.is_authenticated %}
-                <div class="accountMenu">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ current_user.username }} <i class="bi bi-person-circle"></i>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <li><a href="/profil"><button class="dropdown-item" type="button">Profil</button></a></li>
-                        <li><a href="/hirdetes/hirdetesfeladas"><button class="dropdown-item" type="button">Hírdetésfeladás</button></a></li>
-                        <li><a href="/hirdetes/sajathirdetesek"><button class="dropdown-item" type="button">Saját hírdetéseim</button></a></li>
-                        <li><a href="/auth/logout"><button class="dropdown-item" type="button">Kijelentkezés</button></a></li>
-                    </ul>
-                </div>
-                {% else %}
-                <div class="accountMenu">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Fiókom <i class="bi bi-person-circle"></i>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <a href="/auth/login">
-                            <li><button class="dropdown-item" type="button">Bejelentkezés</button></li>
-                        </a>
-                        <a href="/auth/signup">
-                            <li><button class="dropdown-item" type="button">Regisztráció</button></li>
-                        </a>
-                    </ul>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </header>
+	<header>
+		<div class="navbar">
+			<div class="logo">
+				<a href="/" class="logo">TeszemVeszem</a>
+			</div>
+			<div class="btn-group">
+				<a href="/hirdetes/hirdetesfeladas"><button type="button" class="btn btn-light">
+						<i class="bi bi-plus-circle"></i>
+					</button>
+				</a>
 
-    {% with messages = get_flashed_messages(with_categories=true)%}
-    {%if messages%}
-    {% for category, message in messages %}
-    {%if category == 'error'%}
-    <div id="error-flash" class="alert alert-danger alter-dismissable show" role="alert">
-        {{message}}
-    </div>
-    {%else%}
-    <div id="success-flash" class="alert alert-success alter-dismissable show" role="alert">
-        {{message}}
-    </div>
-    {%endif%}
-    {%endfor%}
-    {%endif%}
-    {% endwith %}
+				<div class="dropdown">
+					{% if current_user.is_authenticated %}
+					<div class="accountMenu">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							{{ current_user.username }}
+							<i class="bi bi-person-circle"></i>
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+							<li>
+								<a href="/profil"><button class="dropdown-item" type="button">
+										Profil
+									</button></a>
+							</li>
+							<li>
+								<a href="/hirdetes/hirdeteseim"><button class="dropdown-item" type="button">
+										Hirdetéseim
+									</button></a>
+							</li>
+							<li>
+								<a href="/auth/logout"><button class="dropdown-item" type="button">
+										Kijelentkezés
+									</button></a>
+							</li>
+						</ul>
+					</div>
+					{% else %}
+					<div class="accountMenu">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							Fiókom <i class="bi bi-person-circle"></i>
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+							<a href="/auth/login">
+								<li>
+									<button class="dropdown-item" type="button">
+										Bejelentkezés
+									</button>
+								</li>
+							</a>
+							<a href="/auth/signup">
+								<li>
+									<button class="dropdown-item" type="button">
+										Regisztráció
+									</button>
+								</li>
+							</a>
+						</ul>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</header>
+
+	{% with messages = get_flashed_messages(with_categories=true)%} {%if
+	messages%} {% for category, message in messages %} {%if category ==
+	'error'%}
+	<div id="error-flash" class="alert alert-danger alter-dismissable show" role="alert">
+		{{message}}
+	</div>
+	{%else%}
+	<div id="success-flash" class="alert alert-success alter-dismissable show" role="alert">
+		{{message}}
+	</div>
+	{%endif%} {%endfor%} {%endif%} {% endwith %}
 
     <main class="container">
         {% block content %}{% endblock %}

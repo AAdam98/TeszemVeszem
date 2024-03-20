@@ -34,8 +34,7 @@ def adatlap():
 def password():
     user = current_user
     if request.method == "POST" or (
-        request.method == "GET" and request.args.get("_method") == "PUT"
-    ):
+        request.method == "GET" and request.args.get("_method") == "PUT"):
         curpassw = request.form.get("curPassw")
         if check_password_hash(user.password, curpassw):
             newpassw1 = request.form.get("newPassw1")
@@ -49,8 +48,7 @@ def password():
                     flash("Az új jelszó túl rövid!", category="error")
                 else:
                     user.password = generate_password_hash(
-                        newpassw1, method="pbkdf2:sha256"
-                    )
+                        newpassw1, method="pbkdf2:sha256")
                     db.session.commit()
                     flash("A jelszavad sikeresen megváltoztattad")
                     return redirect(url_for("views.home"))
