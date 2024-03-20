@@ -40,10 +40,9 @@ def index():
 
         advertisements = advertisements.all()
         return render_template('index.html', advertisements=advertisements)
-
-    # összes hirdetés rendezés nélkül
-    advertisements = Advertisement.query.all()
-    return render_template("index.html", advertisements=advertisements)
+    else:
+        advertisements = Advertisement.query.all()
+        return render_template("index.html", advertisements=advertisements)
 
 
 
@@ -100,8 +99,6 @@ def query(category):
 
 
 
-
-# 1 hirdetés megjelenítése
 @hirdetes.route('/<int:id>', methods=['GET'])
 def adv_details(id):
     advertisement = Advertisement.query.get(id)

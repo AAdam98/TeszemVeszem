@@ -40,8 +40,7 @@ class Comment(db.Model):
     commentID = db.Column(db.Integer, primary_key=True)
     userID = db.Column(db.Integer, db.ForeignKey("user.userID"))
     advertisementID = db.Column(
-        db.Integer, db.ForeignKey("advertisement.advertisementID")
-    )
+        db.Integer, db.ForeignKey("advertisement.advertisementID"))
     content = db.Column(db.String(300), nullable=False)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
 
