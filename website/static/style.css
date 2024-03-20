@@ -99,9 +99,7 @@ footer {
 }
 
 .container {
-    display: flex;
-    justify-content: space-evenly;
-    max-height: 15rem;
+    background-color: white;
 }
 
 .hirdetesdoboz {
