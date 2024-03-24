@@ -50,6 +50,14 @@ def index():
 
 @hirdetes.route("/<category>", methods=["GET", "POST"])
 def query(category):
+    cat_name = "" + category
+    full_cat = Category.query.filter(Category.endpoint_name == cat_name).first()
+    if full_cat:
+        name = full_cat.name
+    else:
+        name = cat_name[0].upper() + cat_name[1:]
+    print(name)
+
     if request.method == "POST":
         sortBy = request.form['sortBy']
         min_price = request.form['min_price']
@@ -80,7 +88,7 @@ def query(category):
             advertisements = advertisements.order_by(Advertisement.date.asc())
 
         advertisements = advertisements.all()
-        return render_template('adv_by_category.html', filtered_advertisements=advertisements, category=category)
+        return render_template('adv_by_category.html', filtered_advertisements=advertisements, category=category, name=name)
 
             
     # összes hirdetés egy fő kategóriában
@@ -91,7 +99,7 @@ def query(category):
     if filtered_categories:
         all_advertisements = Advertisement.query.filter(Advertisement.category.in_([cat.name for cat in filtered_categories])).all()
         if all_advertisements:
-            return render_template('adv_by_category.html', filtered_advertisements=all_advertisements, category=category)
+            return render_template('adv_by_category.html', filtered_advertisements=all_advertisements, category=category, name=name)
         else:
             flash('Nincs hirdetés a kiválasztott kategóriában.', category='error')
     else:
