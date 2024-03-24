@@ -48,20 +48,20 @@ header {
     max-height: 4rem;
 }
 
-h1 {
-    text-align: center;
-    padding: 2rem;
-}
 
 footer {
-    position: absolute;
-    bottom: 0;
-    padding: 0 2rem;
-    color: grey;
-    width: 100%;
     background-color: #008fff;
-    min-height: 4rem ;
-    max-height: 4rem;
+    position: absolute;
+    width: 100%;
+    min-height: 9rem ;
+    max-height: 9rem;
+    /* 
+    
+    
+    color: grey;
+    
+    
+     */
 }
 
 .navbar {
@@ -97,7 +97,8 @@ footer {
 
 .container {
     background-color: white;
-    min-height: calc(100vh - 4rem - 4rem);
+    min-height: calc(100vh - 9rem - 9rem);
+    padding: 2rem;
 }
 
 .hirdetesHomeDoboz {
@@ -106,7 +107,7 @@ footer {
     flex-direction: column;
     justify-content: center;
     background-color: #45adff;
-    margin: 0 auto;
+    margin: 2rem auto;
     max-width: 800px;
     padding: 20px;
     border-radius: 15px;
