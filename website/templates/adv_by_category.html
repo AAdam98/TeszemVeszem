@@ -4,8 +4,8 @@
 {%block content%}
 
 
-    <h1>Hírdetések</h1>
-    <h3>{{ category }}</h3>
+    <h1>{{ name }} hírdetések</h1>
+
     <form method="POST" action="{{ url_for('hirdetes.query', category=category) }}">
         <label for="sortBy">Rendezés:</label>
         <select id="sortBy" name="sortBy">

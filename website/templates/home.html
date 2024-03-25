@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="cardContainer">
-            {% for category in random_categories %}
+            {% for category in best_categories %}
             <div class="card middle-card" onclick="redirectToPage('/hirdetes/{{category.endpoint_name}}')">
                 <div class="catIcon">
                     <img src="{{ url_for('static', filename=category.icon_path) }}"

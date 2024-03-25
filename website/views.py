@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from sqlalchemy import func
 from .db import db
-from .models import Category
+from .models import Category, Advertisement
 
 views = Blueprint("views", __name__)
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -16,11 +16,29 @@ def get_random_categories(num_categories=4):
             random_categories.append(category)
     return random_categories
 
+def best_categories(num_categories=4):
+    best_categories = []
+
+    category_counts = db.session.query(Advertisement.category, func.count(Advertisement.category).label('count')).group_by(Advertisement.category).all()
+    sorted_categories = sorted(category_counts, key=lambda x: x[1], reverse=True)
+    most_common_categories = sorted_categories[:num_categories]
+    for category, _ in most_common_categories:
+        category_obj = Category.query.filter_by(name=category).first()
+        if category_obj:
+            best_categories.append(category_obj)
+    while len(best_categories) < num_categories:
+        random_category = Category.query.order_by(func.random()).first()
+        if random_category and random_category not in best_categories:
+            best_categories.append(random_category)
+
+    return best_categories
+
+
 
 @views.route("/")
 def home():
-    random_categories = get_random_categories()
-    return render_template("home.html", random_categories=random_categories)
+    categories = best_categories()
+    return render_template("home.html", best_categories=categories)
 
 
 @views.route("/profil")
