@@ -3,7 +3,7 @@
 
 {%block content%}
 
-<h1>Összes hírdetés</h1>
+<h1 class="text-center">Összes hírdetés</h1>
 <form method="POST" action="{{ url_for('hirdetes.index') }}">
     <label for="sortBy">Rendezés:</label>
     <select id="sortBy" name="sortBy">
@@ -25,22 +25,23 @@
     {% if advertisement.available %}
 
     <div class="hirdetesCard">
-        <div>
-            <img class="hirdetesImage" src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba">
-        </div>
+        
+            <a class="align-self-center" href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}"><img class="hirdetesImage" src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba"></a>
+        
         <div class="hirdetesText">
-            {{ advertisement.title }}
+            <a id="advInfo" href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}">{{ advertisement.title }}</a>
         </div>
         <div class="hirdetesInfok">
             {{ advertisement.price }} Ft
             <br>
-            {{ advertisement.date }}
+            {{ advertisement.date.strftime("%Y-%m-%d") }}
         </div>
-        <div class="feladoInfok">
-            {{ advertisement.userID }}
+        <div class="hirdetesFeladoInfok">
+            {% set user = User.query.get(advertisement.userID) %}
+            <p id="username">{{ user.username }}</p>          
         </div>
     </div>
-    </a>
+    
     {% endif %}
     {% endfor %}
 </div>
