@@ -319,7 +319,6 @@ def ujhirdetes():
                 hardver_categories = Category.query.filter_by(main_category='hardver').all()
                 notebook_categories = Category.query.filter_by(main_category='notebook').all()
                 mobil_categories = Category.query.filter_by(main_category='mobil').all()
-                print(price)
                 return render_template('new_adv.html',title=title, category=category_name, description=description, price=price, hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)
             else:
                 error = False
