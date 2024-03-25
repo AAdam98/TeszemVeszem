@@ -6,6 +6,7 @@ from .db import db
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 import os
+from datetime import datetime
 
 hirdetes = Blueprint('hirdetes', __name__)
 
@@ -49,6 +50,14 @@ def index():
 
 @hirdetes.route("/<category>", methods=["GET", "POST"])
 def query(category):
+    cat_name = "" + category
+    full_cat = Category.query.filter(Category.endpoint_name == cat_name).first()
+    if full_cat:
+        name = full_cat.name
+    else:
+        name = cat_name[0].upper() + cat_name[1:]
+    print(name)
+
     if request.method == "POST":
         sortBy = request.form['sortBy']
         min_price = request.form['min_price']
@@ -79,7 +88,7 @@ def query(category):
             advertisements = advertisements.order_by(Advertisement.date.asc())
 
         advertisements = advertisements.all()
-        return render_template('adv_by_category.html', filtered_advertisements=advertisements, category=category)
+        return render_template('adv_by_category.html', filtered_advertisements=advertisements, category=category, name=name)
 
             
     # összes hirdetés egy fő kategóriában
@@ -90,7 +99,7 @@ def query(category):
     if filtered_categories:
         all_advertisements = Advertisement.query.filter(Advertisement.category.in_([cat.name for cat in filtered_categories])).all()
         if all_advertisements:
-            return render_template('adv_by_category.html', filtered_advertisements=all_advertisements, category=category)
+            return render_template('adv_by_category.html', filtered_advertisements=all_advertisements, category=category, name=name)
         else:
             flash('Nincs hirdetés a kiválasztott kategóriában.', category='error')
     else:
@@ -154,21 +163,56 @@ def adv_edit(id):
                     image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
                 else:
                     image_error = True
-        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0 or image_error == True or len(category_name) == 0 or filename == "":
-            flash('Hiba a hirdetés feladásakor.', category='error')
-            hardver_categories = Category.query.filter_by(main_category='hardver').all()
-            notebook_categories = Category.query.filter_by(main_category='notebook').all()
-            mobil_categories = Category.query.filter_by(main_category='mobil').all()
-            return render_template('adv_edit.html', advertisement=advertisement, hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)
-        else:
-            advertisement.title = title
-            advertisement.category = category_name
-            advertisement.description = description
-            advertisement.price = int(price)
-            advertisement.image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
-            db.session.commit()
-            flash('Hirdetés sikeresen szerkesztve!', category='success')
-            return redirect(url_for('views.home'))
+        
+        error_message = ""
+        error = True
+        errors = 0
+
+        while error:
+            if len(category_name) == 0:
+                error_message = "Válasszon kategóriát!"
+                errors += 1
+
+            if not price.isdigit() or int(price) < 0:
+                error_message = "Nem megfelelő ár formátum!"
+                errors += 1
+
+            if len(description) < 10:
+                error_message = "A hírdetés leírása kevesebb mint 10 karakter!"
+                errors += 1
+            elif len(description) > 1000:
+                error_message = "A hírdetés leírása több mint 10 karakter!"
+                errors += 1
+
+            if len(title) < 5:
+                error_message = "A hírdetés címe kevesebb mint 5 karakter!"
+                errors += 1
+            elif len(title) > 60:
+                error_message = "A hírdetés címe hosszabb mint 60 karakter!"
+                errors += 1
+
+            if image_error:
+                error_message = "Nem megfelelő kiterjesztés!"
+                errors += 1
+            if filename == "":
+                error_message = "Nem töltött fel képet!"
+                errors += 1
+
+            if errors > 0:
+                flash(error_message, category='error')
+                hardver_categories = Category.query.filter_by(main_category='hardver').all()
+                notebook_categories = Category.query.filter_by(main_category='notebook').all()
+                mobil_categories = Category.query.filter_by(main_category='mobil').all()
+                return render_template('adv_edit.html', advertisement=advertisement, hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)
+            else:
+                advertisement.title = title
+                advertisement.category = category_name
+                advertisement.description = description
+                advertisement.price = int(price)
+                advertisement.image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+                db.session.commit()
+                flash('Hirdetés sikeresen szerkesztve!', category='success')
+                return redirect(url_for('views.home'))
     else:
         hardver_categories = Category.query.filter_by(main_category='hardver').all()
         notebook_categories = Category.query.filter_by(main_category='notebook').all()
@@ -229,28 +273,70 @@ def ujhirdetes():
         if 'image' in request.files:
             image = request.files['image']
             if image.filename != '':
-                allowed_extensions = {'jpg', 'jpeg', 'png', 'gif'}
+                allowed_extensions = {'jpg', 'jpeg', 'png'}
+                allowed_extensions = {'jpg', 'jpeg', 'png'}
                 filename = secure_filename(image.filename)
+                base_filename, file_extension = os.path.splitext(filename)
+                
+                filename = f"{current_user.username}_{datetime.now().strftime('%Y%m%d%H%M%S')}_{base_filename}{file_extension}"
+                
                 if '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions:
                     image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
                 else:
                     image_error = True
         
-        if len(title) < 5 or len(description) < 10 or not price.isdigit() or int(price) < 0 or image_error == True or len(category_name) == 0 or filename == "":
-            flash('Hiba a hirdetés feladásakor.', category='error')
-            hardver_categories = Category.query.filter_by(main_category='hardver').all()
-            notebook_categories = Category.query.filter_by(main_category='notebook').all()
-            mobil_categories = Category.query.filter_by(main_category='mobil').all()
-            return render_template('new_adv.html', hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)
-        else:
-            newAdv = Advertisement(userID=userID, title=title, category=category_name, description=description, price=int(price), image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-            db.session.add(newAdv)
-            db.session.commit()
-            flash('Hirdetés sikeresen feladva!', category='success')
-            return redirect(url_for('views.home'))
+        error_message = ""
+        error = True
+        errors = 0
+
+        while error:
+            if len(category_name) == 0:
+                error_message = "Válasszon kategóriát!"
+                category_name = "Válasszon kategóriát"
+                errors += 1
+
+            if not price.isdigit() or int(price) < 0:
+                error_message = "Nem megfelelő ár formátum!"
+                errors += 1
+
+            if len(description) < 10:
+                error_message = "A hírdetés leírása kevesebb mint 10 karakter!"
+                errors += 1
+            elif len(description) > 1000:
+                error_message = "A hírdetés leírása több mint 10 karakter!"
+                errors += 1
+
+            if len(title) < 5:
+                error_message = "A hírdetés címe kevesebb mint 5 karakter!"
+                errors += 1
+            elif len(title) > 60:
+                error_message = "A hírdetés címe hosszabb mint 60 karakter!"
+                errors += 1
+
+            if image_error:
+                error_message = "Nem megfelelő kiterjesztés!"
+                errors += 1
+            if filename == "":
+                error_message = "Nem töltött fel képet!"
+                errors += 1
+
+            if errors > 0:
+                flash(error_message, category='error')
+                hardver_categories = Category.query.filter_by(main_category='hardver').all()
+                notebook_categories = Category.query.filter_by(main_category='notebook').all()
+                mobil_categories = Category.query.filter_by(main_category='mobil').all()
+                return render_template('new_adv.html',title=title, category=category_name, description=description, price=price, hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)
+            else:
+                error = False
+                newAdv = Advertisement(userID=userID, title=title, category=category_name, description=description, price=int(price), image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+                db.session.add(newAdv)
+                db.session.commit()
+                flash('Hirdetés sikeresen feladva!', category='success')
+                return redirect(url_for('views.home'))
     else:
+        category_name = "Válasszon kategóriát!"
         hardver_categories = Category.query.filter_by(main_category='hardver').all()
         notebook_categories = Category.query.filter_by(main_category='notebook').all()
         mobil_categories = Category.query.filter_by(main_category='mobil').all()
         
-        return render_template('new_adv.html', hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)
+        return render_template('new_adv.html', category=category_name, hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)

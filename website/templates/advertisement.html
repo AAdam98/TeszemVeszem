@@ -4,7 +4,7 @@
 {% block content %}
 {% if advertisement.userID == userID or user.is_admin %}
     {% if advertisement.userID == userID %}
-        <a href="{{ url_for('hirdetes.adv_edit', id=advertisement.advertisementID) }}"><p>Hirdetés szerkesztése</p></a>
+        <a href="{{ url_for('hirdetes.adv_edit', id=advertisement.advertisementID) }}"><p id="updateBtn">Hirdetés szerkesztése</p></a>
     {% endif %}
     <form action="{{ url_for('hirdetes.adv_delete', id=advertisement.advertisementID) }}" method="post">
         <button type="submit">Hirdetés törlése</button>
