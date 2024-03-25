@@ -38,7 +38,9 @@
     </div>
     <div class="hirdetesFeladoInfok">
         {% set user = User.query.get(advertisement.userID) %}
-        <p id="username">{{ user.username }}</p>          
+        <a id="advInfo" href="{{ url_for('hirdetes.advByUser', id=user.userID) }}">
+            <p id="user">{{ user.username }}</p>
+        </a>           
     </div>
 </div>
     {% endif %}

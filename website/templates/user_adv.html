@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{%block title %} Saját hirdetések {% endblock %}
+{%block title %} Rólunk {% endblock %}
 
 {%block content%}
-
-<h1 class="text-center">Saját hirdetések</h1>
-<form method="POST" action="{{ url_for('hirdetes.ownAdv_details') }}">
+{% set user = User.query.filter_by(userID=id).first() %}
+<h1 class="text-center">{{user.username}} hirdetései</h1>
+<form method="POST" action="{{ url_for('hirdetes.advByUser', id=id) }}">
     <label for="sortBy">Rendezés:</label>
     <select id="sortBy" name="sortBy">
         <option value="price_desc">Csökkenő (Ár szerint)</option>
@@ -20,11 +20,13 @@
 
     <button type="submit">Küldés</button>
 </form>
+
+
 {% for advertisement in advertisements %}
 {% if advertisement.available %}
 <div class="hirdetesCard">
 
-    <a class="align-self-center" href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}"><img
+    <a class="align-self-center" href="{{ url_for('hirdetes.advByUser', id=id) }}"><img
             class="hirdetesImage" src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba"></a>
 
     <div class="hirdetesText">

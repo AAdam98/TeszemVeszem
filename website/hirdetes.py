@@ -254,6 +254,41 @@ def ownAdv_details():
     else:
         advertisements = Advertisement.query.filter_by(userID=current_user.get_id()).all()
         return render_template('own_adv.html', advertisements=advertisements)
+    
+
+
+
+
+@hirdetes.route("/felhasznalo=<int:id>")
+def advByUser(id):
+    if request.method == "POST":
+        sortBy = request.form['sortBy']
+        min_price = request.form['min_price']
+        max_price = request.form['max_price']
+
+        advertisements = Advertisement.query.filter_by(userID=id)
+
+        if min_price and max_price and min_price <= max_price:
+            advertisements = advertisements.filter(Advertisement.price.between(min_price, max_price))
+        elif min_price:
+            advertisements = advertisements.filter(Advertisement.price >= min_price)
+        elif max_price:
+            advertisements = advertisements.filter(Advertisement.price <= max_price)
+
+        if sortBy == 'price_desc':
+            advertisements = advertisements.order_by(Advertisement.price.desc())
+        elif sortBy == 'price_asc':
+            advertisements = advertisements.order_by(Advertisement.price.asc())
+        elif sortBy == 'date_desc':
+            advertisements = advertisements.order_by(Advertisement.date.desc())
+        elif sortBy == 'date_asc':
+            advertisements = advertisements.order_by(Advertisement.date.asc())
+
+        advertisements = advertisements.all()
+        return render_template('user_adv.html', id=id, advertisements=advertisements)
+    else:
+        advertisements = Advertisement.query.filter_by(userID=id).all()
+        return render_template('user_adv.html', id=id, advertisements=advertisements)
 
 
 
@@ -273,7 +308,6 @@ def ujhirdetes():
         if 'image' in request.files:
             image = request.files['image']
             if image.filename != '':
-                allowed_extensions = {'jpg', 'jpeg', 'png'}
                 allowed_extensions = {'jpg', 'jpeg', 'png'}
                 filename = secure_filename(image.filename)
                 base_filename, file_extension = os.path.splitext(filename)
