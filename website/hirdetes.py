@@ -6,6 +6,7 @@ from .db import db
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 import os
+from datetime import datetime
 
 hirdetes = Blueprint('hirdetes', __name__)
 
@@ -273,7 +274,12 @@ def ujhirdetes():
             image = request.files['image']
             if image.filename != '':
                 allowed_extensions = {'jpg', 'jpeg', 'png'}
+                allowed_extensions = {'jpg', 'jpeg', 'png'}
                 filename = secure_filename(image.filename)
+                base_filename, file_extension = os.path.splitext(filename)
+                
+                filename = f"{current_user.username}_{datetime.now().strftime('%Y%m%d%H%M%S')}_{base_filename}{file_extension}"
+                
                 if '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions:
                     image.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
                 else:

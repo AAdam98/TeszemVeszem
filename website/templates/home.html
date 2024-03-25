@@ -3,60 +3,58 @@
 
 {%block content%}
 
-<h1>Vásárolj, és adj el Magyarország egyik legmegbízhatóbb online piacterén!</h1>
+<h2 class="text-center">Vásárolj, és adj el Magyarország egyik legmegbízhatóbb online piacterén!</h2>
 
-<div class="hirdetesdoboz">
-    <div>
-        <div class="cardContainer">
-            <div class="card upper-card" onclick="redirectToPage('/hirdetes/hardver')">
-                <div class="catIcon">
-                    <i class="bi bi-motherboard" style="font-size: 90px;"></i>
-                </div>
-                <div class="catName">
-                    <p>Hardver</p>
-                </div>
+<div class="hirdetesHomeDoboz">
+    <div class="cardContainer">
+        <div class="card upper-card" onclick="redirectToPage('/hirdetes/hardver')">
+            <div class="catIcon">
+                <i class="bi bi-motherboard" style="font-size: 90px;"></i>
             </div>
-            <div class="card upper-card" onclick="redirectToPage('/hirdetes/notebook')">
-                <div class="catIcon">
-                    <i class="bi bi-laptop" style="font-size: 90px;"></i>
-                </div>
-                <div class="catName">
-                    <p>Notebook</p>
-                </div>
-            </div>
-            <div class="card upper-card" onclick="redirectToPage('/hirdetes/mobil')">
-                <div class="catIcon">
-                    <i class="bi bi-phone" style="font-size: 85px;"></i>
-                </div>
-                <div class="catName">
-                    <p>Mobil</p>
-                </div>
+            <div class="catName">
+                <p>Hardver</p>
             </div>
         </div>
-        <div class="cardContainer">
-            {% for category in best_categories %}
-            <div class="card middle-card" onclick="redirectToPage('/hirdetes/{{category.endpoint_name}}')">
-                <div class="catIcon">
-                    <img src="{{ url_for('static', filename=category.icon_path) }}"
-                        style="object-fit: cover; width: 100%; height: 100%;">
-                </div>
-                <div class="catName">
-                    <p>{{ category.name }}</p>
-                </div>
+        <div class="card upper-card" onclick="redirectToPage('/hirdetes/notebook')">
+            <div class="catIcon">
+                <i class="bi bi-laptop" style="font-size: 90px;"></i>
             </div>
-            {% endfor %}
+            <div class="catName">
+                <p>Notebook</p>
+            </div>
         </div>
-        <a href="/hirdetes/osszes" class="card bottom-card">Csak nézelődöm, mutasd az összeset</a>
+        <div class="card upper-card" onclick="redirectToPage('/hirdetes/mobil')">
+            <div class="catIcon">
+                <i class="bi bi-phone" style="font-size: 85px;"></i>
+            </div>
+            <div class="catName">
+                <p>Mobil</p>
+            </div>
+        </div>
     </div>
+    <hr>
+    <h4 class="text-center">Legpörgősebb kategóriák</h4>
+    <div class="cardContainer">
+        {% for category in best_categories %}
+        <div class="card middle-card" onclick="redirectToPage('/hirdetes/{{category.endpoint_name}}')">
+            <div class="catIcon">
+                <img src="{{ url_for('static', filename=category.icon_path) }}"
+                    style="object-fit: cover; width: 100%; height: 100%;">
+            </div>
+            <div class="catName">
+                <p>{{ category.name }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <hr>
+    <a href="/hirdetes/osszes" class="card bottom-card">Csak nézelődöm, mutasd az összeset</a>
+
     <div class="text-center">
         <a href="/hirdetes/hirdetesfeladas">
             <button type="button" class="btn btn-primary btn-lg">Hírdetésfeladás</button>
         </a>
     </div>
-    
 </div>
-
-
-
 
 {%endblock%}
