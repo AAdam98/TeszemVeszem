@@ -33,7 +33,7 @@
     <div class="hirdetesInfok">
         {{ advertisement.price }} Ft
         <br>
-        {{ advertisement.date }}
+        {{ advertisement.date.strftime("%Y-%m-%d") }}
     </div>
     <div class="hirdetesFeladoInfok">
         {{ advertisement.username }}

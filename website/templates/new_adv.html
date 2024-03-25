@@ -2,51 +2,54 @@
 {% block title %} Hírdetésfeladás - {% endblock %}
 {% block content %}
 
-<div class="container">
-  <h2>Hirdetésfeladás</h2>
-  <form method="POST" enctype="multipart/form-data" action="{{ url_for('hirdetes.ujhirdetes') }}">
-    <div class="form-group">
-      <label for="image">Kép feltöltése:</label>
-      <input type="file" class="form-control-file" id="image" name="image">
-    </div>
-    <div class="form-group">
-      <label for="title">Cím:</label>
-      <input type="text" class="form-control" id="title" name="title"
-        placeholder="Írja be a hirdetés címét (min. 5 karakter)" value="{{title}}">
-    </div>
-    <div class="form-group">
-      <label for="description">Leírás:</label>
-      <textarea class="form-control" id="description" name="description" rows="3"
-        placeholder="Írja le a hirdetést (min. 10 karakter)">{{description}}</textarea>
-    </div>
-    <div class="form-group">
-      <label for="price">Ár:</label>
-      <input type="text" class="form-control" id="price" name="price" placeholder="Írja be az árat" value="{{price}}">
-    </div>
-    <div class="form-group">
-      <label for="category">Kategória:</label>
-      <select class="form-control" id="category" name="category">
-          <option value="{{category}}">{{category}}</option>
-          <optgroup label="Hardver">
-            {% for category in hardver_categories %}
-              <option value="{{ category.name }}" {% if category.name == selectedCategory %}selected{% endif %}>{{ category.name }}</option>
-            {% endfor %}
-          </optgroup>
-          <optgroup label="Notebook">
-            {% for category in notebook_categories %}
-              <option value="{{ category.name }}" {% if category.name == selectedCategory %}selected{% endif %}>{{ category.name }}</option>
-            {% endfor %}
-          </optgroup>
-          <optgroup label="Mobil">
-            {% for category in mobil_categories %}
-              <option value="{{ category.name }}" {% if category.name == selectedCategory %}selected{% endif %}>{{ category.name }}</option>
-            {% endfor %}
-          </optgroup>
-      </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Hirdetés feladása</button>
-  </form>
-  <a href="/"><p>Mégse</p></a>
-</div>
+<h2>Hirdetésfeladás</h2>
+<form method="POST" enctype="multipart/form-data" action="{{ url_for('hirdetes.ujhirdetes') }}">
+  <div class="form-group">
+    <label for="image">Kép feltöltése:</label>
+    <input type="file" class="form-control-file" id="image" name="image">
+  </div>
+  <div class="form-group">
+    <label for="title">Cím:</label>
+    <input type="text" class="form-control" id="title" name="title"
+      placeholder="Írja be a hirdetés címét (min. 5 karakter)" value="{{title}}">
+  </div>
+  <div class="form-group">
+    <label for="description">Leírás:</label>
+    <textarea class="form-control" id="description" name="description" rows="3"
+      placeholder="Írja le a hirdetést (min. 10 karakter)">{{description}}</textarea>
+  </div>
+  <div class="form-group">
+    <label for="price">Ár:</label>
+    <input type="text" class="form-control" id="price" name="price" placeholder="Írja be az árat" value="{{price}}">
+  </div>
+  <div class="form-group">
+    <label for="category">Kategória:</label>
+    <select class="form-control" id="category" name="category">
+      <option value="{{category}}">{{category}}</option>
+      <optgroup label="Hardver">
+        {% for category in hardver_categories %}
+        <option value="{{ category.name }}" {% if category.name==selectedCategory %}selected{% endif %}>{{ category.name
+          }}</option>
+        {% endfor %}
+      </optgroup>
+      <optgroup label="Notebook">
+        {% for category in notebook_categories %}
+        <option value="{{ category.name }}" {% if category.name==selectedCategory %}selected{% endif %}>{{ category.name
+          }}</option>
+        {% endfor %}
+      </optgroup>
+      <optgroup label="Mobil">
+        {% for category in mobil_categories %}
+        <option value="{{ category.name }}" {% if category.name==selectedCategory %}selected{% endif %}>{{ category.name
+          }}</option>
+        {% endfor %}
+      </optgroup>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Hirdetés feladása</button>
+</form>
+<a href="/">
+  <p>Mégse</p>
+</a>
 
 {% endblock %}
