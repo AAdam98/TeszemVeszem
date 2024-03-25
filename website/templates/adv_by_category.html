@@ -37,7 +37,8 @@
         {{ advertisement.date }}
     </div>
     <div class="hirdetesFeladoInfok">
-        {{ advertisement.username }}
+        {% set user = User.query.get(advertisement.userID) %}
+        <p id="username">{{ user.username }}</p>          
     </div>
 </div>
     {% endif %}

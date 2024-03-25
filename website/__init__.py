@@ -48,8 +48,13 @@ def create_app():
     def unauthorized_callback():
         flash("Ehhez az oldalhoz be kell jelentkezned!", "warning")
         return redirect(url_for("auth.login"))
+    
+    @app.context_processor
+    def inject_models():
+        return dict(User=User)
 
     create_database(app)
+
 
     return app
 

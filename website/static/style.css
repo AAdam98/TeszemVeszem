@@ -35,6 +35,10 @@ a {
     font-size: 1rem;
 }
 
+#advInfo {
+    color: black;
+}
+
 a:hover {
     color: orange;
 }
@@ -351,4 +355,9 @@ footer {
 
 #updateBtn {
     color: black !important;
+}
+
+#username {
+    margin-top: 15px;
+    text-align: center;
 }
