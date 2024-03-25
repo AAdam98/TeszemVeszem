@@ -3,39 +3,44 @@
 
 {%block content%}
 
-<div class="content">
-    <h1>Összes hírdetés</h1>
-    <form method="POST" action="{{ url_for('hirdetes.index') }}">
-        <label for="sortBy">Rendezés:</label>
-        <select id="sortBy" name="sortBy">
-            <option value="price_desc">Csökkenő (Ár szerint)</option>
-            <option value="price_asc">Növekvő (Ár szerint)</option> 
-            <option value="date_desc">Csökkenő (Dátum szerint)</option>
-            <option value="date_asc">Növekvő (Dátum szerint)</option>
-        </select>
+<h1>Összes hírdetés</h1>
+<form method="POST" action="{{ url_for('hirdetes.index') }}">
+    <label for="sortBy">Rendezés:</label>
+    <select id="sortBy" name="sortBy">
+        <option value="price_desc">Csökkenő (Ár szerint)</option>
+        <option value="price_asc">Növekvő (Ár szerint)</option>
+        <option value="date_desc">Csökkenő (Dátum szerint)</option>
+        <option value="date_asc">Növekvő (Dátum szerint)</option>
+    </select>
 
-        <label for="min_price">Minimum Ár:</label>
-        <input type="number" id="min_price" name="min_price" placeholder="Minimum ár">
-        <label for="max_price">Maximum Ár:</label>
-        <input type="number" id="max_price" name="max_price" placeholder="Maximum ár">
-    
-        <button type="submit">Küldés</button>
-    </form>
+    <label for="min_price">Minimum Ár:</label>
+    <input type="number" id="min_price" name="min_price" placeholder="Minimum ár">
+    <label for="max_price">Maximum Ár:</label>
+    <input type="number" id="max_price" name="max_price" placeholder="Maximum ár">
+
+    <button type="submit">Küldés</button>
+</form>
+<div class="hirdetesLista">
     {% for advertisement in advertisements %}
     {% if advertisement.available %}
-    <div class="cardContainer">
-        <a href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}">
-            <div class="card upper-card">
-                <div class="text">
-                    <p>{{ advertisement.date }}</p>
-                    <p>{{ advertisement.title }}</p>
-                    <p>{{ advertisement.category }}</p>
-                    <p>{{ advertisement.description }}</p>
-                    <p>{{ advertisement.price }}</p>
-                </div>
-            </div>
-        </a>
+
+    <div class="hirdetesCard">
+        <div>
+            <img class="hirdetesImage" src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba">
+        </div>
+        <div class="hirdetesText">
+            {{ advertisement.title }}
+        </div>
+        <div class="hirdetesInfok">
+            {{ advertisement.price }} Ft
+            <br>
+            {{ advertisement.date }}
+        </div>
+        <div class="feladoInfok">
+            {{ advertisement.userID }}
+        </div>
     </div>
+    </a>
     {% endif %}
     {% endfor %}
 </div>

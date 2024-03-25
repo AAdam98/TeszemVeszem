@@ -14,12 +14,14 @@ DB_NAME = "database.sqlite"
 def create_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "macskajaj"
-    app.config["SQLALCHEMY_DATABASE_URI"] = (
-        f"sqlite:///{path.join(app.instance_path, DB_NAME)}"
-    )
-    UPLOAD_FOLDER = "website/uploads"
+    app.config["SQLALCHEMY_DATABASE_URI"] = (f"sqlite:///{path.join(app.instance_path, DB_NAME)}")
+    
+    
+    UPLOAD_FOLDER = "website/static/cdn"
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
+        print("CDN MAPPA LETREHOZVA")
+        
     app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
     db.init_app(app)
     migrate = Migrate(app, db)
