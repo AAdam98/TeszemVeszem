@@ -125,8 +125,8 @@ footer {
 .hirdetesCard {
     background-color: #f0f0f0;
     border-bottom: solid 1px #ddd;
-    padding: 1rem;
-    margin: 1rem;
+    padding: 0.5rem;
+    margin: 0.3rem;
     flex-wrap: wrap;
     overflow: hidden;
     min-height: 6rem;
@@ -134,13 +134,14 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     flex-wrap: nowrap;
 }
 
 .hirdetesText{
     margin-right: auto;
     padding: 0 1rem;
+    
 }
 
 .hirdetesImage {
