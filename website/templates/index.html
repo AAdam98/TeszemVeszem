@@ -25,9 +25,9 @@
     {% if advertisement.available %}
 
     <div class="hirdetesCard">
-        <div>
-            <img class="hirdetesImage" src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba">
-        </div>
+        
+            <a class="align-self-center" href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}"><img class="hirdetesImage" src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba"></a>
+        
         <div class="hirdetesText">
             {{ advertisement.title }}
         </div>
@@ -36,11 +36,11 @@
             <br>
             {{ advertisement.date }}
         </div>
-        <div class="feladoInfok">
-            {{ advertisement.userID }}
+        <div class="hirdetesFeladoInfok">
+            {{ advertisement.username }}
         </div>
     </div>
-    </a>
+    
     {% endif %}
     {% endfor %}
 </div>

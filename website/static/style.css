@@ -23,7 +23,7 @@ html {
 }
 
 body {
-    margin-bottom: 60px; /*footer magassága*/
+    margin-bottom: 9rem; /*footer magassága*/
     background-color: #f0f0ff;
     overflow: hidden;
     overflow-y: auto;
@@ -97,7 +97,7 @@ footer {
 
 .container {
     background-color: white;
-    min-height: calc(100vh - 9rem - 9rem);
+    min-height: calc(100vh - 6.5rem - 6.5rem);
     padding: 2rem;
 }
 
@@ -134,14 +134,39 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: nowrap;
 }
 
-.hirdetesImage {
-    width: 100px;
-    height: 60px;
+.hirdetesText{
+    margin-right: auto;
+    padding: 0 1rem;
 }
+
+.hirdetesImage {
+    object-fit: cover;
+    width: 80px;
+    height: 60px;
+    margin: 0 0 0 1rem;
+    position: relative;
+    text-align: center;
+    border: solid 1px #ddd;
+}
+
+.hirdetesInfok{
+    width: 150px;
+    height: 60px;
+    text-align: center;
+    border-left: solid 1px #ddd;
+    border-right: solid 1px #ddd;
+    padding: 0 .125rem;
+    flex: none;
+}
+.hirdetesFeladoInfok{
+    flex: none;
+    width: 150px;
+}
+
 
 .card {
     position: static ;
