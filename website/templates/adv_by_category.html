@@ -4,7 +4,7 @@
 {%block content%}
 
 
-    <h1>{{ name }} hírdetések</h1>
+    <h1 class="text-center">{{ name }} hirdetések</h1>
 
     <form method="POST" action="{{ url_for('hirdetes.query', category=category) }}">
         <label for="sortBy">Rendezés:</label>
@@ -24,19 +24,22 @@
     </form>
     {% for advertisement in filtered_advertisements %}
     {% if advertisement.available %}
-        <div class="cardContainer">
-            <a href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}">
-                <div class="card upper-card">
-                    <div class="text">
-                        <p>{{ advertisement.date }}</p>
-                        <p>{{ advertisement.title }}</p>
-                        <p>{{ advertisement.category }}</p>
-                        <p>{{ advertisement.description }}</p>
-                        <p>{{ advertisement.price }}</p>
-                    </div>
-                </div>
-            </a>
-        </div>
+    <div class="hirdetesCard">
+        
+        <a class="align-self-center" href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}"><img class="hirdetesImage" src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba"></a>
+    
+    <div class="hirdetesText">
+        {{ advertisement.title }}
+    </div>
+    <div class="hirdetesInfok">
+        {{ advertisement.price }} Ft
+        <br>
+        {{ advertisement.date }}
+    </div>
+    <div class="hirdetesFeladoInfok">
+        {{ advertisement.username }}
+    </div>
+</div>
     {% endif %}
     {% endfor %}
 
