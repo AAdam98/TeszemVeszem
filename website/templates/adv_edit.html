@@ -26,7 +26,7 @@
     <div class="form-group">
       <label for="category">Kategória:</label>
       <select class="form-control" id="category" name="category">
-          <option value="">Válasszon kategóriát</option>
+          <option value="{{advertisement.category}}">{{advertisement.category}}</option>
           <optgroup label="Hardver">
             {% for category in hardver_categories %}
               <option value="{{ category.name }}" {% if category.name == selectedCategory %}selected{% endif %}>{{ category.name }}</option>
