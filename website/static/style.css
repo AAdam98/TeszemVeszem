@@ -359,3 +359,8 @@ footer {
     margin-top: 15px;
     text-align: center;
 }
+
+.wall {
+    margin-top: 9px;
+    color: blue;
+}
