@@ -29,7 +29,7 @@
         <a class="align-self-center" href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}"><img class="hirdetesImage" src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba"></a>
     
     <div class="hirdetesText">
-        {{ advertisement.title }}
+        <a id="advInfo" href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}">{{ advertisement.title }}</a>
     </div>
     <div class="hirdetesInfok">
         {{ advertisement.price }} Ft
