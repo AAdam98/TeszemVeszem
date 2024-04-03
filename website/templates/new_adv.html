@@ -7,7 +7,8 @@
   <form method="POST" enctype="multipart/form-data" action="{{ url_for('hirdetes.ujhirdetes') }}">
     <div class="form-group">
       <label for="image">Kép feltöltése:</label>
-      <input type="file" class="form-control-file" id="image" name="image" onchange="updatePreviewImage(this);">
+      <input type="file" class="form-control-file" id="image" name="image" accept="image/png, image/jpg, image/jpeg"
+        onchange="updatePreviewImage(this);">
       <!-- Rejtett input mező a kiválasztott kép nevének tárolására -->
       <input type="hidden" id="preview_image" name="preview_image" value="">
     </div>
