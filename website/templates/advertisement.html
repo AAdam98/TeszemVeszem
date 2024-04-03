@@ -33,7 +33,7 @@
         <h3>{{ "{:,.0f}".format(advertisement.price).replace(',', ' ') }} Ft</h3>
     </div>
     <div class="hirdetesLeiras" >
-        <p>{{ advertisement.description }}</p>
+        {{ advertisement.description|safe }}
     </div>
 
 </div>
