@@ -31,7 +31,7 @@
         {{ advertisement.title }}
     </div>
     <div class="hirdetesInfok">
-        {{ advertisement.price }} Ft
+        {{ "{:,.0f}".format(advertisement.price).replace(',', ' ') }} Ft
         <br>
         {{ advertisement.date.strftime("%Y-%m-%d") }}
     </div>

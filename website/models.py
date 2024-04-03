@@ -25,15 +25,17 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(50))
     is_admin = db.Column(db.Boolean, default=False)
+    registration_date = db.Column(db.DateTime(timezone=True), default=func.now())
 
     def get_id(self):
         return self.userID
 
-    def __init__(self, email, username, password, is_admin=False):
+    def __init__(self, email, username, password, registration_date, is_admin=False ):
         self.email = email
         self.username = username
         self.password = password
         self.is_admin = is_admin
+        self.registration_date = registration_date
 
 
 class Comment(db.Model):
