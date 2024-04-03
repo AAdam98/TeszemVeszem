@@ -6,9 +6,20 @@
     {% if advertisement.userID == userID %}
         <a href="{{ url_for('hirdetes.adv_edit', id=advertisement.advertisementID) }}"><p id="updateBtn">Hirdetés szerkesztése</p></a>
     {% endif %}
-    <form action="{{ url_for('hirdetes.adv_delete', id=advertisement.advertisementID) }}" method="post">
-        <button type="submit">Hirdetés törlése</button>
+    <form id="deleteForm" action="{{ url_for('hirdetes.adv_delete', id=advertisement.advertisementID) }}" method="post">
+        <button type="button" onclick="confirmDelete()">Hirdetés törlése</button>
     </form>
+    
+    <script>
+        function confirmDelete() {
+            if (confirm("Biztosan törölni szeretné ezt a hirdetést?")) {
+                document.getElementById("deleteForm").submit();
+            } else {
+                console.log("Törlés megszakítva.");
+            }
+        }
+    </script>
+    
 {% endif %}
 
     <div class="text">
