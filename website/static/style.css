@@ -23,7 +23,8 @@ html {
 }
 
 body {
-    margin-bottom: 9rem; /*footer magassága*/
+    margin-bottom: 9rem;
+    /*footer magassága*/
     background-color: #f0f0ff;
     overflow: hidden;
     overflow-y: auto;
@@ -31,7 +32,7 @@ body {
 
 a {
     text-decoration: none;
-    
+
 }
 
 #advInfo {
@@ -47,16 +48,15 @@ header {
     top: 0;
     padding: 0 2rem;
     background-color: #008fff;
-    min-height: 4rem ;
+    min-height: 4rem;
     max-height: 4rem;
 }
-
 
 footer {
     background-color: #008fff;
     position: absolute;
     width: 100%;
-    min-height: 9rem ;
+    min-height: 9rem;
     max-height: 9rem;
     /* 
     
@@ -94,10 +94,6 @@ footer {
     max-height: 15rem;
 }
 
-
-
-
-
 .container {
     background-color: white;
     min-height: calc(100vh - 6.5rem - 6.5rem);
@@ -133,7 +129,6 @@ footer {
     flex-wrap: wrap;
     overflow: hidden;
     min-height: 6rem;
-
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -141,10 +136,10 @@ footer {
     flex-wrap: nowrap;
 }
 
-.hirdetesText{
+.hirdetesText {
     margin-right: auto;
     padding: 0 1rem;
-    
+
 }
 
 .hirdetesImage {
@@ -157,7 +152,7 @@ footer {
     border: solid 1px #ddd;
 }
 
-.hirdetesInfok{
+.hirdetesInfok {
     width: 150px;
     text-align: center;
     border-left: solid 1px #ddd;
@@ -165,14 +160,14 @@ footer {
     padding: 0 .125rem;
     flex: none;
 }
-.hirdetesFeladoInfok{
+
+.hirdetesFeladoInfok {
     flex: none;
     width: 150px;
 }
 
-
 .card {
-    position: static ;
+    position: static;
     background-color: #f0f0f0;
     padding: 20px;
     text-align: center;
@@ -358,4 +353,9 @@ footer {
 #username {
     margin-top: 15px;
     text-align: center;
+}
+
+#preview {
+    max-width: 400px;
+    max-height: 400px;
 }
