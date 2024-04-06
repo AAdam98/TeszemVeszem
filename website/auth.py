@@ -22,7 +22,9 @@ def login():
             else:
                 flash("Helytelen jelszó.", category="error")
         else:
-            flash("Nincs ilyen e-mail címmel regisztrált felhasználó.", category="error")
+            flash(
+                "Nincs ilyen e-mail címmel regisztrált felhasználó.", category="error"
+            )
     return render_template("login.html")
 
 
@@ -51,7 +53,9 @@ def signup():
         elif len(email) < 3 or not "@" in email or not "." in email:
             flash("Nem megfelelő email cím formátum!", category="error")
         elif len(username) < 4:
-            flash("A felhasználónév nem lehet rövidebb mint 4 karakter", category="error")
+            flash(
+                "A felhasználónév nem lehet rövidebb mint 4 karakter", category="error"
+            )
         elif password1 != password2:
             flash("Nem egyeznek a jelszavak", category="error")
         elif len(password1) < 6:

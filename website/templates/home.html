@@ -1,17 +1,17 @@
-{% extends "base.html" %}
-{%block title %} Főoldal - {% endblock %}
+{% extends "base.html" %} {%block title %} Főoldal - {% endblock %} {%block
+content%}
 
-{%block content%}
-
-<h2 class="text-center">Vásárolj, és adj el Magyarország egyik legmegbízhatóbb online piacterén!</h2>
+<h2 class="text-center">
+    Vásárolj, és adj el Magyarország egyik legmegbízhatóbb online piacterén!
+</h2>
 
 <div class="hirdetesHomeDoboz">
     <div class="cardContainer">
-        <div class="card upper-card " onclick="redirectToPage('/hirdetes/hardver')">
+        <div class="card upper-card" onclick="redirectToPage('/hirdetes/hardver')">
             <span class="catIcon bi bi-motherboard"></span>
             <span class="catName">Hardver</span>
         </div>
-        <div class=" card upper-card" onclick="redirectToPage('/hirdetes/notebook')">
+        <div class="card upper-card" onclick="redirectToPage('/hirdetes/notebook')">
             <span class="catIcon bi bi-laptop"></span>
             <span class="catName">Notebook</span>
         </div>
@@ -20,7 +20,7 @@
             <span class="catName">Mobil</span>
         </div>
     </div>
-    <hr>
+    <hr />
     <h4 class="text-center">Legpörgősebb kategóriák</h4>
     <div class="cardContainer">
         {% for category in best_categories %}
@@ -30,7 +30,7 @@
         </div>
         {% endfor %}
     </div>
-    <hr>
+    <hr />
     <a href="/hirdetes/osszes" class="card bottom-card">Csak nézelődöm, mutasd az összeset</a>
 
     <div class="text-center">

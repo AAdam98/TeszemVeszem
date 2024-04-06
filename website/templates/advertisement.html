@@ -1,25 +1,22 @@
-{% extends "base.html" %}
-{%block title %} {{ advertisement.title }} - {% endblock %}
-
-{% block content %}
-{% if advertisement.userID == userID or user.is_admin %}
-{% if advertisement.userID == userID %}
+{% extends "base.html" %} {%block title %} {{ advertisement.title }} - {%
+endblock %} {% block content %} {% if advertisement.userID == userID or
+user.is_admin %} {% if advertisement.userID == userID %}
 <a href="{{ url_for('hirdetes.adv_edit', id=advertisement.advertisementID) }}">
-    <p>Hirdetés szerkesztése</p>
+	<p>Hirdetés szerkesztése</p>
 </a>
 {% endif %}
 <form action="{{ url_for('hirdetes.adv_delete', id=advertisement.advertisementID) }}" method="post">
-    <button type="submit">Hirdetés törlése</button>
+	<button type="submit">Hirdetés törlése</button>
 </form>
 {% endif %}
 
 <div class="text">
-    <p><img src="{{ advertisement.image_path }}" alt="termékfotó"></p>
-    <p>Felhasználó: {{ user.username}}</p>
-    <p>Dátum: {{ advertisement.date }}</p>
-    <p>Cím: {{ advertisement.title }}</p>
-    <p>Kategória: {{ advertisement.category }}</p>
-    <p>Leírás: {{ advertisement.description }}</p>
-    <p>Ár: {{ advertisement.price }}</p>
+	<p><img src="{{ advertisement.image_path }}" alt="termékfotó" /></p>
+	<p>Felhasználó: {{ user.username}}</p>
+	<p>Dátum: {{ advertisement.date }}</p>
+	<p>Cím: {{ advertisement.title }}</p>
+	<p>Kategória: {{ advertisement.category }}</p>
+	<p>Leírás: {{ advertisement.description }}</p>
+	<p>Ár: {{ advertisement.price }}</p>
 </div>
 {% endblock %}
