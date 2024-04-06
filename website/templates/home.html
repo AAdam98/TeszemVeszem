@@ -8,15 +8,15 @@
 <div class="hirdetesHomeDoboz">
     <div class="cardContainer">
         <div class="card upper-card " onclick="redirectToPage('/hirdetes/hardver')">
-            <span class="catIcon upper bi bi-motherboard"></span>
+            <span class="catIcon bi bi-motherboard"></span>
             <span class="catName">Hardver</span>
         </div>
         <div class=" card upper-card" onclick="redirectToPage('/hirdetes/notebook')">
-            <span class="catIcon upper bi bi-laptop"></span>
+            <span class="catIcon bi bi-laptop"></span>
             <span class="catName">Notebook</span>
         </div>
         <div class="card upper-card" onclick="redirectToPage('/hirdetes/mobil')">
-            <span class="catIcon upper bi bi-phone"></span>
+            <span class="catIcon bi bi-phone"></span>
             <span class="catName">Mobil</span>
         </div>
     </div>
@@ -25,7 +25,7 @@
     <div class="cardContainer">
         {% for category in best_categories %}
         <div class="card middle-card" onclick="redirectToPage('/hirdetes/{{category.endpoint_name}}')">
-            <span class="catIcon {{category.icon_path}}"></span>
+            <span class="catIcon middle {{category.icon_path}}"></span>
             <span class="catName">{{ category.name }}</span>
         </div>
         {% endfor %}
