@@ -20,8 +20,11 @@ content%}
             <span class="catName">Mobil</span>
         </div>
     </div>
+
     <hr />
+
     <h4 class="text-center">Legpörgősebb kategóriák</h4>
+
     <div class="cardContainer">
         {% for category in best_categories %}
         <div class="card middle-card" onclick="redirectToPage('/hirdetes/{{category.endpoint_name}}')">
@@ -30,12 +33,19 @@ content%}
         </div>
         {% endfor %}
     </div>
+
     <hr />
-    <a href="/hirdetes/osszes" class="card bottom-card">Csak nézelődöm, mutasd az összeset</a>
+
+    <div class="cardContainer">
+        <div class="card bottom-card" onclick="redirectToPage('/hirdetes/osszes')">
+            <span class="catIcon middle bi bi-card-list"></span>
+            <span class="catName">Csak nézelődöm, mutasd az összeset</span>
+        </div>
+    </div>
 
     <div class="text-center">
-        <a href="/hirdetes/hirdetesfeladas" class="btn btn-primary btn-lg">
-            Hírdetésfeladás
+        <a href="/hirdetes/hirdetesfeladas" class="btn btn-primary btn-lg bi bi-plus-circle">
+            Hirdetésfeladás
         </a>
     </div>
 </div>

@@ -24,18 +24,18 @@
 				<a href="/" class="logo">TeszemVeszem</a>
 			</div>
 			<div class="btn-group">
-				<a href="/hirdetes/hirdetesfeladas"><button type="button" class="btn btn-light">
-						<i class="bi bi-plus-circle"></i>
+				<a href="/hirdetes/hirdetesfeladas"><button type="button" class="btn btn-light bi bi-plus-circle">
+						Hirdetésfeladás
 					</button>
 				</a>
 
 				<div class="dropdown">
 					{% if current_user.is_authenticated %}
 					<div class="accountMenu">
-						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
-							data-bs-toggle="dropdown" aria-expanded="false">
+						<button class="btn btn-secondary dropdown-toggle bi bi-person-circle" type="button"
+							id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
 							{{ current_user.username }}
-							<i class="bi bi-person-circle"></i>
+							<i class=""></i>
 						</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
 							<li>

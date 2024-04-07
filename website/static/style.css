@@ -167,7 +167,7 @@ footer {
 	flex-direction: column;
 	border-radius: 15px;
 	cursor: pointer;
-	transition: transform 0.3s ease;
+	transition: transform 0.2s ease;
 }
 
 .card.upper-card {
@@ -178,6 +178,14 @@ footer {
 .card.middle-card {
 	height: 10rem;
 	width: 100%;
+}
+
+.card.bottom-card {
+	flex-direction: row;
+}
+
+.card.bottom-card.catName {
+	margin-left: 1rem;
 }
 
 .card.upper-card:hover,
@@ -378,6 +386,7 @@ footer {
 	}
 
 	.catName {
+		flex-grow: 1;
 		text-align: justify;
 		margin-left: 1rem;
 		margin-right: 1rem;
@@ -396,4 +405,16 @@ footer {
 	.card.middle-card {
 		height: calc(var(--catIcon-middle-height) + 10px);
 	}
+
+	.card.upper-card:hover,
+	.card.middle-card:hover {
+		transform: scale(1.05);
+	}
+
+	.card.bottom-card:hover {
+		transform: scale(1.025);
+	}
+}
+
+@media screen and (max-width: 450) {
 }
