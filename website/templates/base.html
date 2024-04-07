@@ -20,14 +20,12 @@
 <body>
 	<header>
 		<div class="navbar">
-			<div class="logo">
-				<a href="/" class="logo">TeszemVeszem</a>
-			</div>
+			<div class="logo" onclick="redirectToPage('/')">TeszemVeszem</div>
 			<div class="btn-group">
-				<a href="/hirdetes/hirdetesfeladas"><button type="button" class="btn btn-light bi bi-plus-circle">
-						Hirdetésfeladás
-					</button>
-				</a>
+				<button type="button" class="btn btn-light bi bi-plus-circle"
+					onclick="redirectToPage('/hirdetes/hirdetesfeladas')">
+					Hirdetésfeladás
+				</button>
 
 				<div class="dropdown">
 					{% if current_user.is_authenticated %}
@@ -35,7 +33,6 @@
 						<button class="btn btn-secondary dropdown-toggle bi bi-person-circle" type="button"
 							id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
 							{{ current_user.username }}
-							<i class=""></i>
 						</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
 							<li>
