@@ -159,9 +159,7 @@ footer {
 	background-color: #f0f0f0;
 	padding: 20px;
 	text-align: center;
-	font-size: 18px;
-	line-height: 1.5;
-	margin: 15px;
+	margin: 1rem;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -182,6 +180,7 @@ footer {
 
 .card.bottom-card {
 	flex-direction: row;
+	width: 100%;
 }
 
 .card.bottom-card.catName {
@@ -211,11 +210,6 @@ footer {
 	padding: 0;
 	margin: 0;
 	font-size: var(--catIcon-middle-height);
-}
-
-.catName {
-	--catName-height: auto;
-	display: flex;
 }
 
 .ujhirdetes {
