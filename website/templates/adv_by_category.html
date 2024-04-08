@@ -30,6 +30,7 @@
     
     <div class="hirdetesekText">
         {{ advertisement.title }}
+
     </div>
     <div class="hirdetesekInfok">
         {{ "{:,.0f}".format(advertisement.price).replace(',', ' ') }} Ft
@@ -38,7 +39,10 @@
     </div>
     <div class="hirdetesekFeladoInfok">
         {% set user = User.query.get(advertisement.userID) %}
-        {{ user.username }}      
+        <a id="advInfo" href="{{ url_for('hirdetes.advByUser', id=user.userID) }}">
+            <p id="user">{{ user.username }}</p>
+        </a>           
+>>>>>>> dev
     </div>
 </div>
     {% endif %}
