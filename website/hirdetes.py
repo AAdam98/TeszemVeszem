@@ -386,12 +386,13 @@ def advByUser(id):
 @hirdetes.route("/hirdetesfeladas", methods=["GET", "POST"])
 @login_required
 def ujhirdetes():
-    preview_image = ""
-    if request.method == "POST":
-        title = request.form.get("title")
-        category_name = request.form.get("category")
-        description = request.form.get("description")
-        price = request.form.get("price")
+    image_error = False
+    
+    if request.method == 'POST':
+        title = request.form.get('title')
+        category_name = request.form.get('category')
+        description = request.form.get('description')
+        price = request.form.get('price')
         userID = current_user.get_id()
         filename = ""
         if "image" in request.files:

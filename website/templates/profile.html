@@ -9,49 +9,24 @@
 					<p>Hirdetésfeladás</p>
 				</div>
 			</div>
-			<div class="card upper-card" onclick="redirectToPage('/felhasznalonev')">
-				<div class="text">
-					<p>Felhasználónév</p>
-				</div>
-			</div>
-			<div class="card upper-card" onclick="redirectToPage('/jelszokezeles')">
-				<div class="text">
-					<p>Jelszó</p>
-				</div>
-			</div>
-		</div>
-		<div class="cardContainer">
-			<div class="card bottom-card">
-				Small Card
-				<div class="text">
-					<p>(?)</p>
-				</div>
-			</div>
-			<div class="card bottom-card">
-				Small Card
-				<div class="text">
-					<p>(?)</p>
-				</div>
-			</div>
-			<div class="card bottom-card">
-				Small Card
-				<div class="text">
-					<p>(?)</p>
-				</div>
-			</div>
 			{% if current_user.is_admin %}
-			<div class="card bottom-card" onclick="redirectToPage('/hirdetes/osszes')">
-				Hirdetések kezelése
-				<!-- Ide jöhet bármilyen további tartalom, ami a hirdetések kezeléséhez szükséges -->
+			<div class="card upper-card" onclick="redirectToPage('/hirdetes/osszes')">
+				<div class="text">
+					<p>Hirdetések kezelése</p>
+				</div>
 			</div>
 			{% else %}
-			<div class="card bottom-card">
-				Kedvencek
+			<div class="card upper-card" onclick="redirectToPage('/hirdetes/sajathirdetesek')">
 				<div class="text">
-					<p>(Hamarosan)</p>
+					<p>Saját hirdetések</p>
 				</div>
 			</div>
 			{% endif %}
+			<div class="card upper-card" onclick="redirectToPage('/jelszokezeles')">
+				<div class="text">
+					<p>Jelszó megváltoztatása</p>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
