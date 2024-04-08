@@ -60,6 +60,12 @@ def create_app():
 
 
 def create_database(app):
+    
+    if not os.path.exists("instance"):
+        os.makedirs("instance")
+        print("STATIC MAPPA LETREHOZVA")
+        
+        
     db_path = path.join(app.instance_path, DB_NAME)
     if not path.exists(db_path):
         with app.app_context():
@@ -80,97 +86,97 @@ def create_database(app):
                 db.session.add(admin_user)
 
                 categories = [
-                    ("hardver", "Alaplap", "icons/alaplap.svg", "alaplap"),
-                    ("hardver", "Processzor", "icons/processzor.svg", "processzor"),
-                    ("hardver", "Memória", "icons/memoria.svg", "memoria"),
-                    ("hardver", "Hűtés", "icons/hutes.svg", "hutes"),
-                    ("hardver", "Ház, táp", "icons/haz.svg", "haz_tap"),
+                    ("hardver", "Alaplap", "bi-motherboard", "alaplap"),
+                    ("hardver", "Processzor", "bi-cpu", "processzor"),
+                    ("hardver", "Memória", "bi-memory", "memoria"),
+                    ("hardver", "Hűtés", "bi-fan", "hutes"),
+                    ("hardver", "Ház, táp", "bi-pc", "haz_tap"),
                     (
                         "hardver",
                         "Játékvezérlő, szimulátor",
-                        "icons/jatekvezerlo.svg",
+                        "bi-controller",
                         "jatekvezerlo_szimulator",
                     ),
-                    ("hardver", "VR", "icons/vr.svg", "vr"),
+                    ("hardver", "VR", "bi-badge-vr", "vr"),
                     (
                         "hardver",
                         "Billentyűzet, egér(pad)",
-                        "icons/billentyuzet.svg",
+                        "bi-keyboard",
                         "billentyuzet_eger",
                     ),
                     (
                         "hardver",
                         "Egyéb hardverek",
-                        "icons/egyebhardver.svg",
+                        "bi-pci-card",
                         "egyeb_hardverek",
                     ),
                     (
                         "hardver",
                         "Retró hardverek",
-                        "icons/retrohardver.svg",
+                        "bi-archive",
                         "retro_hardverek",
                     ),
-                    ("hardver", "Videókártya", "icons/videokartya.svg", "videokartya"),
-                    ("hardver", "Monitor", "icons/monitor.svg", "monitor"),
+                    ("hardver", "Videókártya", "bi-gpu-card", "videokartya"),
+                    ("hardver", "Monitor", "bi-display", "monitor"),
                     (
                         "hardver",
                         "Merevlemez, SSD",
-                        "icons/merevlemezssd.svg",
+                        "bi-hdd",
                         "merevlemez_ssd",
                     ),
-                    ("hardver", "Adathordozó", "icons/adathordozo.svg", "adathordozo"),
+                    ("hardver", "Adathordozó", "bi-sd-card", "adathordozo"),
                     (
                         "hardver",
                         "Hálózati termékek",
-                        "icons/halozati.svg",
+                        "bi-router",
                         "halozati_termekek",
                     ),
                     (
                         "hardver",
                         "Nyomtató, szkenner",
-                        "icons/nyomtato.svg",
+                        "bi-printer",
                         "nyomtato_szkenner",
                     ),
-                    ("mobil", "IPhone", "icons/mobil.svg", "iphone"),
-                    ("mobil", "Samsung", "icons/mobil.svg", "samsung"),
-                    ("mobil", "Sony", "icons/mobil.svg", "sony"),
-                    ("mobil", "LG", "icons/mobil.svg", "lg"),
-                    ("mobil", "Asus", "icons/mobil.svg", "asus"),
-                    ("mobil", "Google", "icons/mobil.svg", "google"),
+                    ("mobil", "IPhone", "bi-phone", "iphone"),
+                    ("mobil", "Samsung", "bi-phone", "samsung"),
+                    ("mobil", "Sony", "bi-phone", "sony"),
+                    ("mobil", "LG", "bi-phone", "lg"),
+                    ("mobil", "Asus", "bi-phone", "asus"),
+                    ("mobil", "Google", "bi-phone", "google"),
                     (
                         "mobil",
                         "Xiaomi, Redmi, Poco",
-                        "icons/mobil.svg",
+                        "bi-phone",
                         "xiaomi_redmi_poco",
                     ),
-                    ("mobil", "Huawei", "icons/mobil.svg", "huawei"),
-                    ("mobil", "Honor", "icons/mobil.svg", "honor"),
-                    ("mobil", "Realme", "icons/mobil.svg", "realme"),
-                    ("mobil", "OnePlus", "icons/mobil.svg", "oneplus"),
-                    ("mobil", "Oppo", "icons/mobil.svg", "oppo"),
-                    ("mobil", "Nokia", "icons/mobil.svg", "nokia"),
-                    ("mobil", "Motorola", "icons/mobil.svg", "motorola"),
-                    ("mobil", "Lenovo", "icons/mobil.svg", "lenovo"),
-                    ("notebook", "MacBook", "icons/notebook.svg", "macbook"),
-                    ("notebook", "MacBook Air", "icons/notebook.svg", "macbook_air"),
-                    ("notebook", "MacBook Pro", "icons/notebook.svg", "macbook_pro"),
-                    ("notebook", "Subnotebook", "icons/notebook.svg", "subnotebook"),
+                    ("mobil", "Huawei", "bi-phone", "huawei"),
+                    ("mobil", "Honor", "bi-phone", "honor"),
+                    ("mobil", "Realme", "bi-phone", "realme"),
+                    ("mobil", "OnePlus", "bi-phone", "oneplus"),
+                    ("mobil", "Oppo", "bi-phone", "oppo"),
+                    ("mobil", "Nokia", "bi-phone", "nokia"),
+                    ("mobil", "Motorola", "bi-phone", "motorola"),
+                    ("mobil", "Lenovo", "bi-phone", "lenovo"),
+                    ("notebook", "MacBook", "bi-laptop", "macbook"),
+                    ("notebook", "MacBook Air", "bi-laptop", "macbook_air"),
+                    ("notebook", "MacBook Pro", "bi-laptop", "macbook_pro"),
+                    ("notebook", "Subnotebook", "bi-laptop", "subnotebook"),
                     (
                         "notebook",
                         "Könnyű notebook",
-                        "icons/notebook.svg",
+                        "bi-laptop",
                         "konnyu_notebook",
                     ),
                     (
                         "notebook",
                         "Asztali notebook",
-                        "icons/notebook.svg",
+                        "bi-laptop",
                         "asztali_notebook",
                     ),
                     (
                         "notebook",
                         "Nagyméretű notebook",
-                        "icons/notebook.svg",
+                        "bi-laptop",
                         "nagymeretu_notebook",
                     ),
                 ]
