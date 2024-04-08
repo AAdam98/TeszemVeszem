@@ -1,57 +1,51 @@
-{% extends "base.html" %}
-{%block title %} Főoldal - {% endblock %}
+{% extends "base.html" %} {%block title %} Főoldal - {% endblock %} {%block
+content%}
 
-{%block content%}
-
-<h2 class="text-center">Vásárolj, és adj el Magyarország egyik legmegbízhatóbb online piacterén!</h2>
+<h2 class="text-center">
+    Vásárolj, és adj el Magyarország egyik legmegbízhatóbb online piacterén!
+</h2>
 
 <div class="hirdetesHomeDoboz">
     <div class="cardContainer">
         <div class="card upper-card" onclick="redirectToPage('/hirdetes/hardver')">
-            <div class="catIcon">
-                <i class="bi bi-motherboard" style="font-size: 90px;"></i>
-            </div>
-            <div class="catName">
-                <p>Hardver</p>
-            </div>
+            <span class="catIcon bi bi-motherboard"></span>
+            <span class="catName">Hardver</span>
         </div>
         <div class="card upper-card" onclick="redirectToPage('/hirdetes/notebook')">
-            <div class="catIcon">
-                <i class="bi bi-laptop" style="font-size: 90px;"></i>
-            </div>
-            <div class="catName">
-                <p>Notebook</p>
-            </div>
+            <span class="catIcon bi bi-laptop"></span>
+            <span class="catName">Notebook</span>
         </div>
         <div class="card upper-card" onclick="redirectToPage('/hirdetes/mobil')">
-            <div class="catIcon">
-                <i class="bi bi-phone" style="font-size: 85px;"></i>
-            </div>
-            <div class="catName">
-                <p>Mobil</p>
-            </div>
+            <span class="catIcon bi bi-phone"></span>
+            <span class="catName">Mobil</span>
         </div>
     </div>
-    <hr>
+
+    <hr />
+
     <h4 class="text-center">Legpörgősebb kategóriák</h4>
+
     <div class="cardContainer">
         {% for category in best_categories %}
         <div class="card middle-card" onclick="redirectToPage('/hirdetes/{{category.endpoint_name}}')">
-            <div class="catIcon">
-                <i style="font-size: 3rem;" class="{{category.icon_path}}"></i>
-            </div>
-            <div class="catName">
-                <p>{{ category.name }}</p>
-            </div>
+            <span class="catIcon middle {{category.icon_path}}"></span>
+            <span class="catName">{{ category.name }}</span>
         </div>
         {% endfor %}
     </div>
-    <hr>
-    <a href="/hirdetes/osszes" class="card bottom-card">Csak nézelődöm, mutasd az összeset</a>
+
+    <hr />
+
+    <div class="cardContainer">
+        <div class="card bottom-card" onclick="redirectToPage('/hirdetes/osszes')">
+            <span class="catIcon middle bi bi-card-list"></span>
+            <span class="catName">Csak nézelődöm, mutasd az összeset</span>
+        </div>
+    </div>
 
     <div class="text-center">
-        <a href="/hirdetes/hirdetesfeladas">
-            <button type="button" class="btn btn-primary btn-lg">Hírdetésfeladás</button>
+        <a href="/hirdetes/hirdetesfeladas" class="btn btn-primary btn-lg bi bi-plus-circle">
+            Hirdetésfeladás
         </a>
     </div>
 </div>

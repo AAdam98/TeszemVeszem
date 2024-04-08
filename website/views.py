@@ -16,10 +16,17 @@ def get_random_categories(num_categories=4):
             random_categories.append(category)
     return random_categories
 
+
 def best_categories(num_categories=4):
     best_categories = []
 
-    category_counts = db.session.query(Advertisement.category, func.count(Advertisement.category).label('count')).group_by(Advertisement.category).all()
+    category_counts = (
+        db.session.query(
+            Advertisement.category, func.count(Advertisement.category).label("count")
+        )
+        .group_by(Advertisement.category)
+        .all()
+    )
     sorted_categories = sorted(category_counts, key=lambda x: x[1], reverse=True)
     most_common_categories = sorted_categories[:num_categories]
     for category, _ in most_common_categories:
@@ -32,7 +39,6 @@ def best_categories(num_categories=4):
             best_categories.append(random_category)
 
     return best_categories
-
 
 
 @views.route("/")
@@ -52,7 +58,8 @@ def adatlap():
 def password():
     user = current_user
     if request.method == "POST" or (
-        request.method == "GET" and request.args.get("_method") == "PUT"):
+        request.method == "GET" and request.args.get("_method") == "PUT"
+    ):
         curpassw = request.form.get("curPassw")
         if check_password_hash(user.password, curpassw):
             newpassw1 = request.form.get("newPassw1")
@@ -66,7 +73,8 @@ def password():
                     flash("Az új jelszó túl rövid!", category="error")
                 else:
                     user.password = generate_password_hash(
-                        newpassw1, method="pbkdf2:sha256")
+                        newpassw1, method="pbkdf2:sha256"
+                    )
                     db.session.commit()
                     flash("A jelszavad sikeresen megváltoztattad")
                     return redirect(url_for("views.home"))
