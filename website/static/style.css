@@ -58,13 +58,6 @@ footer {
     width: 100%;
     min-height: 9rem ;
     max-height: 9rem;
-    /* 
-    
-    
-    color: grey;
-    
-    
-     */
 }
 
 .navbar {
@@ -104,6 +97,54 @@ footer {
     padding: 2rem;
 }
 
+.hirdetesBox {
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+.hirdetesInfok{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 1px #ddd;
+    height: 3rem;
+}
+
+.hirdetesAImage{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
+
+}
+.hirdetesDivImage{
+    padding: 1rem;
+    border-bottom: solid 1px #ddd;
+    background-color: white;
+    border-radius: 0.6rem;
+}
+
+.hirdetesPrice{
+    border-bottom: solid 1px #ddd;  
+}
+.hirdetesImage{
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: initial;
+    border-radius: 0.6rem;
+}
+
+.hirdetesLeiras{
+    background-color: white;
+    border-radius: 0.6rem;
+    padding: 1rem;
+}
+
 .hirdetesHomeDoboz {
     display: flex;
     width: 100%;
@@ -117,15 +158,16 @@ footer {
     box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
-.hirdetesLista {
+.hirdetesekLista {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-top: 2rem;
     margin-bottom: 2rem;
+    background-color: #f0f0f0;
 }
 
-.hirdetesCard {
+.hirdetesekCard {
     background-color: #f0f0f0;
     border-bottom: solid 1px #ddd;
     padding: 0.5rem;
@@ -141,13 +183,13 @@ footer {
     flex-wrap: nowrap;
 }
 
-.hirdetesText{
+.hirdetesekText{
     margin-right: auto;
     padding: 0 1rem;
     
 }
 
-.hirdetesImage {
+.hirdetesekImage {
     object-fit: cover;
     width: 80px;
     height: 60px;
@@ -157,7 +199,7 @@ footer {
     border: solid 1px #ddd;
 }
 
-.hirdetesInfok{
+.hirdetesekInfok{
     width: 150px;
     text-align: center;
     border-left: solid 1px #ddd;
@@ -165,9 +207,10 @@ footer {
     padding: 0 .125rem;
     flex: none;
 }
-.hirdetesFeladoInfok{
+.hirdetesekFeladoInfok{
     flex: none;
     width: 150px;
+    text-align: center;
 }
 
 
@@ -353,14 +396,4 @@ footer {
 
 #updateBtn {
     color: black !important;
-}
-
-#user {
-    margin-top: 15px;
-    text-align: center;
-}
-
-.wall {
-    margin-top: 9px;
-    color: blue;
 }

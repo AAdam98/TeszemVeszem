@@ -362,7 +362,7 @@ def ujhirdetes():
                 return render_template('new_adv.html',title=title, category=category_name, description=description, price=price, hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)
             else:
                 error = False
-                newAdv = Advertisement(userID=userID, title=title, category=category_name, description=description, price=int(price), image_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+                newAdv = Advertisement(userID=userID, title=title, category=category_name, description=description, price=int(price), image_path = filename)
                 db.session.add(newAdv)
                 db.session.commit()
                 flash('Hirdetés sikeresen feladva!', category='success')

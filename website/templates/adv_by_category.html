@@ -24,23 +24,25 @@
     </form>
     {% for advertisement in filtered_advertisements %}
     {% if advertisement.available %}
-    <div class="hirdetesCard">
+    <div class="hirdetesekCard">
         
-        <a class="align-self-center" href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}"><img class="hirdetesImage" src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba"></a>
+        <a class="align-self-center" href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}"><img class="hirdetesekImage" src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba"></a>
     
-    <div class="hirdetesText">
-        <a id="advInfo" href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}">{{ advertisement.title }}</a>
+    <div class="hirdetesekText">
+        {{ advertisement.title }}
+
     </div>
-    <div class="hirdetesInfok">
-        {{ advertisement.price }} Ft
+    <div class="hirdetesekInfok">
+        {{ "{:,.0f}".format(advertisement.price).replace(',', ' ') }} Ft
         <br>
         {{ advertisement.date }}
     </div>
-    <div class="hirdetesFeladoInfok">
+    <div class="hirdetesekFeladoInfok">
         {% set user = User.query.get(advertisement.userID) %}
         <a id="advInfo" href="{{ url_for('hirdetes.advByUser', id=user.userID) }}">
             <p id="user">{{ user.username }}</p>
         </a>           
+>>>>>>> dev
     </div>
 </div>
     {% endif %}

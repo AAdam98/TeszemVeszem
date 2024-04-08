@@ -11,12 +11,30 @@
     </form>
 {% endif %}
 
-    <div class="text">
-        <p>Felhasználó ID: {{ advertisement.userID }}</p>
-        <p>Dátum: {{ advertisement.date }}</p>
-        <p>Cím: {{ advertisement.title }}</p>
-        <p>Kategória: {{ advertisement.category }}</p>
-        <p>Leírás: {{ advertisement.description }}</p>
-        <p>Ár: {{ advertisement.price }}</p>
+<div class="hirdetesBox">
+    <div style="border-bottom: solid 1px #ddd;">
+        <h3>{{ advertisement.title }}</h3>
+        
+        Kategória: {{ advertisement.category }}
     </div>
+    <div class="hirdetesInfok">
+        {% set user = User.query.get(advertisement.userID) %}
+            <div class="hirdetesFeladoInfok">
+                {{ user.username }} - #### ideje regisztrált
+            </div>
+            <div>
+                <i class="bi bi-clock"></i> {{ advertisement.date.strftime("%Y-%m-%d | %H:%M") }}
+            </div>
+    </div>
+    <div class="hirdetesDivImage">
+        <a class="hirdetesAImage" href="/static/cdn/{{advertisement.image_path}}"><img class="hirdetesImage" src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba"></a>
+    </div>
+    <div class="hirdetesPrice p-3">
+        <h3>{{ "{:,.0f}".format(advertisement.price).replace(',', ' ') }} Ft</h3>
+    </div>
+    <div class="hirdetesLeiras" >
+        {{ advertisement.description|safe }}
+    </div>
+
+</div>
 {% endblock %}
