@@ -397,3 +397,7 @@ footer {
 #updateBtn {
     color: black !important;
 }
+
+.wall {
+    margin-top: 8px;
+}
