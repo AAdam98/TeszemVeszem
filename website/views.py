@@ -88,3 +88,11 @@ def password():
 @views.route("/aboutus")
 def aboutus():
     return render_template("about.html")
+
+@views.route("/adatvedelmi_szabalyzat")
+def privacy_policy():
+    return render_template("privacy_policy.html")
+
+@views.route("/hirdetesi_szabalyzat")
+def adv_rules():
+    return render_template("adv_rules.html")

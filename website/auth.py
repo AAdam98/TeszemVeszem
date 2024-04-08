@@ -65,6 +65,7 @@ def signup():
                 email=email,
                 username=username,
                 password=generate_password_hash(password1, method="pbkdf2:sha256"),
+                registration_date= registration_date
             )
             db.session.add(new_user)
             db.session.commit()

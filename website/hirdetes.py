@@ -64,7 +64,6 @@ def query(category):
         name = full_cat.name
     else:
         name = cat_name[0].upper() + cat_name[1:]
-    print(name)
 
     if request.method == "POST":
         sortBy = request.form["sortBy"]
@@ -350,6 +349,40 @@ def ownAdv_details():
         return render_template("own_adv.html", advertisements=advertisements)
 
 
+@hirdetes.route("/felhasznalo=<int:id>")
+def advByUser(id):
+    if request.method == "POST":
+        sortBy = request.form["sortBy"]
+        min_price = request.form["min_price"]
+        max_price = request.form["max_price"]
+
+        advertisements = Advertisement.query.filter_by(userID=id)
+
+        if min_price and max_price and min_price <= max_price:
+            advertisements = advertisements.filter(
+                Advertisement.price.between(min_price, max_price)
+            )
+        elif min_price:
+            advertisements = advertisements.filter(Advertisement.price >= min_price)
+        elif max_price:
+            advertisements = advertisements.filter(Advertisement.price <= max_price)
+
+        if sortBy == "price_desc":
+            advertisements = advertisements.order_by(Advertisement.price.desc())
+        elif sortBy == "price_asc":
+            advertisements = advertisements.order_by(Advertisement.price.asc())
+        elif sortBy == "date_desc":
+            advertisements = advertisements.order_by(Advertisement.date.desc())
+        elif sortBy == "date_asc":
+            advertisements = advertisements.order_by(Advertisement.date.asc())
+
+        advertisements = advertisements.all()
+        return render_template("user_adv.html", id=id, advertisements=advertisements)
+    else:
+        advertisements = Advertisement.query.filter_by(userID=id).all()
+        return render_template("user_adv.html", id=id, advertisements=advertisements)
+
+
 @hirdetes.route("/hirdetesfeladas", methods=["GET", "POST"])
 @login_required
 def ujhirdetes():
@@ -380,40 +413,74 @@ def ujhirdetes():
                 else:
                     image_error = True
 
-        if (
-            len(title) < 5
-            or len(description) < 10
-            or not price.isdigit()
-            or int(price) < 0
-            or image_error == True
-            or len(category_name) == 0
-            or filename == ""
-        ):
-            flash("Hiba a hirdetés feladásakor.", category="error")
-            hardver_categories = Category.query.filter_by(main_category="hardver").all()
-            notebook_categories = Category.query.filter_by(
-                main_category="notebook"
-            ).all()
-            mobil_categories = Category.query.filter_by(main_category="mobil").all()
-            return render_template(
-                "new_adv.html",
-                hardver_categories=hardver_categories,
-                notebook_categories=notebook_categories,
-                mobil_categories=mobil_categories,
-            )
-        else:
-            newAdv = Advertisement(
-                userID=userID,
-                title=title,
-                category=category_name,
-                description=description,
-                price=int(price),
-                image_path=filename,
-            )
-            db.session.add(newAdv)
-            db.session.commit()
-            flash("Hirdetés sikeresen feladva!", category="success")
-            return redirect(url_for("views.home"))
+        error_message = ""
+        error = True
+        errors = 0
+
+        while error:
+            if len(category_name) == 0:
+                error_message = "Válasszon kategóriát!"
+                category_name = "Válasszon kategóriát"
+                errors += 1
+
+            if not price.isdigit() or int(price) < 0:
+                error_message = "Nem megfelelő ár formátum!"
+                errors += 1
+
+            if len(description) < 10:
+                error_message = "A hírdetés leírása kevesebb mint 10 karakter!"
+                errors += 1
+            elif len(description) > 1000:
+                error_message = "A hírdetés leírása több mint 10 karakter!"
+                errors += 1
+
+            if len(title) < 5:
+                error_message = "A hírdetés címe kevesebb mint 5 karakter!"
+                errors += 1
+            elif len(title) > 60:
+                error_message = "A hírdetés címe hosszabb mint 60 karakter!"
+                errors += 1
+
+            if image_error:
+                error_message = "Nem megfelelő kiterjesztés!"
+                errors += 1
+            if filename == "":
+                error_message = "Nem töltött fel képet!"
+                errors += 1
+
+            if errors > 0:
+                flash(error_message, category="error")
+                hardver_categories = Category.query.filter_by(
+                    main_category="hardver"
+                ).all()
+                notebook_categories = Category.query.filter_by(
+                    main_category="notebook"
+                ).all()
+                mobil_categories = Category.query.filter_by(main_category="mobil").all()
+                return render_template(
+                    "new_adv.html",
+                    title=title,
+                    category=category_name,
+                    description=description,
+                    price=price,
+                    hardver_categories=hardver_categories,
+                    notebook_categories=notebook_categories,
+                    mobil_categories=mobil_categories,
+                )
+            else:
+                error = False
+                newAdv = Advertisement(
+                    userID=userID,
+                    title=title,
+                    category=category_name,
+                    description=description,
+                    price=int(price),
+                    image_path=filename,
+                )
+                db.session.add(newAdv)
+                db.session.commit()
+                flash("Hirdetés sikeresen feladva!", category="success")
+                return redirect(url_for("views.home"))
     else:
         hardver_categories = Category.query.filter_by(main_category="hardver").all()
         notebook_categories = Category.query.filter_by(main_category="notebook").all()

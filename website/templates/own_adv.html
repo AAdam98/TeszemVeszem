@@ -1,5 +1,7 @@
-{% extends "base.html" %} {%block title %} Rólunk {% endblock %} {%block
-content%}
+{% extends "base.html" %}
+{%block title %} Saját hirdetések {% endblock %}
+
+{%block content%}
 
 <h1 class="text-center">Saját hirdetések</h1>
 <form method="POST" action="{{ url_for('hirdetes.ownAdv_details') }}">
@@ -18,15 +20,19 @@ content%}
 
 	<button type="submit">Küldés</button>
 </form>
-{% for advertisement in advertisements %} {% if advertisement.available %}
-<div class="hirdetesCard">
-	<a class="align-self-center" href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}"><img
-			class="hirdetesImage" src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba" /></a>
+{% for advertisement in advertisements %}
+{% if advertisement.available %}
+<div class="hirdetesekCard">
 
-	<div class="hirdetesText">{{ advertisement.title }}</div>
+	<a class="align-self-center" href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}"><img
+			class="hirdetesekImage" src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba"></a>
+
+	<div class="hirdetesText">
+		{{ advertisement.title }}
+	</div>
 	<div class="hirdetesInfok">
 		{{ advertisement.price }} Ft
-		<br />
+		<br>
 		{{ advertisement.date.strftime("%Y-%m-%d") }}
 	</div>
 </div>
