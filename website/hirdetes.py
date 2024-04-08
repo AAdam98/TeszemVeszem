@@ -297,6 +297,7 @@ def advByUser(id):
 @login_required
 def ujhirdetes():
     image_error = False
+    
     if request.method == 'POST':
         title = request.form.get('title')
         category_name = request.form.get('category')
