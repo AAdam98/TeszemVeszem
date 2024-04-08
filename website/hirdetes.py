@@ -321,11 +321,9 @@ def ujhirdetes():
         error_message = ""
         error = True
         errors = 0
-
         while error:
-            if len(category_name) == 0:
+            if category_name == None:
                 error_message = "Válasszon kategóriát!"
-                category_name = "Válasszon kategóriát"
                 errors += 1
 
             if not price.isdigit() or int(price) < 0:
@@ -367,9 +365,8 @@ def ujhirdetes():
                 flash('Hirdetés sikeresen feladva!', category='success')
                 return redirect(url_for('views.home'))
     else:
-        category_name = "Válasszon kategóriát!"
         hardver_categories = Category.query.filter_by(main_category='hardver').all()
         notebook_categories = Category.query.filter_by(main_category='notebook').all()
         mobil_categories = Category.query.filter_by(main_category='mobil').all()
         
-        return render_template('new_adv.html', category=category_name, hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)
+        return render_template('new_adv.html', hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)
