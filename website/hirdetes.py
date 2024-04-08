@@ -56,7 +56,6 @@ def query(category):
         name = full_cat.name
     else:
         name = cat_name[0].upper() + cat_name[1:]
-    print(name)
 
     if request.method == "POST":
         sortBy = request.form['sortBy']
