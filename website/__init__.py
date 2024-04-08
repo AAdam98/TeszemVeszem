@@ -60,6 +60,12 @@ def create_app():
 
 
 def create_database(app):
+    
+    if not os.path.exists("instance"):
+        os.makedirs("instance")
+        print("STATIC MAPPA LETREHOZVA")
+        
+        
     db_path = path.join(app.instance_path, DB_NAME)
     if not path.exists(db_path):
         with app.app_context():
