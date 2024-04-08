@@ -40,6 +40,8 @@
         <a id="advInfo" href="{{ url_for('hirdetes.advByUser', id=user.userID) }}">
             <p id="user">{{ user.username }}</p>
         </a>
+        {{ user.username }}
+        </a>
     </div>
 </div>
 {% endif %} {% endfor %} {%endblock%}
