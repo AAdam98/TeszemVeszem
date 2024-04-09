@@ -14,7 +14,7 @@ class Advertisement(db.Model):
     title = db.Column(db.String(60), nullable=False)
     category = db.Column(db.String(100), nullable=False)
     available = db.Column(db.Boolean, default=True)
-    description = db.Column(db.Text(1000))
+    description = db.Column(db.Text(10000))
     price = db.Column(db.Integer, nullable=False)
     image_path = db.Column(db.Text(255), nullable=False)
 
@@ -51,7 +51,7 @@ class Comment(db.Model):
 class Category(db.Model):
     categoryID = db.Column(db.Integer, primary_key=True)
     main_category = db.Column(db.String(255), nullable=False)
-    name = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String(100), unique=True, nullable=False)
     icon_path = db.Column(db.String(255), nullable=False)
     endpoint_name = db.Column(db.String(255), nullable=False)
 
