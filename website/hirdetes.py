@@ -128,6 +128,11 @@ def query(category):
         flash("A kiválasztott kategória nem található.", category="error")
     return redirect(url_for("views.home"))
 
+@hirdetes.route("/kereses", methods=['POST'])
+def search_results():
+    search_term = request.form['search']
+    searched_ads = Advertisement.query.filter(Advertisement.title.like(f'%{search_term}%')).all()
+    return render_template('adv_by_category.html', filtered_advertisements=searched_ads)
 
 @hirdetes.route("/<int:id>", methods=["GET"])
 def adv_details(id):

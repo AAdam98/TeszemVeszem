@@ -41,7 +41,7 @@ def best_categories(num_categories=4):
     return best_categories
 
 
-@views.route("/")
+@views.route("/", methods=['GET'])
 def home():
     categories = best_categories()
     return render_template("home.html", best_categories=categories)
