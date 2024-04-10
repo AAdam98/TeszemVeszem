@@ -29,7 +29,7 @@
     <div class="hirdetesInfok">
         {% set user = User.query.get(advertisement.userID) %}
             <div class="hirdetesFeladoInfok">
-                {{ user.username }} - #### ideje regisztrált
+                Feladó: {{ user.username }}
             </div>
             <div>
                 <i class="bi bi-clock"></i> {{ advertisement.date.strftime("%Y-%m-%d | %H:%M") }}
