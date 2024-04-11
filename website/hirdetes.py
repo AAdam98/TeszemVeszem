@@ -22,7 +22,7 @@ Session = scoped_session(sessionmaker(bind=engine))
 session = Session()
 
 
-@hirdetes.route("/osszes", methods=["GET", "POST"])
+@hirdetes.route("/", methods=["GET", "POST"])
 def index():
     page = int(request.args.get("page", 1))
     adv_per_page = 2
@@ -54,14 +54,6 @@ def index():
     elif max_price:
         advertisements = advertisements.filter(Advertisement.price <= int(max_price))
 
-    # Szűrés kategória szerint
-    category = request.args.get("category")
-    sub_category = request.args.get("sub_category")
-    if category:
-        advertisements = advertisements.filter_by(category=category)
-    if sub_category:
-        advertisements = advertisements.filter_by(sub_category=sub_category)
-
     # Sorrendezés
     if sortBy == "price_desc":
         advertisements = advertisements.order_by(Advertisement.price.desc())
@@ -87,9 +79,17 @@ def index():
         max_price=max_price
     )
 
-
 @hirdetes.route("/<category>", methods=["GET", "POST"])
 def query(category):
+    
+    page = int(request.args.get("page", 1))
+    adv_per_page = 2
+    offset = (page - 1) * adv_per_page
+    sortBy = request.args.get("sortBy", "date_desc")
+    min_price = request.args.get("min_price")
+    max_price = request.args.get("max_price")
+    
+    
     cat_name = "" + category
     full_cat = Category.query.filter(Category.endpoint_name == cat_name).first()
     if full_cat:
@@ -98,67 +98,86 @@ def query(category):
         name = cat_name[0].upper() + cat_name[1:]
 
     if request.method == "POST":
-        sortBy = request.form["sortBy"]
-        min_price = request.form["min_price"]
-        max_price = request.form["max_price"]
+        
+        min_price = request.form.get("min_price")
+        max_price = request.form.get("max_price")
+        sortBy = request.form.get("sortBy")
+        
+        params = {'page': page, 'sortBy': sortBy}
+        if min_price:
+            params['min_price'] = min_price
+        if max_price:
+            params['max_price'] = max_price
+            
+        return redirect(url_for('hirdetes.index', **params))
 
-        filtered_categories = Category.query.filter_by(main_category=category).all()
-        if not filtered_categories:
-            filtered_categories = Category.query.filter_by(endpoint_name=category).all()
-
-        advertisements = Advertisement.query.filter(
-            Advertisement.category.in_([cat.name for cat in filtered_categories])
-        )
-
-        # Árszűrés
-        if min_price and max_price and min_price <= max_price:
-            advertisements = advertisements.filter(
-                Advertisement.price.between(min_price, max_price)
-            )
-        elif min_price:
-            advertisements = advertisements.filter(Advertisement.price >= min_price)
-        elif max_price:
-            advertisements = advertisements.filter(Advertisement.price <= max_price)
-
-        # Rendezés
-        if sortBy == "price_desc":
-            advertisements = advertisements.order_by(Advertisement.price.desc())
-        elif sortBy == "price_asc":
-            advertisements = advertisements.order_by(Advertisement.price.asc())
-        elif sortBy == "date_desc":
-            advertisements = advertisements.order_by(Advertisement.date.desc())
-        elif sortBy == "date_asc":
-            advertisements = advertisements.order_by(Advertisement.date.asc())
-
-        advertisements = advertisements.all()
-        return render_template(
-            "adv_by_category.html",
-            filtered_advertisements=advertisements,
-            category=category,
-            name=name,
-        )
-
-    # összes hirdetés egy fő kategóriában
     filtered_categories = Category.query.filter_by(main_category=category).all()
-
     if not filtered_categories:
         filtered_categories = Category.query.filter_by(endpoint_name=category).all()
-    if filtered_categories:
-        all_advertisements = Advertisement.query.filter(
-            Advertisement.category.in_([cat.name for cat in filtered_categories])
-        ).all()
-        if all_advertisements:
-            return render_template(
-                "adv_by_category.html",
-                filtered_advertisements=all_advertisements,
-                category=category,
-                name=name,
-            )
-        else:
-            flash("Nincs hirdetés a kiválasztott kategóriában.", category="error")
+
+    advertisements = Advertisement.query.filter(
+        Advertisement.category.in_([cat.name for cat in filtered_categories])
+    )
+
+    if min_price and max_price:
+            advertisements = advertisements.filter(Advertisement.price.between(int(min_price), int(max_price)))
+    elif min_price:
+        advertisements = advertisements.filter(Advertisement.price >= int(min_price))
+    elif max_price:
+        advertisements = advertisements.filter(Advertisement.price <= int(max_price))
+
+    # Sorrendezés
+    if sortBy == "price_desc":
+        advertisements = advertisements.order_by(Advertisement.price.desc())
+    elif sortBy == "price_asc":
+        advertisements = advertisements.order_by(Advertisement.price.asc())
+    elif sortBy == "date_desc":
+        advertisements = advertisements.order_by(Advertisement.date.desc())
+    elif sortBy == "date_asc":
+        advertisements = advertisements.order_by(Advertisement.date.asc())
+
+    # Oldalszámozás
+    number_of_advs = advertisements.count()
+    number_of_pag_pages = -(-number_of_advs // adv_per_page)
+    advertisements = advertisements.limit(adv_per_page).offset(offset)
+
+    if advertisements:
+        return render_template(
+        "index.html",
+        advertisements=advertisements,
+        current_page=page,
+        number_of_pag_pages=number_of_pag_pages,
+        sortBy=sortBy,
+        min_price=min_price,
+        max_price=max_price
+    )
     else:
-        flash("A kiválasztott kategória nem található.", category="error")
-    return redirect(url_for("views.home"))
+        flash("Nincs hirdetés a kiválasztott kategóriában.", category="error")
+
+    
+
+    # # összes hirdetés egy fő kategóriában
+    # filtered_categories = Category.query.filter_by(main_category=category).all()
+
+    # if not filtered_categories:
+    #     filtered_categories = Category.query.filter_by(endpoint_name=category).all()
+        
+    # if filtered_categories:
+    #     all_advertisements = Advertisement.query.filter(
+    #         Advertisement.category.in_([cat.name for cat in filtered_categories])
+    #     ).all()
+    #     if all_advertisements:
+    #         return render_template(
+    #             "adv_by_category.html",
+    #             filtered_advertisements=all_advertisements,
+    #             category=category,
+    #             name=name,
+    #         )
+    #     else:
+    #         flash("Nincs hirdetés a kiválasztott kategóriában.", category="error")
+    # else:
+    #     flash("A kiválasztott kategória nem található.", category="error")
+    # return redirect(url_for("views.home"))
 
 
 @hirdetes.route("/kereses", methods=["POST"])
