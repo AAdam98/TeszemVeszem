@@ -11,23 +11,24 @@
 		<label for="min_price">Szűrés:</label>
 
 		<div style="width: 30%;" class="input-group">
-			<input class="form-control" onchange="submitForm()" type="number" id="min_price" name="min_price" placeholder="Minimum ár">
+			<input class="form-control" type="number" id="min_price" name="min_price" value="{{request.args.get("min_price")}}" placeholder="Minimum ár">
 			<span class="input-group-text">Ft.</span>
 		</div>
 
 		<div style="width: 30%;" class="input-group">
-			<input class="form-control" onchange="submitForm()" type="number" id="max_price" name="max_price" placeholder="Maximum ár">
+			<input class="form-control" type="number" id="max_price" name="max_price" value="{{request.args.get("max_price")}}" placeholder="Maximum ár">
 			<span class="input-group-text">Ft.</span>
 		</div>
 
-	
+		<button type="submit"> nyomod	</button>
+
 
 	<div>
 		<select class="form-select" id="sortBy" name="sortBy" onchange="submitForm()">
-			<option value="date_desc">Csökkenő (Dátum szerint)</option>
-			<option value="date_asc">Növekvő (Dátum szerint)</option>
-			<option value="price_desc">Csökkenő (Ár szerint)</option>
-			<option value="price_asc">Növekvő (Ár szerint)</option>
+			<option {% if sortBy == "date_desc" %} selected {% endif %} value="date_desc">Újak elöl</option>
+			<option {% if sortBy == "date_asc" %} selected {% endif %} value="date_asc">Régik elöl</option>
+			<option {% if sortBy == "price_desc" %} selected {% endif %} value="price_desc">Drágák elöl</option>
+			<option {% if sortBy == "price_asc" %} selected {% endif %} value="price_asc">Olcsók elöl</option>
 		</select>
 	</div>
 
@@ -69,8 +70,8 @@
 <div class="paginationPanel">
 
     {% if current_page > 1 %} 
-    <a style="color: black;" href="{{ url_for('hirdetes.index', page=1, sortBy=sortBy) }}"><i title="Legelső blokk" class="bi bi-arrow-bar-left"></i></a>
-    <a style="color: black;" href="{{ url_for('hirdetes.index', page=current_page - 1, sortBy=sortBy) }}"><i title="Előző blokk" class="bi bi-arrow-left"></i></a>
+    <a style="color: black;" href="{{ url_for('hirdetes.index', page=1, sortBy=sortBy, min_price=min_price, max_price=max_price) }}"><i title="Legelső blokk" class="bi bi-arrow-bar-left"></i></a>
+    <a style="color: black;" href="{{ url_for('hirdetes.index', page=current_page - 1, sortBy=sortBy, min_price=min_price, max_price=max_price) }}"><i title="Előző blokk" class="bi bi-arrow-left"></i></a>
 
     {% else  %}
     <a style="color: gray;""><i title="Legelső blokk" class="bi bi-arrow-bar-left"></i></a>
@@ -80,7 +81,7 @@
         {% for page_num in range(1, number_of_pag_pages + 1) %}
             <a {% if page_num==current_page%} style="color: cornflowerblue;" {% else%} style="color:black" 
             {% endif %}
-            href="{{ url_for('hirdetes.index', page=page_num, sortBy=sortBy) }}">
+            href="{{ url_for('hirdetes.index', page=page_num, sortBy=sortBy, min_price=min_price, max_price=max_price) }}">
             {{page_num }}
             </a>
         {% endfor %}
@@ -94,15 +95,15 @@
             {% endif %}
             {% for page_num in range(start_page, end_page + 1) %}
 
-            <a href="{{ url_for('hirdetes.index', page=page_num, sortBy=sortBy) }}" {% if page_num==current_page %}
+            <a href="{{ url_for('hirdetes.index', page=page_num, sortBy=sortBy, min_price=min_price, max_price=max_price) }}" {% if page_num==current_page %}
                 style="color: cornflowerblue;" {% endif %}>{{
                 page_num }}</a>
             {% endfor %}
             {% endif %}
 
             {% if current_page < number_of_pag_pages %} 
-            <a style="color: black;" href="{{ url_for('hirdetes.index', page=current_page+1, sortBy=sortBy) }}"><i title="Következő blokk" class="bi bi-arrow-right"></i></a>
-            <a style="color: black;" href="{{ url_for('hirdetes.index', page=number_of_pag_pages, sortBy=sortBy) }}"><i title="Utolsó blokk" class="bi bi-arrow-bar-right"></i></a>
+            <a style="color: black;" href="{{ url_for('hirdetes.index', page=current_page+1, sortBy=sortBy, min_price=min_price, max_price=max_price) }}"><i title="Következő blokk" class="bi bi-arrow-right"></i></a>
+            <a style="color: black;" href="{{ url_for('hirdetes.index', page=number_of_pag_pages, sortBy=sortBy, min_price=min_price, max_price=max_price) }}"><i title="Utolsó blokk" class="bi bi-arrow-bar-right"></i></a>
 
             {%else%}
             <a style="color: gray;" ><i title="Következő blokk" class="bi bi-arrow-right"></i></a>
