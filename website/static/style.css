@@ -17,6 +17,11 @@
 	font-family: "CascadiaMono", sans-serif;
 }
 
+*:not(input):not(textarea) {
+    caret-color: transparent;
+}
+
+
 html {
 	position: relative;
 	min-height: 100%;
@@ -209,6 +214,11 @@ footer {
 	flex: none;
 	width: 150px;
 	text-align: center;
+}
+
+.paginationPanel{
+	text-align: center;
+	font-size: 1.3rem;
 }
 
 .card {

@@ -24,36 +24,108 @@ session = Session()
 
 @hirdetes.route("/osszes", methods=["GET", "POST"])
 def index():
+
+    # paginacio
+    page = int(request.args.get("page", 1))
+    adv_per_page = 5
+    offset = (page - 1) * adv_per_page
+    number_of_advs = db.session.query(Advertisement).count()
+    number_of_pag_pages = -(-number_of_advs // adv_per_page)
+    sortBy = request.args.get("sortBy", "price_asc")
+
+    advertisements = Advertisement.query
+    if sortBy == "price_desc":
+        advertisements = (
+            advertisements.order_by(Advertisement.price.desc())
+            .limit(adv_per_page)
+            .offset(offset)
+        )
+    elif sortBy == "price_asc":
+        advertisements = (
+            advertisements.order_by(Advertisement.price.asc())
+            .limit(adv_per_page)
+            .offset(offset)
+        )
+    elif sortBy == "date_desc":
+        advertisements = (
+            advertisements.order_by(Advertisement.date.desc())
+            .limit(adv_per_page)
+            .offset(offset)
+        )
+    elif sortBy == "date_asc":
+        advertisements = (
+            advertisements.order_by(Advertisement.date.asc())
+            .limit(adv_per_page)
+            .offset(offset)
+        )
+
     if request.method == "POST":
         sortBy = request.form["sortBy"]
         min_price = request.form["min_price"]
         max_price = request.form["max_price"]
-
         advertisements = Advertisement.query
 
         if min_price and max_price and min_price <= max_price:
-            advertisements = advertisements.filter(
-                Advertisement.price.between(min_price, max_price)
+            advertisements = (
+                advertisements.filter(Advertisement.price.between(min_price, max_price))
+                .limit(adv_per_page)
+                .offset(offset)
             )
         elif min_price:
-            advertisements = advertisements.filter(Advertisement.price >= min_price)
+            advertisements = (
+                advertisements.filter(Advertisement.price >= min_price)
+                .limit(adv_per_page)
+                .offset(offset)
+            )
         elif max_price:
-            advertisements = advertisements.filter(Advertisement.price <= max_price)
+            advertisements = (
+                advertisements.filter(Advertisement.price <= max_price)
+                .limit(adv_per_page)
+                .offset(offset)
+            )
 
         if sortBy == "price_desc":
-            advertisements = advertisements.order_by(Advertisement.price.desc())
+            advertisements = (
+                advertisements.order_by(Advertisement.price.desc())
+                .limit(adv_per_page)
+                .offset(offset)
+            )
         elif sortBy == "price_asc":
-            advertisements = advertisements.order_by(Advertisement.price.asc())
+            advertisements = (
+                advertisements.order_by(Advertisement.price.asc())
+                .limit(adv_per_page)
+                .offset(offset)
+            )
         elif sortBy == "date_desc":
-            advertisements = advertisements.order_by(Advertisement.date.desc())
+            advertisements = (
+                advertisements.order_by(Advertisement.date.desc())
+                .limit(adv_per_page)
+                .offset(offset)
+            )
         elif sortBy == "date_asc":
-            advertisements = advertisements.order_by(Advertisement.date.asc())
+            advertisements = (
+                advertisements.order_by(Advertisement.date.asc())
+                .limit(adv_per_page)
+                .offset(offset)
+            )
+        #
+        # advertisements = advertisements.all()
+        return render_template(
+            "index.html",
+            advertisements=advertisements,
+            current_page=page,
+            number_of_pag_pages=number_of_pag_pages,
+            sortBy=sortBy,
+        )
 
-        advertisements = advertisements.all()
-        return render_template("index.html", advertisements=advertisements)
     else:
-        advertisements = Advertisement.query.all()
-        return render_template("index.html", advertisements=advertisements)
+        return render_template(
+            "index.html",
+            advertisements=advertisements,
+            current_page=page,
+            number_of_pag_pages=number_of_pag_pages,
+            sortBy=sortBy,
+        )
 
 
 @hirdetes.route("/<category>", methods=["GET", "POST"])
@@ -128,11 +200,15 @@ def query(category):
         flash("A kiválasztott kategória nem található.", category="error")
     return redirect(url_for("views.home"))
 
-@hirdetes.route("/kereses", methods=['POST'])
+
+@hirdetes.route("/kereses", methods=["POST"])
 def search_results():
-    search_term = request.form['search']
-    searched_ads = Advertisement.query.filter(Advertisement.title.like(f'%{search_term}%')).all()
-    return render_template('adv_by_category.html', filtered_advertisements=searched_ads)
+    search_term = request.form["search"]
+    searched_ads = Advertisement.query.filter(
+        Advertisement.title.like(f"%{search_term}%")
+    ).all()
+    return render_template("adv_by_category.html", filtered_advertisements=searched_ads)
+
 
 @hirdetes.route("/<int:id>", methods=["GET"])
 def adv_details(id):
@@ -392,12 +468,12 @@ def advByUser(id):
 @login_required
 def ujhirdetes():
     image_error = False
-    
-    if request.method == 'POST':
-        title = request.form.get('title')
-        category_name = request.form.get('category')
-        description = request.form.get('description')
-        price = request.form.get('price')
+
+    if request.method == "POST":
+        title = request.form.get("title")
+        category_name = request.form.get("category")
+        description = request.form.get("description")
+        price = request.form.get("price")
         userID = current_user.get_id()
         filename = ""
         if "image" in request.files:
@@ -486,8 +562,13 @@ def ujhirdetes():
                 flash("Hirdetés sikeresen feladva!", category="success")
                 return redirect(url_for("views.home"))
     else:
-        hardver_categories = Category.query.filter_by(main_category='hardver').all()
-        notebook_categories = Category.query.filter_by(main_category='notebook').all()
-        mobil_categories = Category.query.filter_by(main_category='mobil').all()
-        
-        return render_template('new_adv.html', hardver_categories=hardver_categories, notebook_categories = notebook_categories, mobil_categories = mobil_categories)
+        hardver_categories = Category.query.filter_by(main_category="hardver").all()
+        notebook_categories = Category.query.filter_by(main_category="notebook").all()
+        mobil_categories = Category.query.filter_by(main_category="mobil").all()
+
+        return render_template(
+            "new_adv.html",
+            hardver_categories=hardver_categories,
+            notebook_categories=notebook_categories,
+            mobil_categories=mobil_categories,
+        )

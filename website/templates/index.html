@@ -65,4 +65,50 @@
 	{% endfor %}
 </div>
 
+
+<div class="paginationPanel">
+
+    {% if current_page > 1 %} 
+    <a style="color: black;" href="{{ url_for('hirdetes.index', page=1, sortBy=sortBy) }}"><i title="Legelső blokk" class="bi bi-arrow-bar-left"></i></a>
+    <a style="color: black;" href="{{ url_for('hirdetes.index', page=current_page - 1, sortBy=sortBy) }}"><i title="Előző blokk" class="bi bi-arrow-left"></i></a>
+
+    {% else  %}
+    <a style="color: gray;""><i title="Legelső blokk" class="bi bi-arrow-bar-left"></i></a>
+    <a style="color: gray;"><i title="Előző blokk" class="bi bi-arrow-left"></i></a>
+    {% endif %}
+    {% if number_of_pag_pages <= 5 %} 
+        {% for page_num in range(1, number_of_pag_pages + 1) %}
+            <a {% if page_num==current_page%} style="color: cornflowerblue;" {% else%} style="color:black" 
+            {% endif %}
+            href="{{ url_for('hirdetes.index', page=page_num, sortBy=sortBy) }}">
+            {{page_num }}
+            </a>
+        {% endfor %}
+        {% else %}
+        {% if current_page <= 2 %} {% set start_page=1 %} {% set end_page=5 %} {% elif current_page>=number_of_pag_pages -1 %}
+            {% set start_page = number_of_pag_pages - 4 %}
+            {% set end_page = number_of_pag_pages %}
+            {% else %}
+            {% set start_page = current_page - 2 %}
+            {% set end_page = current_page + 2 %}
+            {% endif %}
+            {% for page_num in range(start_page, end_page + 1) %}
+
+            <a href="{{ url_for('hirdetes.index', page=page_num, sortBy=sortBy) }}" {% if page_num==current_page %}
+                style="color: cornflowerblue;" {% endif %}>{{
+                page_num }}</a>
+            {% endfor %}
+            {% endif %}
+
+            {% if current_page < number_of_pag_pages %} 
+            <a style="color: black;" href="{{ url_for('hirdetes.index', page=current_page+1, sortBy=sortBy) }}"><i title="Következő blokk" class="bi bi-arrow-right"></i></a>
+            <a style="color: black;" href="{{ url_for('hirdetes.index', page=number_of_pag_pages, sortBy=sortBy) }}"><i title="Utolsó blokk" class="bi bi-arrow-bar-right"></i></a>
+
+            {%else%}
+            <a style="color: gray;" ><i title="Következő blokk" class="bi bi-arrow-right"></i></a>
+            <a style="color: gray;"><i title="Utolsó blokk" class="bi bi-arrow-bar-right"></i></a>
+            {% endif %}
+
+</div>
+
 {%endblock%}
