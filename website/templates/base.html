@@ -33,12 +33,14 @@
 			<div class="logo" onclick="redirectToPage('/')">TeszemVeszem</div>
 			<div class="btn-group">
 
-			<form action="{{ url_for('hirdetes.search_results') }}" method="POST">
-			<div class="input-group">
-				<input name="search" id="search" type="text" class="form-control" placeholder="Keresés" aria-label="Keresés" aria-describedby="button-addon2">
-				<button class="btn btn-secondary" type="submit" id="button-addon2"><i class="bi bi-search"></i></button>
-			</div>
-			</form>
+				<form action="{{ url_for('hirdetes.search') }}" method="POST">
+					<div class="input-group">
+						<input name="search_term" id="search_term" type="text" class="form-control" placeholder="Keresés" aria-label="Keresés" aria-describedby="button-addon2">
+						<button class="btn btn-secondary" type="submit" id="button-addon2"><i class="bi bi-search"></i></button>
+					</div>
+				</form>
+				
+				
 
 			
 				<button type="button" class="btn btn-light bi bi-plus-circle"

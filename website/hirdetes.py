@@ -24,6 +24,7 @@ session = Session()
 @hirdetes.route("/", methods=["GET", "POST"])
 def index():
     
+    advertisementsTypeText = "Összes hirdetés"
     print('index belep')
     page = int(request.args.get("page", 1))
     adv_per_page = 2
@@ -77,11 +78,81 @@ def index():
         number_of_pag_pages=number_of_pag_pages,
         sortBy=sortBy,
         min_price=min_price,
-        max_price=max_price
+        max_price=max_price,
+        advertisementsTypeText = advertisementsTypeText
+    )
+
+@hirdetes.route("/kereses", methods=["GET", "POST"])
+def search():
+    
+    search_term= request.args.get("search_term")
+    print('index belep')
+    page = int(request.args.get("page", 1))
+    adv_per_page = 2
+    offset = (page - 1) * adv_per_page
+    sortBy = request.args.get("sortBy", "date_desc")
+    min_price = request.args.get("min_price")
+    max_price = request.args.get("max_price")
+    advertisements = Advertisement.query
+    advertisementsTypeText = f"Találatok a következőre: "+ search_term
+
+    # Szűrés ár szerint
+    if request.method == "POST":
+        
+        min_price = request.form.get("min_price")
+        max_price = request.form.get("max_price")
+        sortBy = request.form.get("sortBy")
+        search_term = request.form.get("search_term")
+        
+        params = {'page': page, 'sortBy': sortBy}
+        if min_price:
+            params['min_price'] = min_price
+        if max_price:
+            params['max_price'] = max_price
+            
+        return redirect(url_for('hirdetes.search', search_term=search_term ,**params))
+    
+    advertisements = Advertisement.query.filter(
+        Advertisement.title.like(f"%{search_term}%"))
+
+    if min_price and max_price:
+            advertisements = advertisements.filter(Advertisement.price.between(int(min_price), int(max_price)))
+    elif min_price:
+        advertisements = advertisements.filter(Advertisement.price >= int(min_price))
+    elif max_price:
+        advertisements = advertisements.filter(Advertisement.price <= int(max_price))
+
+    # Sorrendezés
+    if sortBy == "price_desc":
+        advertisements = advertisements.order_by(Advertisement.price.desc())
+    elif sortBy == "price_asc":
+        advertisements = advertisements.order_by(Advertisement.price.asc())
+    elif sortBy == "date_desc":
+        advertisements = advertisements.order_by(Advertisement.date.desc())
+    elif sortBy == "date_asc":
+        advertisements = advertisements.order_by(Advertisement.date.asc())
+
+    # Oldalszámozás
+    number_of_advs = advertisements.count()
+    number_of_pag_pages = -(-number_of_advs // adv_per_page)
+    advertisements = advertisements.limit(adv_per_page).offset(offset)
+
+    return render_template(
+        "index.html",
+        advertisements=advertisements,
+        current_page=page,
+        number_of_pag_pages=number_of_pag_pages,
+        sortBy=sortBy,
+        min_price=min_price,
+        max_price=max_price,
+        search_term = search_term,
+        advertisementsTypeText = advertisementsTypeText
     )
 
 @hirdetes.route("/<category>", methods=["GET", "POST"])
 def query(category):
+    
+    advertisementsTypeText = "Kategória hirdetések"
     
     endpoint_category = category
     
@@ -159,7 +230,8 @@ def query(category):
         sortBy=sortBy,
         min_price=min_price,
         max_price=max_price,
-        category = endpoint_category
+        category = endpoint_category,
+        advertisementsTypeText = advertisementsTypeText
     )
     else:
         print("nincsenek hirdetesek")

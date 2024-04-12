@@ -3,11 +3,10 @@
 
 {%block content%}
 
-<h1 class="text-center">Összes hirdetés</h1>
+<h1 class="text-center">{{advertisementsTypeText}}</h1>
 
-
-<form id="Form" class="hirdetesekFejlec" method="POST" action="{{ url_for(request.endpoint, category=category)}}">
-
+<form id="Form" class="hirdetesekFejlec" method="POST" action="{{ url_for(request.endpoint, category=category, search_term = search_term )}}">
+	<input type="hidden" name="search_term" value="{{ search_term }}">
 		<label for="min_price">Szűrés:</label>
 
 		<div style="width: 30%;" class="input-group">
@@ -70,8 +69,8 @@
 <div class="paginationPanel">
 
     {% if current_page > 1 %} 
-    <a style="color: black;" href="{{ url_for(request.endpoint, category=category, page=1, sortBy=sortBy, min_price=min_price, max_price=max_price) }}"><i title="Legelső blokk" class="bi bi-arrow-bar-left"></i></a>
-    <a style="color: black;" href="{{ url_for(request.endpoint, category=category, page=current_page - 1, sortBy=sortBy, min_price=min_price, max_price=max_price) }}"><i title="Előző blokk" class="bi bi-arrow-left"></i></a>
+    <a style="color: black;" href="{{ url_for(request.endpoint, search_term = search_term, category=category, page=1, sortBy=sortBy, min_price=min_price, max_price=max_price) }}"><i title="Legelső blokk" class="bi bi-arrow-bar-left"></i></a>
+    <a style="color: black;" href="{{ url_for(request.endpoint, search_term = search_term, category=category, page=current_page - 1, sortBy=sortBy, min_price=min_price, max_price=max_price) }}"><i title="Előző blokk" class="bi bi-arrow-left"></i></a>
 
     {% else  %}
     <a style="color: gray;""><i title="Legelső blokk" class="bi bi-arrow-bar-left"></i></a>
@@ -81,7 +80,7 @@
         {% for page_num in range(1, number_of_pag_pages + 1) %}
             <a {% if page_num==current_page%} style="color: cornflowerblue;" {% else%} style="color:black" 
             {% endif %}
-            href="{{ url_for(request.endpoint, category=category, page=page_num, sortBy=sortBy, min_price=min_price, max_price=max_price) }}">
+            href="{{ url_for(request.endpoint, category=category, search_term = search_term, page=page_num, sortBy=sortBy, min_price=min_price, max_price=max_price) }}">
             {{page_num }}
             </a>
         {% endfor %}
@@ -95,15 +94,15 @@
             {% endif %}
             {% for page_num in range(start_page, end_page + 1) %}
 
-            <a href="{{ url_for(request.endpoint, category=category,  page=page_num, sortBy=sortBy, min_price=min_price, max_price=max_price) }}" {% if page_num==current_page %}
+            <a href="{{ url_for(request.endpoint, category=category,  search_term = search_term, page=page_num, sortBy=sortBy, min_price=min_price, max_price=max_price) }}" {% if page_num==current_page %}
                 style="color: cornflowerblue;" {% endif %}>{{
                 page_num }}</a>
             {% endfor %}
             {% endif %}
 
             {% if current_page < number_of_pag_pages %} 
-            <a style="color: black;" href="{{ url_for(request.endpoint, category=category, page=current_page+1, sortBy=sortBy, min_price=min_price, max_price=max_price) }}"><i title="Következő blokk" class="bi bi-arrow-right"></i></a>
-            <a style="color: black;" href="{{ url_for(request.endpoint, category=category, page=number_of_pag_pages, sortBy=sortBy, min_price=min_price, max_price=max_price) }}"><i title="Utolsó blokk" class="bi bi-arrow-bar-right"></i></a>
+            <a style="color: black;" href="{{ url_for(request.endpoint, search_term = search_term, category=category, page=current_page+1, sortBy=sortBy, min_price=min_price, max_price=max_price) }}"><i title="Következő blokk" class="bi bi-arrow-right"></i></a>
+            <a style="color: black;" href="{{ url_for(request.endpoint, search_term = search_term, category=category, page=number_of_pag_pages, sortBy=sortBy, min_price=min_price, max_price=max_price) }}"><i title="Utolsó blokk" class="bi bi-arrow-bar-right"></i></a>
 
             {%else%}
             <a style="color: gray;" ><i title="Következő blokk" class="bi bi-arrow-right"></i></a>
