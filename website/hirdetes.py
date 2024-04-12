@@ -21,9 +21,10 @@ hirdetes = Blueprint("hirdetes", __name__)
 Session = scoped_session(sessionmaker(bind=engine))
 session = Session()
 
-
 @hirdetes.route("/", methods=["GET", "POST"])
 def index():
+    
+    print('index belep')
     page = int(request.args.get("page", 1))
     adv_per_page = 2
     offset = (page - 1) * adv_per_page
@@ -82,13 +83,15 @@ def index():
 @hirdetes.route("/<category>", methods=["GET", "POST"])
 def query(category):
     
+    endpoint_category = category
+    
+    print('category belep')
     page = int(request.args.get("page", 1))
     adv_per_page = 2
     offset = (page - 1) * adv_per_page
     sortBy = request.args.get("sortBy", "date_desc")
     min_price = request.args.get("min_price")
     max_price = request.args.get("max_price")
-    
     
     cat_name = "" + category
     full_cat = Category.query.filter(Category.endpoint_name == cat_name).first()
@@ -97,19 +100,24 @@ def query(category):
     else:
         name = cat_name[0].upper() + cat_name[1:]
 
+    print("category vár POSTra")
     if request.method == "POST":
         
+        print("category POST")
         min_price = request.form.get("min_price")
         max_price = request.form.get("max_price")
         sortBy = request.form.get("sortBy")
         
         params = {'page': page, 'sortBy': sortBy}
+        
         if min_price:
             params['min_price'] = min_price
         if max_price:
             params['max_price'] = max_price
             
-        return redirect(url_for('hirdetes.index', **params))
+        return redirect(url_for('hirdetes.query', category=endpoint_category,**params))
+    
+    
 
     filtered_categories = Category.query.filter_by(main_category=category).all()
     if not filtered_categories:
@@ -141,7 +149,8 @@ def query(category):
     number_of_pag_pages = -(-number_of_advs // adv_per_page)
     advertisements = advertisements.limit(adv_per_page).offset(offset)
 
-    if advertisements:
+    if advertisements.count() > 0:
+        print("vannak hirdetesek", advertisements.count())
         return render_template(
         "index.html",
         advertisements=advertisements,
@@ -149,35 +158,14 @@ def query(category):
         number_of_pag_pages=number_of_pag_pages,
         sortBy=sortBy,
         min_price=min_price,
-        max_price=max_price
+        max_price=max_price,
+        category = endpoint_category
     )
     else:
+        print("nincsenek hirdetesek")
         flash("Nincs hirdetés a kiválasztott kategóriában.", category="error")
+        return redirect(url_for("views.home"))
 
-    
-
-    # # összes hirdetés egy fő kategóriában
-    # filtered_categories = Category.query.filter_by(main_category=category).all()
-
-    # if not filtered_categories:
-    #     filtered_categories = Category.query.filter_by(endpoint_name=category).all()
-        
-    # if filtered_categories:
-    #     all_advertisements = Advertisement.query.filter(
-    #         Advertisement.category.in_([cat.name for cat in filtered_categories])
-    #     ).all()
-    #     if all_advertisements:
-    #         return render_template(
-    #             "adv_by_category.html",
-    #             filtered_advertisements=all_advertisements,
-    #             category=category,
-    #             name=name,
-    #         )
-    #     else:
-    #         flash("Nincs hirdetés a kiválasztott kategóriában.", category="error")
-    # else:
-    #     flash("A kiválasztott kategória nem található.", category="error")
-    # return redirect(url_for("views.home"))
 
 
 @hirdetes.route("/kereses", methods=["POST"])
@@ -239,7 +227,7 @@ def adv_delete(id):
             return redirect(url_for("hirdetes.index"))
 
 
-@hirdetes.route("//<int:id>/szerkesztes", methods=["GET", "POST"])
+@hirdetes.route("/<int:id>/szerkesztes", methods=["GET", "POST"])
 @login_required
 def adv_edit(id):
     advertisement = Advertisement.query.get(id)

@@ -403,18 +403,13 @@ footer {
 		0 0 100px #003d30;
 }
 
+
 #flash-success {
-	width: 50%;
-	margin: 0 auto;
-	
+	width: 30%;
 }
 
 #flash-error {
-	width: 50%;
-	display: flex; 
-	justify-content: center; 
-	align-items: center;
-	
+	width: 30%;
 }
 
 #updateBtn {

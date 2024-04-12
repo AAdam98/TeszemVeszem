@@ -1,0 +1,47 @@
+{% extends "base.html" %} {%block title %} Találatok - {% endblock %} {%block content%}
+
+<h1 class="text-center">{{ name }} hirdetések</h1>
+
+<form method="POST" action="{{ url_for('hirdetes.query', category=category) }}">
+    <label for="sortBy">Rendezés:</label>
+    <select id="sortBy" name="sortBy">
+        <option value="price_desc">Csökkenő (Ár szerint)</option>
+        <option value="price_asc">Növekvő (Ár szerint)</option>
+        <option value="date_desc">Csökkenő (Dátum szerint)</option>
+        <option value="date_asc">Növekvő (Dátum szerint)</option>
+    </select>
+
+    <label for="min_price">Minimum Ár:</label>
+    <input type="number" id="min_price" name="min_price" placeholder="Minimum ár" />
+    <label for="max_price">Maximum Ár:</label>
+    <input type="number" id="max_price" name="max_price" placeholder="Maximum ár" />
+
+    <button type="submit">Küldés</button>
+</form>
+{% for advertisement in filtered_advertisements %}
+{% if advertisement.available %}
+<div class="hirdetesCard">
+
+    <a class="align-self-center" href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}">
+        <img class="hirdetesImage" src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba" />
+    </a>
+
+    <div class="hirdetesekText">
+        {{ advertisement.title }}
+
+    </div>
+    <div class="hirdetesekInfok">
+        {{ "{:,.0f}".format(advertisement.price).replace(',', ' ') }} Ft
+        <br>
+        {{ advertisement.date }}
+    </div>
+    <div class="hirdetesekFeladoInfok">
+        {% set user = User.query.get(advertisement.userID) %}
+        <a id="advInfo" href="{{ url_for('hirdetes.advByUser', id=user.userID) }}">
+            <p id="user">{{ user.username }}</p>
+        </a>
+        {{ user.username }}
+        </a>
+    </div>
+</div>
+{% endif %} {% endfor %} {%endblock%}

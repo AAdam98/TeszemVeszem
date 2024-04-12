@@ -31,7 +31,8 @@
 	<header>
 		<div class="navbar">
 			<div class="logo" onclick="redirectToPage('/')">TeszemVeszem</div>
-			
+			<div class="btn-group">
+
 			<form action="{{ url_for('hirdetes.search_results') }}" method="POST">
 			<div class="input-group">
 				<input name="search" id="search" type="text" class="form-control" placeholder="Keresés" aria-label="Keresés" aria-describedby="button-addon2">
@@ -39,11 +40,13 @@
 			</div>
 			</form>
 
-			<div class="btn-group">
+			
 				<button type="button" class="btn btn-light bi bi-plus-circle"
 					onclick="redirectToPage('/hirdetes/hirdetesfeladas')">
 					Hirdetésfeladás
 				</button>
+
+			</div>
 
 				
 
@@ -97,7 +100,7 @@
 					</div>
 					{% endif %}
 				</div>
-			</div>
+			
 		</div>
 	</header>
 
