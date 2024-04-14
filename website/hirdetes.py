@@ -30,7 +30,7 @@ def index():
     
     print('index belep')
     page = int(request.args.get("page", 1))
-    
+    offset = (page - 1) * adv_per_page
     sortBy = request.args.get("sortBy", "date_desc")
     min_price = request.args.get("min_price")
     max_price = request.args.get("max_price")
