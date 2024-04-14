@@ -475,6 +475,8 @@ def advById(id):
     number_of_pag_pages = -(-number_of_advs // adv_per_page)
     advertisements = advertisements.limit(adv_per_page).offset(offset)
     
+    user = User.query.get(id)
+    
     return render_template(
         "index.html",
         advertisements=advertisements,
@@ -484,7 +486,7 @@ def advById(id):
         min_price=min_price,
         max_price=max_price,
         id = id,
-        advertisementsTypeText = f"{id} hirdetései lazi eztt csinald meg konyorgok nemtom hogykell h a nevet irja ne idt"
+        advertisementsTypeText = f"{user.username} hirdetései"
     )
     
     # if request.method == "POST":
