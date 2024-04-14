@@ -20,10 +20,10 @@ def login():
                 login_user(user, remember=True)
                 return redirect(url_for("views.home"))
             else:
-                flash("Helytelen jelszó.", category="error")
+                flash("Helytelen jelszó!", category="error")
         else:
             flash(
-                "Nincs ilyen e-mail címmel regisztrált felhasználó.", category="error"
+                "Nincs ilyen email címmel regisztrált felhasználó!", category="error"
             )
     return render_template("login.html")
 
