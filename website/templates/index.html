@@ -7,16 +7,16 @@
 
 <form id="Form" class="hirdetesekFejlec" method="POST" action="{{ url_for(request.endpoint, category=category, search_term = search_term, id = id )}}">
 	<input type="hidden" name="search_term" value="{{ search_term }}">
-		<label for="min_price">Szűrés:</label>
+		<label class="hirdetesekFejlecLabel" for="min_price">Szűrés:</label>
 
-		<div style="width: 50%;  padding-left:1rem" class="input-group">
+		<div class="input-group hirdetesekFejlecArak">
 			<input type="number" id="max_price" name="max_price" value="{{request.args.get("max_price")}}" class="form-control" placeholder="Minimum ár">
 			<span class="input-group-text">-</span>
 			<input type="number" id="max_price" name="max_price" value="{{request.args.get("max_price")}}" class="form-control" placeholder="Maximum ár">
 			<span class="input-group-text">Ft.</span>
 		</div>
 
-		<button style="margin-right: auto; margin-left: 10px" class="btn btn-light" type="submit"> Szűrés	</button>
+		<button class="btn btn-light hirdetesekFejlecSzuresButton" type="submit"> Szűrés	</button>
 
 
 	<div>

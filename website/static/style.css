@@ -160,6 +160,7 @@ footer {
 	justify-content: space-between;
 	align-items: center;
 	padding: 0.5rem;
+	row-gap: 10px;
 }
 
 .hirdetesekLista {
@@ -215,6 +216,16 @@ footer {
 	width: 150px;
 	text-align: center;
 	align-items: center;
+}
+
+.hirdetesekFejlecArak{
+	width: 50%;
+	padding-left:1rem
+}
+
+.hirdetesekFejlecSzuresButton{
+	margin-right: auto;
+	margin-left: 10px;
 }
 
 .paginationPanel{
@@ -446,7 +457,6 @@ footer {
 
 	.catName {
 		flex-grow: 1;
-		text-align: justify;
 		margin-left: 1rem;
 		margin-right: 1rem;
 	}
@@ -500,6 +510,24 @@ footer {
 	}
 	.hirdetesekText{
 		padding: 0.5rem;
+	}
+
+	.hirdetesekFejlec{
+		row-gap: 10px;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+	}
+	.hirdetesekFejlecLabel{
+		display: none;
+	}
+
+	.hirdetesekFejlecArak{
+		width: auto;
+		padding-left: 0px;
+	}
+
+	.hirdetesekFejlecSzuresButton{
+		margin-left: 0px;
 	}
 }
 
