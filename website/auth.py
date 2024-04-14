@@ -47,19 +47,19 @@ def signup():
         user = User.query.filter_by(email=email).first()
         userName = User.query.filter_by(username=username).first()
         if user:
-            flash("Ezzel az e-mail címmel már regisztráltak.", category="error")
+            flash("Ezzel az e-mail címmel már regisztráltak!", category="error")
         elif userName:
-            flash("Ez a felhasználónév már foglalt.", category="error")
+            flash("Ez a felhasználónév már foglalt!", category="error")
         elif len(email) < 3 or not "@" in email or not "." in email:
             flash("Nem megfelelő email cím formátum!", category="error")
         elif len(username) < 4:
             flash(
-                "A felhasználónév nem lehet rövidebb mint 4 karakter", category="error"
+                "A felhasználónév nem lehet rövidebb mint 4 karakter!", category="error"
             )
         elif password1 != password2:
-            flash("Nem egyeznek a jelszavak", category="error")
+            flash("A jelszavak nem egyeznek!", category="error")
         elif len(password1) < 6:
-            flash("Jelszó nem lehet rövidebb mint 6 karakter", category="error")
+            flash("A jelszó nem lehet rövidebb mint 6 karakter!", category="error")
         else:
             new_user = User(
                 email=email,
