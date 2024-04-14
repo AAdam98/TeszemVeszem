@@ -3,45 +3,45 @@
 
 {% block content %}
 {% if advertisement.userID == userID or user.is_admin %}
-    {% if advertisement.userID == userID %}
-        <a href="{{ url_for('hirdetes.adv_edit', id=advertisement.advertisementID) }}"><p id="updateBtn">Hirdetés szerkesztése</p></a>
-    {% endif %}
-    <form id="deleteForm" action="{{ url_for('hirdetes.adv_delete', id=advertisement.advertisementID) }}" method="post">
-        <button type="button" onclick="confirmDelete()">Hirdetés törlése</button>
-    </form>
-    
-    <script>
-        function confirmDelete() {
-            if (confirm("Biztosan törölni szeretné ezt a hirdetést?")) {
-                document.getElementById("deleteForm").submit();
-            }
-        }
-    </script>
-    
-{% endif %}
+{% if advertisement.userID == userID %}
 
 <div class="hirdetesBox">
-    <div style="border-bottom: solid 1px #ddd;">
-        <h3>{{ advertisement.title }}</h3>
-        
-        Kategória: {{ advertisement.category }}
+    <div class="flexRow" style="justify-content: space-between; border-bottom: solid 1px #ddd;">
+        <div>
+            <h3>{{ advertisement.title }}</h3>
+
+            Kategória: {{ advertisement.category }}
+        </div>
+        <div  class="flexRow">
+            <a class="btn btn-outline-primary" href="{{ url_for('hirdetes.adv_edit', id=advertisement.advertisementID) }}">
+                <i class="bi bi-pencil-square"></i>
+            </a>
+
+            <form id="deleteForm" action="{{ url_for('hirdetes.adv_delete', id=advertisement.advertisementID) }}" method="post">
+                <button class="btn btn-outline-primary" type="button" onclick="confirmDelete()"><i class="bi bi-trash3"></i></button>
+            </form>
+            {% endif %}
+            {% endif %}
+
+        </div>
     </div>
     <div class="hirdetesInfok">
         {% set user = User.query.get(advertisement.userID) %}
-            <div class="hirdetesFeladoInfok">
-                {{ user.username }} - #### ideje regisztrált
-            </div>
-            <div>
-                <i class="bi bi-clock"></i> {{ advertisement.date.strftime("%Y-%m-%d | %H:%M") }}
-            </div>
+        <div class="hirdetesFeladoInfok">
+            {{ user.username }}
+        </div>
+        <div>
+            <i class="bi bi-clock"></i> {{ advertisement.date.strftime("%Y-%m-%d | %H:%M") }}
+        </div>
     </div>
     <div class="hirdetesDivImage">
-        <a class="hirdetesAImage" href="/static/cdn/{{advertisement.image_path}}"><img class="hirdetesImage" src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba"></a>
+        <a class="hirdetesAImage" href="/static/cdn/{{advertisement.image_path}}"><img class="hirdetesImage"
+                src="/static/cdn/{{advertisement.image_path}}" alt="kepHiba"></a>
     </div>
     <div class="hirdetesPrice p-3">
         <h3>{{ "{:,.0f}".format(advertisement.price).replace(',', ' ') }} Ft</h3>
     </div>
-    <div class="hirdetesLeiras" >
+    <div class="hirdetesLeiras">
         {{ advertisement.description|safe }}
     </div>
 

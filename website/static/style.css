@@ -60,6 +60,12 @@ footer {
 	width: 100%;
 }
 
+.flexRow{
+	display: flex;
+	flex-direction: row;
+	column-gap: 10px;
+}
+
 .navbar {
 	display: flex;
 	margin: 0;
@@ -421,10 +427,6 @@ footer {
 
 #flash-error {
 	width: 30%;
-}
-
-#updateBtn {
-	color: black !important;
 }
 
 #username {
