@@ -281,11 +281,10 @@ footer {
 }
 
 .ujhirdetes {
-	position: absolute;
+	margin: 0 auto;
 	top: 50%;
 	left: 50%;
-	width: 50%;
-	transform: translate(-50%, -50%);
+	
 }
 
 .ujhirdetes h2 {
