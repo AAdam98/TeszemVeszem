@@ -15,7 +15,13 @@
 	padding: 0;
 	box-sizing: border-box;
 	font-family: "CascadiaMono", sans-serif;
+	caret-color: auto;
 }
+
+*:not(input):not(textarea) {
+    caret-color: transparent;
+}
+
 
 html {
 	position: relative;
@@ -44,7 +50,6 @@ a:hover {
 header {
 	position: sticky;
 	width: 100%;
-	height: 60px;
 	padding: 0 3rem;
 	background-color: #008fff;
 }
@@ -53,6 +58,12 @@ footer {
 	background-color: #008fff;
 	position: absolute;
 	width: 100%;
+}
+
+.flexRow{
+	display: flex;
+	flex-direction: row;
+	column-gap: 10px;
 }
 
 .navbar {
@@ -67,6 +78,7 @@ footer {
 	font-family: "CascadiaMonoBold";
 	font-weight: bold;
 	color: white;
+	cursor: pointer;
 }
 
 .navbar .accountBtn {
@@ -146,11 +158,23 @@ footer {
 	justify-content: space-evenly;
 }
 
+.hirdetesekFejlec{
+	margin-top: 2rem;
+	background-color: #008fff;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.5rem;
+	row-gap: 10px;
+}
+
 .hirdetesekLista {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	margin-top: 2rem;
+	
 	margin-bottom: 2rem;
 	background-color: #f0f0f0;
 }
@@ -198,6 +222,22 @@ footer {
 	flex: none;
 	width: 150px;
 	text-align: center;
+	align-items: center;
+}
+
+.hirdetesekFejlecArak{
+	width: 50%;
+	padding-left:1rem
+}
+
+.hirdetesekFejlecSzuresButton{
+	margin-right: auto;
+	margin-left: 10px;
+}
+
+.paginationPanel{
+	text-align: center;
+	font-size: 1.3rem;
 }
 
 .card {
@@ -259,11 +299,10 @@ footer {
 }
 
 .ujhirdetes {
-	position: absolute;
+	margin: 0 auto;
 	top: 50%;
 	left: 50%;
-	width: 50%;
-	transform: translate(-50%, -50%);
+	
 }
 
 .ujhirdetes h2 {
@@ -301,9 +340,7 @@ footer {
 
 .alert {
 	text-align: center;
-	position: fixed;
-	top: 0;
-	height: 60px;
+	position: absolute;
 	width: 100%;
 	animation: alert 0.5s ease-out 3s 1 normal forwards;
 }
@@ -314,11 +351,11 @@ footer {
 	left: 50%;
 	width: 400px;
 	padding: 40px;
-	transform: translate(-50%, -50%);
 	background: #45adff;
 	box-sizing: border-box;
 	box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.6);
 	border-radius: 10px;
+	transform: translate(-50%, -50%);
 }
 
 .login-box h2 {
@@ -374,29 +411,6 @@ footer {
 	text-align: center;
 }
 
-.login-box a:hover {
-	background: #003d30;
-	color: #fff;
-	border-radius: 5px;
-	box-shadow: 0 0 5px #003d30, 0 0 25px #003d30, 0 0 50px #003d30,
-		0 0 100px #003d30;
-}
-
-.flash.success {
-	background-color: #d4edda;
-	border-color: #c3e6cb;
-	color: #155724;
-}
-
-.flash.error {
-	background-color: #f8d7da;
-	border-color: #f5c6cb;
-	color: #721c24;
-}
-
-#updateBtn {
-	color: black !important;
-}
 
 #username {
 	margin-top: 15px;
@@ -404,7 +418,7 @@ footer {
 }
 
 #preview {
-	max-width: 100%;
+	max-width: 10%;
 }
 
 @media screen and (max-width: 1100px) {
@@ -428,7 +442,6 @@ footer {
 
 	.catName {
 		flex-grow: 1;
-		text-align: justify;
 		margin-left: 1rem;
 		margin-right: 1rem;
 	}
@@ -455,11 +468,59 @@ footer {
 }
 
 @media screen and (max-width: 600px) {
-	header {
-		height: 120px;
-	}
 	.navbar {
-		height: 120px;
+		flex-direction: column;
+		row-gap: 10px;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+	}
+
+	.hirdetesekCard{
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.hirdetesekImage{
+		width: 100%;
+		height: 50vw;
+		margin: 0;
+	}
+	.hirdetesekText{
+		width: 100%;
+    	text-align: center;
+	}
+	.hirdetesekInfok, .hirdetesekFeladoInfok{
+		text-align: center;
+    	width: 50%;
+	}
+	.hirdetesekText{
+		padding: 0.5rem;
+	}
+
+	.hirdetesekFejlec{
+		row-gap: 10px;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+	}
+	.hirdetesekFejlecLabel{
+		display: none;
+	}
+
+	.hirdetesekFejlecArak{
+		width: auto;
+		padding-left: 0px;
+	}
+
+	.hirdetesekFejlecSzuresButton{
+		margin-left: 0px;
+	}
+
+	h2{
+		font-size: 20px;
+	}
+
+	.btn span{
+		display: none;
 	}
 }
 

@@ -41,7 +41,7 @@ def best_categories(num_categories=4):
     return best_categories
 
 
-@views.route("/")
+@views.route("/", methods=['GET'])
 def home():
     categories = best_categories()
     return render_template("home.html", best_categories=categories)
@@ -76,20 +76,20 @@ def password():
                         newpassw1, method="pbkdf2:sha256"
                     )
                     db.session.commit()
-                    flash("A jelszavad sikeresen megváltoztattad")
+                    flash("A jelszavad sikeresen megváltoztattad!")
                     return redirect(url_for("views.home"))
             else:
-                flash("A megadott jelszavak nem egyeznek", category="error")
+                flash("A megadott jelszavak nem egyeznek!", category="error")
         else:
-            flash("Hibás jelszó", category="error")
+            flash("Hibás jelszó!", category="error")
     return render_template("profile_passw.html", user=current_user)
 
 
-@views.route("/aboutus")
+@views.route("/rolunk")
 def aboutus():
     return render_template("about.html")
 
-@views.route("/adatvedelmi_szabalyzat")
+@views.route("/adatvedelmi_tajekoztato")
 def privacy_policy():
     return render_template("privacy_policy.html")
 

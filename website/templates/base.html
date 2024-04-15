@@ -9,7 +9,8 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-	<link rel="stylesheet" href="../static/style.css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
@@ -31,10 +32,25 @@
 		<div class="navbar">
 			<div class="logo" onclick="redirectToPage('/')">TeszemVeszem</div>
 			<div class="btn-group">
+
+				<form action="{{ url_for('hirdetes.search') }}" method="POST">
+					<div class="input-group">
+						<input name="search_term" id="search_term" type="text" class="form-control" placeholder="Keresés" aria-label="Keresés" aria-describedby="button-addon2">
+						<button class="btn btn-secondary" type="submit" id="button-addon2"><i class="bi bi-search"></i></button>
+					</div>
+				</form>
+				
+				
+
+			
 				<button type="button" class="btn btn-light bi bi-plus-circle"
 					onclick="redirectToPage('/hirdetes/hirdetesfeladas')">
-					Hirdetésfeladás
+					<span> Hirdetésfeladás </span>
 				</button>
+
+			</div>
+
+				
 
 				<div class="dropdown">
 					{% if current_user.is_authenticated %}
@@ -86,18 +102,18 @@
 					</div>
 					{% endif %}
 				</div>
-			</div>
+			
 		</div>
 	</header>
 
 	{% with messages = get_flashed_messages(with_categories=true)%} {%if
 	messages%} {% for category, message in messages %} {%if category ==
 	'error'%}
-	<div id="error-flash" class="alert alert-danger alter-dismissable show" role="alert">
+	<div id="flash-error" class="alert alert-danger alter-dismissable show" role="alert">
 		{{message}}
 	</div>
 	{%else%}
-	<div id="success-flash" class="alert alert-success alter-dismissable show" role="alert">
+	<div id="flash-success" class="alert alert-success alter-dismissable show" role="alert">
 		{{message}}
 	</div>
 	{%endif%} {%endfor%} {%endif%} {% endwith %}
@@ -111,16 +127,16 @@
 				<p class="wall">|</p>
 			</li>
 			<li class="nav-item"><a href="/hirdetesi_szabalyzat" class="nav-link px-2 text-muted">Hirdetési
-					szabályzat</a></li>
+					Szabályzat</a></li>
 			<li>
 				<p class="wall">|</p>
 			</li>
-			<li class="nav-item"><a href="/adatvedelmi_szabalyzat" class="nav-link px-2 text-muted">Adatvédelmi
+			<li class="nav-item"><a href="/adatvedelmi_tajekoztato" class="nav-link px-2 text-muted">Adatvédelmi
 					Tájékoztató</a></li>
 			<li>
 				<p class="wall">|</p>
 			</li>
-			<li class="nav-item"><a href="/aboutus" class="nav-link px-2 text-muted">Rólunk</a></li>
+			<li class="nav-item"><a href="/rolunk" class="nav-link px-2 text-muted">Rólunk</a></li>
 		</ul>
 		<p class="text-center text-muted">&copy; 2024 TeszemVeszem Kft.</p>
 	</footer>
