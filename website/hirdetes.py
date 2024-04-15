@@ -26,9 +26,6 @@ adv_per_page = 5
 
 @hirdetes.route("/", methods=["GET", "POST"])
 def index():
-    
-    
-    print('index belep')
     page = int(request.args.get("page", 1))
     offset = (page - 1) * adv_per_page
     sortBy = request.args.get("sortBy", "date_desc")
@@ -88,7 +85,6 @@ def index():
 def search():
     
     search_term= request.args.get("search_term")
-    print(search_term)
     page = int(request.args.get("page", 1))
     offset = (page - 1) * adv_per_page
     sortBy = request.args.get("sortBy", "date_desc")
@@ -156,8 +152,6 @@ def search():
 def query(category):
     
     endpoint_category = category
-    
-    print('category belep')
     page = int(request.args.get("page", 1))
     offset = (page - 1) * adv_per_page
     sortBy = request.args.get("sortBy", "date_desc")
@@ -171,10 +165,8 @@ def query(category):
     else:
         name = cat_name[0].upper() + cat_name[1:]
 
-    print("category vár POSTra")
     if request.method == "POST":
         
-        print("category POST")
         min_price = request.form.get("min_price")
         max_price = request.form.get("max_price")
         sortBy = request.form.get("sortBy")
@@ -222,7 +214,6 @@ def query(category):
     advertisements = advertisements.limit(adv_per_page).offset(offset)
 
     if advertisements.count() > 0:
-        print("vannak hirdetesek", advertisements.count())
         return render_template(
         "index.html",
         advertisements=advertisements,
@@ -235,7 +226,6 @@ def query(category):
         advertisementsTypeText = f"Találatok a következőre: "+ category
     )
     else:
-        print("nincsenek hirdetesek")
         flash("Nincs hirdetés a kiválasztott kategóriában.", category="error")
         return redirect(url_for("views.home"))
 

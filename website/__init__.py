@@ -21,7 +21,6 @@ def create_app():
     UPLOAD_FOLDER = "website/static/cdn"
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
-        print("CDN MAPPA LETREHOZVA")
 
     app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
     db.init_app(app)
@@ -63,7 +62,6 @@ def create_database(app):
     
     if not os.path.exists("instance"):
         os.makedirs("instance")
-        print("STATIC MAPPA LETREHOZVA")
         
         
     db_path = path.join(app.instance_path, DB_NAME)
