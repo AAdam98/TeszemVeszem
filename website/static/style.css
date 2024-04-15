@@ -485,8 +485,4 @@ footer {
 		flex-direction: column;
 		row-gap: 10px;
 	}
-
-	/*.btn span {
-		font-size: 1rem;
-	}*/
 }
