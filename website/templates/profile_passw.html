@@ -3,7 +3,7 @@ block content %}
 
 <div class="login-box">
 	<h2>Jelszó megváltoztatása</h2>
-	<form method="post" action="/password">
+	<form method="post" action="{{url_for('views.password')}}">
 		<input type="hidden" name="_method" value="PUT" />
 		<div class="user-box">
 			<input type="password" id="curPassw" name="curPassw" />
@@ -17,12 +17,9 @@ block content %}
 			<input type="password" id="newPassw2" name="newPassw2" />
 			<label for="newPassw2">Jelszó megerősítése</label>
 		</div>
-
-		<a href="/">
-			<label for="submitBtn">Mentés
-				<input type="submit" id="submitBtn" style="display: none" />
-			</label>
-		</a>
+		<label for="submitBtn">Mentés
+			<input type="submit" id="submitBtn" style="display: none" />
+		</label>
 	</form>
 </div>
 {% endblock %}
