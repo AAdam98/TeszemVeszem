@@ -594,12 +594,7 @@ def ujhirdetes():
                     main_category="notebook"
                 ).all()
                 mobil_categories = Category.query.filter_by(main_category="mobil").all()
-                return render_template(
-                    "new_adv.html",
-                    title=title,
-                    category=category_name,
-                    description=description,
-                    price=price,
+                return render_template("new_adv.html", title=title, category=category_name, description=description, price=price,
                     hardver_categories=hardver_categories,
                     notebook_categories=notebook_categories,
                     mobil_categories=mobil_categories,

@@ -85,11 +85,11 @@ def password():
     return render_template("profile_passw.html", user=current_user)
 
 
-@views.route("/aboutus")
+@views.route("/rolunk")
 def aboutus():
     return render_template("about.html")
 
-@views.route("/adatvedelmi_szabalyzat")
+@views.route("/adatvedelmi_tajekoztato")
 def privacy_policy():
     return render_template("privacy_policy.html")
 
