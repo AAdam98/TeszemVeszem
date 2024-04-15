@@ -87,7 +87,7 @@ def index():
 @hirdetes.route("/kereses", methods=["GET", "POST"])
 def search():
     
-    search_term= request.args.get("search_term")
+    search_term= request.args.get("search_term", "")
     print(search_term)
     page = int(request.args.get("page", 1))
     offset = (page - 1) * adv_per_page
@@ -103,7 +103,7 @@ def search():
         min_price = request.form.get("min_price")
         max_price = request.form.get("max_price")
         sortBy = request.form.get("sortBy")
-        search_term = request.form.get("search_term")
+        search_term = request.form.get("search_term", " ")
         
         params = {'page': page, 'sortBy': sortBy}
         if min_price:
@@ -111,8 +111,13 @@ def search():
         if max_price:
             params['max_price'] = max_price
             
-        return redirect(url_for('hirdetes.search', search_term=search_term ,**params))
-    
+        if len(search_term) > 3 :
+            return redirect(url_for('hirdetes.search', search_term=search_term ,**params))
+        else:
+            flash("Minimum 3 betűs legyen a keresés", category="error")
+            return redirect(url_for(request.endpoint))
+        
+        
     advertisements = Advertisement.query.filter(
         Advertisement.title.like(f"%{search_term}%"))
 
