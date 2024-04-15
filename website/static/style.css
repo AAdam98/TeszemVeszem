@@ -397,14 +397,6 @@ footer {
 	text-align: center;
 }
 
-.login-box a:hover {
-	background: #003d30;
-	color: #fff;
-	border-radius: 5px;
-	box-shadow: 0 0 5px #003d30, 0 0 25px #003d30, 0 0 50px #003d30,
-		0 0 100px #003d30;
-}
-
 #updateBtn {
 	color: black !important;
 }
