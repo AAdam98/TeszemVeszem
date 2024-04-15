@@ -15,13 +15,13 @@
             <label for="password">Jelszó</label>
         </div>
 
-        <a href="/">
-            <label for="submitBtn">Bejelentkezés
+        <a class="btn btn-light" href="{{ url_for('views.home') }}"">
+            <label for="submitBtn">Belépés
                 <input type="submit" id="submitBtn" style="display:none;">
             </label>
         </a>
     </form>
-    <h3>Még nincs fiókod? <a href="/auth/signup">Kattints ide!</h3>
+    <p style="margin-top: 1rem;">Még nincs fiókod? <a href="{{ url_for('auth.signup') }}">Kattints ide!</p>
 </div>
 
 {%endblock%}

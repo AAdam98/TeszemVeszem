@@ -23,13 +23,13 @@
             <label for="password2" class="form-label">Jelszó megerősítése</label>
         </div>
 
-        <a href="/">
+        <a class="btn btn-light" href="{{ url_for('views.home') }}"">
             <label for="submitBtn">Regisztráció
                 <input type="submit" id="submitBtn" style="display:none;">
             </label>
         </a>
     </form>
-    <h3>Már van fiókod? <a href="/auth/login">Jelentkezz be!</h3>
+    <p style="margin-top: 1rem;">Már van fiókod? <a href="{{ url_for('auth.login') }}">Jelentkezz be!</p>
 </div>
 
 

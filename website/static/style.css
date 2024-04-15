@@ -15,6 +15,7 @@
 	padding: 0;
 	box-sizing: border-box;
 	font-family: "CascadiaMono", sans-serif;
+	caret-color: auto;
 }
 
 *:not(input):not(textarea) {
@@ -380,7 +381,6 @@ footer {
 	width: 100%;
 	padding: 10px 0;
 	font-size: 16px;
-	font-size: #fff;
 	margin-bottom: 30px;
 	border: none;
 	border-bottom: 1px solid #fff;
@@ -412,13 +412,6 @@ footer {
 	text-align: center;
 }
 
-.login-box a:hover {
-	background: #003d30;
-	color: #fff;
-	border-radius: 5px;
-	box-shadow: 0 0 5px #003d30, 0 0 25px #003d30, 0 0 50px #003d30,
-		0 0 100px #003d30;
-}
 
 
 #flash-success {
@@ -429,10 +422,6 @@ footer {
 	width: 30%;
 }
 
-#username {
-	margin-top: 15px;
-	text-align: center;
-}
 
 #preview {
 	max-width: 10%;
@@ -530,6 +519,10 @@ footer {
 
 	.hirdetesekFejlecSzuresButton{
 		margin-left: 0px;
+	}
+
+	h2{
+		font-size: 20px;
 	}
 }
 
