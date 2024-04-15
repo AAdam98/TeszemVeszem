@@ -15,12 +15,12 @@
 	padding: 0;
 	box-sizing: border-box;
 	font-family: "CascadiaMono", sans-serif;
+	scrollbar-width: none;
 }
 
-*:not(input):not(textarea) {
-    caret-color: transparent;
+*::-webkit-scrollbar {
+	display: none;
 }
-
 
 html {
 	position: relative;
@@ -49,7 +49,6 @@ a:hover {
 header {
 	position: sticky;
 	width: 100%;
-	height: 60px;
 	padding: 0 3rem;
 	background-color: #008fff;
 }
@@ -60,29 +59,24 @@ footer {
 	width: 100%;
 }
 
-.flexRow{
-	display: flex;
-	flex-direction: row;
-	column-gap: 10px;
-}
-
 .navbar {
 	display: flex;
 	margin: 0;
 	align-items: center;
 	justify-content: space-between;
+	color: white;
 }
 
 .logo {
-	font-size: 1.5rem;
+	--logo-font-size: 1.5rem;
+	font-size: var(--logo-font-size);
 	font-family: "CascadiaMonoBold";
 	font-weight: bold;
 	color: white;
 }
 
-.navbar .accountBtn {
-	color: white;
-	font-size: 1.5rem;
+.logo:hover {
+	color: orange;
 	cursor: pointer;
 }
 
@@ -115,6 +109,7 @@ footer {
 	justify-content: center;
 	height: 500px;
 }
+
 .hirdetesDivImage {
 	padding: 1rem;
 	border-bottom: solid 1px #ddd;
@@ -125,10 +120,18 @@ footer {
 .hirdetesPrice {
 	border-bottom: solid 1px #ddd;
 }
+
 .hirdetesImage {
 	height: auto;
 	max-height: 100%;
 	max-width: 100%;
+	object-fit: initial;
+	border-radius: 0.6rem;
+}
+
+.hirdetesImageEdit {
+	max-width: 50%;
+	max-height: 50%;
 	object-fit: initial;
 	border-radius: 0.6rem;
 }
@@ -157,7 +160,7 @@ footer {
 	justify-content: space-evenly;
 }
 
-.hirdetesekFejlec{
+.hirdetesekFejlec {
 	margin-top: 2rem;
 	background-color: #008fff;
 	display: flex;
@@ -166,14 +169,13 @@ footer {
 	justify-content: space-between;
 	align-items: center;
 	padding: 0.5rem;
-	row-gap: 10px;
 }
 
 .hirdetesekLista {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	
+
 	margin-bottom: 2rem;
 	background-color: #f0f0f0;
 }
@@ -221,22 +223,6 @@ footer {
 	flex: none;
 	width: 150px;
 	text-align: center;
-	align-items: center;
-}
-
-.hirdetesekFejlecArak{
-	width: 50%;
-	padding-left:1rem
-}
-
-.hirdetesekFejlecSzuresButton{
-	margin-right: auto;
-	margin-left: 10px;
-}
-
-.paginationPanel{
-	text-align: center;
-	font-size: 1.3rem;
 }
 
 .card {
@@ -259,13 +245,12 @@ footer {
 }
 
 .card.middle-card {
-	height: 10rem;
 	width: 100%;
 }
 
-.card.bottom-card {
+#osszes {
 	flex-direction: row;
-	width: 100%;
+	height: calc(var(--catIcon-middle-height) + 10px);
 }
 
 .card.bottom-card.catName {
@@ -298,10 +283,11 @@ footer {
 }
 
 .ujhirdetes {
-	margin: 0 auto;
+	position: absolute;
 	top: 50%;
 	left: 50%;
-	
+	width: 50%;
+	transform: translate(-50%, -50%);
 }
 
 .ujhirdetes h2 {
@@ -341,7 +327,6 @@ footer {
 	text-align: center;
 	position: fixed;
 	top: 0;
-	height: 60px;
 	width: 100%;
 	animation: alert 0.5s ease-out 3s 1 normal forwards;
 }
@@ -420,13 +405,8 @@ footer {
 		0 0 100px #003d30;
 }
 
-
-#flash-success {
-	width: 30%;
-}
-
-#flash-error {
-	width: 30%;
+#updateBtn {
+	color: black !important;
 }
 
 #username {
@@ -435,10 +415,22 @@ footer {
 }
 
 #preview {
-	max-width: 10%;
+	max-width: 100%;
 }
 
-@media screen and (max-width: 1100px) {
+.wall {
+	margin-top: 8px;
+}
+
+@media screen and (max-width: 900px) {
+	.btn span {
+		font-size: 0;
+	}
+
+	.container {
+		max-width: 100vw;
+	}
+
 	.cardContainer {
 		display: table-row;
 	}
@@ -459,6 +451,7 @@ footer {
 
 	.catName {
 		flex-grow: 1;
+		text-align: justify;
 		margin-left: 1rem;
 		margin-right: 1rem;
 	}
@@ -478,61 +471,22 @@ footer {
 	}
 
 	.card.upper-card:hover,
-	.card.middle-card:hover,
-	.card.bottom-card:hover {
+	.card.middle-card:hover {
 		transform: scale(1.05);
 	}
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 670px) {
 	header {
-		height: 120px;
+		padding: 0;
 	}
+
 	.navbar {
-		height: 120px;
-	}
-
-	.hirdetesekCard{
-		flex-wrap: wrap;
-		justify-content: center;
-	}
-
-	.hirdetesekImage{
-		width: 100%;
-		height: 50vw;
-		margin: 0;
-	}
-	.hirdetesekText{
-		width: 100%;
-    	text-align: center;
-	}
-	.hirdetesekInfok, .hirdetesekFeladoInfok{
-		text-align: center;
-    	width: 50%;
-	}
-	.hirdetesekText{
-		padding: 0.5rem;
-	}
-
-	.hirdetesekFejlec{
+		flex-direction: column;
 		row-gap: 10px;
-		flex-wrap: wrap;
-		justify-content: flex-end;
-	}
-	.hirdetesekFejlecLabel{
-		display: none;
 	}
 
-	.hirdetesekFejlecArak{
-		width: auto;
-		padding-left: 0px;
-	}
-
-	.hirdetesekFejlecSzuresButton{
-		margin-left: 0px;
-	}
-}
-
-.wall {
-    margin-top: 8px;
+	/*.btn span {
+		font-size: 1rem;
+	}*/
 }
