@@ -22,12 +22,9 @@
             <input type="password" id="password2" name="password2">
             <label for="password2" class="form-label">Jelszó megerősítése</label>
         </div>
-
-        <a class="btn btn-light" href="{{ url_for('views.home') }}"">
-            <label for="submitBtn">Regisztráció
-                <input type="submit" id="submitBtn" style="display:none;">
-            </label>
-        </a>
+        <label class="btn btn-light"  for="submitBtn">Regisztráció
+            <input type="submit" id="submitBtn" style="display:none;">
+        </label>
     </form>
     <p style="margin-top: 1rem;">Már van fiókod? <a href="{{ url_for('auth.login') }}">Jelentkezz be!</p>
 </div>

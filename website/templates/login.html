@@ -14,12 +14,9 @@
             <input type="password" id="password" name="password">
             <label for="password">Jelszó</label>
         </div>
-
-        <a class="btn btn-light" href="{{ url_for('views.home') }}"">
-            <label for="submitBtn">Belépés
-                <input type="submit" id="submitBtn" style="display:none;">
-            </label>
-        </a>
+        <label class="btn btn-light" for="submitBtn">Belépés
+            <input type="submit" id="submitBtn" style="display:none;">
+        </label>
     </form>
     <p style="margin-top: 1rem;">Még nincs fiókod? <a href="{{ url_for('auth.signup') }}">Kattints ide!</p>
 </div>

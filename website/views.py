@@ -76,12 +76,12 @@ def password():
                         newpassw1, method="pbkdf2:sha256"
                     )
                     db.session.commit()
-                    flash("A jelszavad sikeresen megváltoztattad")
+                    flash("A jelszavad sikeresen megváltoztattad!")
                     return redirect(url_for("views.home"))
             else:
-                flash("A megadott jelszavak nem egyeznek", category="error")
+                flash("A megadott jelszavak nem egyeznek!", category="error")
         else:
-            flash("Hibás jelszó", category="error")
+            flash("Hibás jelszó!", category="error")
     return render_template("profile_passw.html", user=current_user)
 
 
