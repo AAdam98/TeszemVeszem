@@ -294,45 +294,66 @@ def adv_delete(id):
 @login_required
 def adv_edit(id):
     advertisement = Advertisement.query.get(id)
-    if request.method == "POST":
-        image_error = False
-        title = request.form.get("title")
-        category_name = request.form.get("category")
-        description = request.form.get("description")
-        price = request.form.get("price")
-        filename = ""
-        if "image" in request.files:
-            image = request.files["image"]
-            if image.filename != "":
-                allowed_extensions = {"jpg", "jpeg", "png"}
-                filename = secure_filename(image.filename)
-                base_filename, file_extension = os.path.splitext(filename)
+    user = current_user
+    if user.userID == advertisement.userID:
+        if request.method == "POST":
+            image_error = False
+            title = request.form.get("title")
+            category_name = request.form.get("category")
+            description = request.form.get("description")
+            price = request.form.get("price")
+            filename = ""
+            if "image" in request.files:
+                image = request.files["image"]
+                if image.filename != "":
+                    allowed_extensions = {"jpg", "jpeg", "png", "gif"}
+                    filename = secure_filename(image.filename)
+                    if (
+                        "." in filename
+                        and filename.rsplit(".", 1)[1].lower() in allowed_extensions
+                    ):
+                        image.save(
+                            os.path.join(current_app.config["UPLOAD_FOLDER"], filename)
+                        )
+                    else:
+                        image_error = True
+            if (
+                len(title) < 5
+                or len(description) < 10
+                or not price.isdigit()
+                or int(price) < 0
+                or image_error == True
+                or len(category_name) == 0
+                or filename == ""
+            ):
+                flash("Hiba a hirdetés feladásakor.", category="error")
+                hardver_categories = Category.query.filter_by(main_category="hardver").all()
+                notebook_categories = Category.query.filter_by(
+                    main_category="notebook"
+                ).all()
+                mobil_categories = Category.query.filter_by(main_category="mobil").all()
+                return render_template(
+                    "adv_edit.html",
+                    advertisement=advertisement,
+                    hardver_categories=hardver_categories,
+                    notebook_categories=notebook_categories,
+                    mobil_categories=mobil_categories,
+                )
+            else:
+                advertisement.title = title
+                advertisement.category = category_name
+                advertisement.description = description
+                advertisement.price = int(price)
+                advertisement.image_path = os.path.join(
+                    current_app.config["UPLOAD_FOLDER"], filename
+                )
+                db.session.commit()
+                flash("Hirdetés sikeresen szerkesztve!", category="success")
+                return redirect(url_for("views.home"))
 
-                filename = f"{current_user.username}_{datetime.now().strftime('%Y%m%d%H%M%S')}_{base_filename}{file_extension}"
-
-                if (
-                    "." in filename
-                    and filename.rsplit(".", 1)[1].lower() in allowed_extensions
-                ):
-                    image.save(
-                        os.path.join(current_app.config["UPLOAD_FOLDER"], filename)
-                    )
-                else:
-                    image_error = True
-        if (
-            len(title) < 5
-            or len(description) < 10
-            or not price.isdigit()
-            or int(price) < 0
-            or image_error == True
-            or len(category_name) == 0
-            or filename == ""
-        ):
-            flash("Hiba a hirdetés feladásakor.", category="error")
+        else:
             hardver_categories = Category.query.filter_by(main_category="hardver").all()
-            notebook_categories = Category.query.filter_by(
-                main_category="notebook"
-            ).all()
+            notebook_categories = Category.query.filter_by(main_category="notebook").all()
             mobil_categories = Category.query.filter_by(main_category="mobil").all()
             return render_template(
                 "adv_edit.html",
@@ -341,30 +362,9 @@ def adv_edit(id):
                 notebook_categories=notebook_categories,
                 mobil_categories=mobil_categories,
             )
-        else:
-            advertisement.title = title
-            advertisement.category = category_name
-            advertisement.description = description
-            advertisement.price = int(price)
-            advertisement.image_path = os.path.join(
-                current_app.config["UPLOAD_FOLDER"], filename
-            )
-            db.session.commit()
-            flash("Hirdetés sikeresen szerkesztve!", category="success")
-            return redirect(url_for("views.home"))
-
     else:
-        hardver_categories = Category.query.filter_by(main_category="hardver").all()
-        notebook_categories = Category.query.filter_by(main_category="notebook").all()
-        mobil_categories = Category.query.filter_by(main_category="mobil").all()
-        return render_template(
-            "adv_edit.html",
-            advertisement=advertisement,
-            hardver_categories=hardver_categories,
-            notebook_categories=notebook_categories,
-            mobil_categories=mobil_categories,
-        )
-
+        flash("Nincs jogosultságod más hirdetéseit szerkeszteni!", category="error")
+        return redirect(url_for("views.home"))
 
 @hirdetes.route("/sajathirdetesek", methods=["GET", "POST"])
 @login_required
