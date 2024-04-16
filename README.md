@@ -29,3 +29,6 @@ pip install -r requirements.txt
 ```
 python3 main.py
 ```
+
+### Teszt adatbázis eléréséhez:
+Csomagolja ki az [example.zip](./example.zip) tartalmát a TeszemVeszem gyökérkönyvtárába.
