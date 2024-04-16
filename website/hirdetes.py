@@ -26,9 +26,6 @@ adv_per_page = 5
 
 @hirdetes.route("/", methods=["GET", "POST"])
 def index():
-    
-    
-    print('index belep')
     page = int(request.args.get("page", 1))
     offset = (page - 1) * adv_per_page
     sortBy = request.args.get("sortBy", "date_desc")
@@ -88,7 +85,7 @@ def index():
 def search():
     
     search_term= request.args.get("search_term", "")
-    print(search_term)
+    
     page = int(request.args.get("page", 1))
     offset = (page - 1) * adv_per_page
     sortBy = request.args.get("sortBy", "date_desc")
@@ -161,8 +158,6 @@ def search():
 def query(category):
     
     endpoint_category = category
-    
-    print('category belep')
     page = int(request.args.get("page", 1))
     offset = (page - 1) * adv_per_page
     sortBy = request.args.get("sortBy", "date_desc")
@@ -176,10 +171,8 @@ def query(category):
     else:
         name = cat_name[0].upper() + cat_name[1:]
 
-    print("category vár POSTra")
     if request.method == "POST":
         
-        print("category POST")
         min_price = request.form.get("min_price")
         max_price = request.form.get("max_price")
         sortBy = request.form.get("sortBy")
@@ -227,7 +220,6 @@ def query(category):
     advertisements = advertisements.limit(adv_per_page).offset(offset)
 
     if advertisements.count() > 0:
-        print("vannak hirdetesek", advertisements.count())
         return render_template(
         "index.html",
         advertisements=advertisements,
@@ -240,7 +232,6 @@ def query(category):
         advertisementsTypeText = f"Találatok a következőre: "+ category
     )
     else:
-        print("nincsenek hirdetesek")
         flash("Nincs hirdetés a kiválasztott kategóriában.", category="error")
         return redirect(url_for("views.home"))
 
@@ -498,37 +489,6 @@ def advById(id):
         advertisementsTypeText = f"{user.username} hirdetései"
     )
     
-    # if request.method == "POST":
-    #     sortBy = request.form["sortBy"]
-    #     min_price = request.form["min_price"]
-    #     max_price = request.form["max_price"]
-
-    #     advertisements = Advertisement.query.filter_by(userID=id)
-
-    #     if min_price and max_price and min_price <= max_price:
-    #         advertisements = advertisements.filter(
-    #             Advertisement.price.between(min_price, max_price)
-    #         )
-    #     elif min_price:
-    #         advertisements = advertisements.filter(Advertisement.price >= min_price)
-    #     elif max_price:
-    #         advertisements = advertisements.filter(Advertisement.price <= max_price)
-
-    #     if sortBy == "price_desc":
-    #         advertisements = advertisements.order_by(Advertisement.price.desc())
-    #     elif sortBy == "price_asc":
-    #         advertisements = advertisements.order_by(Advertisement.price.asc())
-    #     elif sortBy == "date_desc":
-    #         advertisements = advertisements.order_by(Advertisement.date.desc())
-    #     elif sortBy == "date_asc":
-    #         advertisements = advertisements.order_by(Advertisement.date.asc())
-
-    #     advertisements = advertisements.all()
-    #     return render_template("user_adv.html", id=id, advertisements=advertisements)
-    # else:
-    #     advertisements = Advertisement.query.filter_by(userID=id).all()
-    #     return render_template("user_adv.html", id=id, advertisements=advertisements)
-
 
 @hirdetes.route("/hirdetesfeladas", methods=["GET", "POST"])
 @login_required
