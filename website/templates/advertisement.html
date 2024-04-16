@@ -2,8 +2,8 @@
 {%block title %} {{ advertisement.title }} - {% endblock %}
 
 {% block content %}
-{% if advertisement.userID == userID or user.is_admin %}
-{% if advertisement.userID == userID %}
+
+
 
 <div class="hirdetesBox">
     <div class="flexRow" style="justify-content: space-between; border-bottom: solid 1px #ddd;">
@@ -12,16 +12,20 @@
 
             Kategória: {{ advertisement.category }}
         </div>
-        <div  class="flexRow">
-            <a class="btn btn-outline-primary" href="{{ url_for('hirdetes.adv_edit', id=advertisement.advertisementID) }}">
-                <i class="bi bi-pencil-square"></i>
-            </a>
-
-            <form id="deleteForm" action="{{ url_for('hirdetes.adv_delete', id=advertisement.advertisementID) }}" method="post">
-                <button class="btn btn-outline-primary" type="button" onclick="confirmDelete()"><i class="bi bi-trash3"></i></button>
+        <div class="flexRow">
+            {% if advertisement.userID == userID %}
+            <form action="{{ url_for('hirdetes.adv_edit', id=advertisement.advertisementID) }}">
+                <button class="btn btn-outline-primary bi bi-pencil-square"></button>
             </form>
             {% endif %}
+            {% if advertisement.userID == userID or user.is_admin %}
+            <form id="deleteForm" action="{{ url_for('hirdetes.adv_delete', id=advertisement.advertisementID) }}"
+                method="post">
+                <button class="btn btn-outline-primary" type="button" onclick="confirmDelete()"><i
+                        class="bi bi-trash3"></i></button>
+            </form>
             {% endif %}
+
 
         </div>
     </div>
