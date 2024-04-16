@@ -1,3 +1,5 @@
+# TeszemVeszem
+
 A TeszemVeszem egy online piactér, amely lehetőséget biztosít a felhasználóknak a használt informatikai eszközeik eladására, illetve a mások által meghirdetett tárgyak böngészésére.
 Az adásvétel folyamatában a TeszemVeszem harmadik félként nem vállal szerepet. 
 
@@ -12,12 +14,16 @@ A projekten közreműködött:
 ## Teendők a futtatáshoz:
 
 ### Virtuális környezet létrehozása:
->python -m venv .venv
+```
+python3 -m venv .venv
+```
 
 ### Modulok telepítése:
->pip install -r requirements.txt
+```
+pip install -r requirements.txt
+```
 
 ### main.py futtatása:
->./main.py
-
-
+```
+python3 main.py
+```
