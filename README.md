@@ -11,7 +11,7 @@ A projekten közreműködött:
 ### Python verzió:
 >Python 3.12
 
-## Függőségek a [requirements.txt](./requirements.txt) -ben.
+### Függőségek a [requirements.txt](./requirements.txt) -ben.
 
 ## Teendők a futtatáshoz:
 
