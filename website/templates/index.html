@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{%block title %} Találatok - {% endblock %}
+
+{%block content%}
+
+<h1 class="text-center">{{advertisementsTypeText}}</h1>
+
+<form id="Form" class="hirdetesekFejlec" method="POST" action="{{ url_for(request.endpoint, category=category, search_term = search_term, id = id )}}">
+	<input type="hidden" name="search_term" value="{{ search_term }}">
+		<label class="hirdetesekFejlecLabel" for="min_price">Szűrés:</label>
+
+		<div class="input-group hirdetesekFejlecArak">
+			<input type="number" id="min_price" name="min_price" value="{{request.args.get("min_price")}}" class="form-control" placeholder="Minimum ár">
+			<span class="input-group-text">-</span>
+			<input type="number" id="max_price" name="max_price" value="{{request.args.get("max_price")}}" class="form-control" placeholder="Maximum ár">
+			<span class="input-group-text">Ft.</span>
+		</div>
+
+		<button class="btn btn-light hirdetesekFejlecSzuresButton" type="submit"> Szűrés	</button>
+
+
+	<div>
+		<select class="form-select" id="sortBy" name="sortBy" onchange="submitForm()">
+			<option {% if sortBy == "date_desc" %} selected {% endif %} value="date_desc">Újak elöl</option>
+			<option {% if sortBy == "date_asc" %} selected {% endif %} value="date_asc">Régik elöl</option>
+			<option {% if sortBy == "price_desc" %} selected {% endif %} value="price_desc">Drágák elöl</option>
+			<option {% if sortBy == "price_asc" %} selected {% endif %} value="price_asc">Olcsók elöl</option>
+		</select>
+	</div>
+
+</form>
+
+
+<div class="hirdetesekLista">
+	{% for advertisement in advertisements %}
+	{% if advertisement.available %}
+
+	<div class="hirdetesekCard">
+
+		<a class="align-self-center" href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}"><img
+				class="hirdetesekImage" src="/static/cdn/{{advertisement.image_path}}" alt="Nem található kép"></a>
+
+		<div class="hirdetesekText">
+			<a id="advInfo" href="{{ url_for('hirdetes.adv_details', id=advertisement.advertisementID) }}">{{
+				advertisement.title }}</a>
+		</div>
+		<div class="hirdetesekInfok">
+			{{ "{:,.0f}".format(advertisement.price).replace(',', ' ') }} Ft
+			<br>
+			{{ advertisement.date.strftime("%Y-%m-%d") }}
+		</div>
+		<div class="hirdetesekFeladoInfok">
+			{% set user = User.query.get(advertisement.userID) %}
+			<a id="advInfo" href="{{ url_for('hirdetes.advById', id=user.userID) }}">
+				{{ user.username }}
+			</a>
+
+		</div>
+	</div>
+
+	{% endif %}
+	{% endfor %}
+</div>
+
+
+<div class="paginationPanel">
+
+    {% if current_page > 1 %} 
+    <a style="color: black;" href="{{ url_for(request.endpoint, search_term = search_term, category=category, page=1, sortBy=sortBy, min_price=min_price, max_price=max_price, id = id) }}"><i title="Legelső blokk" class="bi bi-arrow-bar-left"></i></a>
+    <a style="color: black;" href="{{ url_for(request.endpoint, search_term = search_term, category=category, page=current_page - 1, sortBy=sortBy, min_price=min_price, max_price=max_price, id = id) }}"><i title="Előző blokk" class="bi bi-arrow-left"></i></a>
+
+    {% else  %}
+    <a style="color: gray;""><i title="Legelső blokk" class="bi bi-arrow-bar-left"></i></a>
+    <a style="color: gray;"><i title="Előző blokk" class="bi bi-arrow-left"></i></a>
+    {% endif %}
+    {% if number_of_pag_pages <= 5 %} 
+        {% for page_num in range(1, number_of_pag_pages + 1) %}
+            <a {% if page_num==current_page%} style="color: cornflowerblue;" {% else%} style="color:black" 
+            {% endif %}
+            href="{{ url_for(request.endpoint, category=category, search_term = search_term, page=page_num, sortBy=sortBy, min_price=min_price, max_price=max_price, id = id) }}">
+            {{page_num }}
+            </a>
+        {% endfor %}
+        {% else %}
+        {% if current_page <= 2 %} {% set start_page=1 %} {% set end_page=5 %} {% elif current_page>=number_of_pag_pages -1 %}
+            {% set start_page = number_of_pag_pages - 4 %}
+            {% set end_page = number_of_pag_pages %}
+            {% else %}
+            {% set start_page = current_page - 2 %}
+            {% set end_page = current_page + 2 %}
+            {% endif %}
+            {% for page_num in range(start_page, end_page + 1) %}
+
+            <a href="{{ url_for(request.endpoint, category=category,  search_term = search_term, page=page_num, sortBy=sortBy, min_price=min_price, max_price=max_price, id = id) }}" {% if page_num==current_page %}
+                style="color: cornflowerblue;" {% endif %}>{{
+                page_num }}</a>
+            {% endfor %}
+            {% endif %}
+
+            {% if current_page < number_of_pag_pages %} 
+            <a style="color: black;" href="{{ url_for(request.endpoint, search_term = search_term, category=category, page=current_page+1, sortBy=sortBy, min_price=min_price, max_price=max_price, id = id) }}"><i title="Következő blokk" class="bi bi-arrow-right"></i></a>
+            <a style="color: black;" href="{{ url_for(request.endpoint, search_term = search_term, category=category, page=number_of_pag_pages, sortBy=sortBy, min_price=min_price, max_price=max_price, id = id) }}"><i title="Utolsó blokk" class="bi bi-arrow-bar-right"></i></a>
+
+            {%else%}
+            <a style="color: gray;" ><i title="Következő blokk" class="bi bi-arrow-right"></i></a>
+            <a style="color: gray;"><i title="Utolsó blokk" class="bi bi-arrow-bar-right"></i></a>
+            {% endif %}
+
+</div>
+
+{%endblock%}

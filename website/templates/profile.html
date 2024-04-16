@@ -1,0 +1,34 @@
+{% extends "base.html" %} {%block title %} Fiókbeállítások - {% endblock %}
+{%block content%}
+
+<div class="hirdetesdoboz">
+	<div>
+		<div class="cardContainer">
+			<div class="card upper-card" onclick="redirectToPage('/hirdetes/hirdetesfeladas')">
+				<div class="text">
+					<p>Hirdetésfeladás</p>
+				</div>
+			</div>
+			{% if current_user.is_admin %}
+			<div class="card upper-card" onclick="redirectToPage('/hirdetes/osszes')">
+				<div class="text">
+					<p>Hirdetések kezelése</p>
+				</div>
+			</div>
+			{% else %}
+			<div class="card upper-card" onclick="redirectToPage('/hirdetes/sajathirdetesek')">
+				<div class="text">
+					<p>Saját hirdetések</p>
+				</div>
+			</div>
+			{% endif %}
+			<div class="card upper-card" onclick="redirectToPage('/jelszokezeles')">
+				<div class="text">
+					<p>Jelszó megváltoztatása</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{%endblock%}

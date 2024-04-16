@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>{%block title %} {% endblock %}TeszemVeszem</title>
+	<link rel="icon" href="../static/favicon.ico" type="image/x-icon" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+		crossorigin="anonymous"></script>
+	<script src="{{ url_for('static', filename='script.js') }}"></script>
+	<script src="{{ url_for('static', filename='tinymce/tinymce.min.js') }}"></script>
+
+	<script>
+		tinymce.init({
+			selector: '#tinymce',
+			language: 'hu_HU'
+		});
+	</script>
+	
+</head>
+
+<body>
+	<header>
+		<div class="navbar">
+			<div class="logo" onclick="redirectToPage('/')">TeszemVeszem</div>
+			<div class="btn-group">
+
+				<form action="{{ url_for('hirdetes.search') }}" method="POST">
+					<div class="input-group">
+						<input name="search_term" id="search_term" type="text" class="form-control" placeholder="Keresés" aria-label="Keresés" aria-describedby="button-addon2">
+						<button class="btn btn-secondary" type="submit" id="button-addon2"><i class="bi bi-search"></i></button>
+					</div>
+				</form>
+				
+				
+
+			
+				<button type="button" class="btn btn-light bi bi-plus-circle"
+					onclick="redirectToPage('/hirdetes/hirdetesfeladas')">
+					<span> Hirdetésfeladás </span>
+				</button>
+
+			</div>
+
+				
+
+				<div class="dropdown">
+					{% if current_user.is_authenticated %}
+					<div class="accountMenu">
+						<button class="btn btn-secondary dropdown-toggle bi bi-person-circle" type="button"
+							id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+							{{ current_user.username }}
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+							<li>
+								<a href="/profil"><button class="dropdown-item" type="button">
+										Profil
+									</button></a>
+							</li>
+							<li>
+								<a href="/hirdetes/sajathirdetesek"><button class="dropdown-item" type="button">
+										Hirdetéseim
+									</button></a>
+							</li>
+							<li>
+								<a href="/auth/logout"><button class="dropdown-item" type="button">
+										Kijelentkezés
+									</button></a>
+							</li>
+						</ul>
+					</div>
+					{% else %}
+					<div class="accountMenu">
+						<button class="btn btn-secondary dropdown-toggle bi bi-person-circle" type="button"
+							id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+							Fiókom
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+							<a href="/auth/login">
+								<li>
+									<button class="dropdown-item" type="button">
+										Bejelentkezés
+									</button>
+								</li>
+							</a>
+							<a href="/auth/signup">
+								<li>
+									<button class="dropdown-item" type="button">
+										Regisztráció
+									</button>
+								</li>
+							</a>
+						</ul>
+					</div>
+					{% endif %}
+				</div>
+			
+		</div>
+	</header>
+
+	{% with messages = get_flashed_messages(with_categories=true)%} {%if
+	messages%} {% for category, message in messages %} {%if category ==
+	'error'%}
+	<div id="flash-error" class="alert alert-danger alter-dismissable show" role="alert">
+		{{message}}
+	</div>
+	{%else%}
+	<div id="flash-success" class="alert alert-success alter-dismissable show" role="alert">
+		{{message}}
+	</div>
+	{%endif%} {%endfor%} {%endif%} {% endwith %}
+
+	<main class="container">{% block content %}{% endblock %}</main>
+
+	<footer class="py-3">
+		<ul class="nav justify-content-center border-bottom pb-3 mb-3">
+			<li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Kezdőlap</a></li>
+			<li>
+				<p class="wall">|</p>
+			</li>
+			<li class="nav-item"><a href="/hirdetesi_szabalyzat" class="nav-link px-2 text-muted">Hirdetési
+					Szabályzat</a></li>
+			<li>
+				<p class="wall">|</p>
+			</li>
+			<li class="nav-item"><a href="/adatvedelmi_tajekoztato" class="nav-link px-2 text-muted">Adatvédelmi
+					Tájékoztató</a></li>
+			<li>
+				<p class="wall">|</p>
+			</li>
+			<li class="nav-item"><a href="/rolunk" class="nav-link px-2 text-muted">Rólunk</a></li>
+		</ul>
+		<p class="text-center text-muted">&copy; 2024 TeszemVeszem Kft.</p>
+	</footer>
+</body>
+
+</html>

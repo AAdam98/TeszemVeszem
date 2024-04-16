@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %} Bejelentkezés - {%endblock%}
+
+{%block content%}
+
+<div class="login-box">
+    <h2>Bejelentkezés</h2>
+    <form method="POST">
+        <div class="user-box">
+            <input type="email" id="email" name="email" aria-describedby="emailHelp">
+            <label for="email">Email</label>
+        </div>
+        <div class="user-box">
+            <input type="password" id="password" name="password">
+            <label for="password">Jelszó</label>
+        </div>
+        <label class="btn btn-light" for="submitBtn">Belépés
+            <input type="submit" id="submitBtn" style="display:none;">
+        </label>
+    </form>
+    <p style="margin-top: 1rem;">Még nincs fiókod? <a href="{{ url_for('auth.signup') }}">Kattints ide!</p>
+</div>
+
+{%endblock%}
