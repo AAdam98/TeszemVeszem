@@ -26,6 +26,7 @@ adv_per_page = 5
 
 @hirdetes.route("/", methods=["GET", "POST"])
 def index():
+    
     page = int(request.args.get("page", 1))
     offset = (page - 1) * adv_per_page
     sortBy = request.args.get("sortBy", "date_desc")
@@ -85,7 +86,6 @@ def index():
 def search():
     
     search_term= request.args.get("search_term", "")
-    
     page = int(request.args.get("page", 1))
     offset = (page - 1) * adv_per_page
     sortBy = request.args.get("sortBy", "date_desc")
@@ -158,6 +158,7 @@ def search():
 def query(category):
     
     endpoint_category = category
+    
     page = int(request.args.get("page", 1))
     offset = (page - 1) * adv_per_page
     sortBy = request.args.get("sortBy", "date_desc")
@@ -340,9 +341,8 @@ def adv_edit(id):
                 advertisement.category = category_name
                 advertisement.description = description
                 advertisement.price = int(price)
-                advertisement.image_path = os.path.join(
-                    current_app.config["UPLOAD_FOLDER"], filename
-                )
+                advertisement.image_path =filename
+                
                 db.session.commit()
                 flash("Hirdetés sikeresen szerkesztve!", category="success")
                 return redirect(url_for("views.home"))
@@ -488,7 +488,7 @@ def advById(id):
         id = id,
         advertisementsTypeText = f"{user.username} hirdetései"
     )
-    
+
 
 @hirdetes.route("/hirdetesfeladas", methods=["GET", "POST"])
 @login_required
