@@ -26,6 +26,7 @@ adv_per_page = 5
 
 @hirdetes.route("/", methods=["GET", "POST"])
 def index():
+    
     page = int(request.args.get("page", 1))
     offset = (page - 1) * adv_per_page
     sortBy = request.args.get("sortBy", "date_desc")
@@ -85,7 +86,6 @@ def index():
 def search():
     
     search_term= request.args.get("search_term", "")
-    
     page = int(request.args.get("page", 1))
     offset = (page - 1) * adv_per_page
     sortBy = request.args.get("sortBy", "date_desc")
@@ -108,7 +108,7 @@ def search():
         if max_price:
             params['max_price'] = max_price
             
-        if len(search_term) > 3 :
+        if len(search_term) >= 3 :
             return redirect(url_for('hirdetes.search', search_term=search_term ,**params))
         else:
             flash("Minimum 3 betűs legyen a keresés", category="error")
@@ -157,7 +157,9 @@ def search():
 @hirdetes.route("/<category>", methods=["GET", "POST"])
 def query(category):
     
+    
     endpoint_category = category
+    
     page = int(request.args.get("page", 1))
     offset = (page - 1) * adv_per_page
     sortBy = request.args.get("sortBy", "date_desc")
@@ -229,7 +231,7 @@ def query(category):
         min_price=min_price,
         max_price=max_price,
         category = endpoint_category,
-        advertisementsTypeText = f"Találatok a következőre: "+ category
+        advertisementsTypeText = f"Találatok a következőre: "+ name
     )
     else:
         flash("Nincs hirdetés a kiválasztott kategóriában.", category="error")
@@ -299,11 +301,16 @@ def adv_edit(id):
             description = request.form.get("description")
             price = request.form.get("price")
             filename = ""
+
             if "image" in request.files:
                 image = request.files["image"]
                 if image.filename != "":
-                    allowed_extensions = {"jpg", "jpeg", "png", "gif"}
+                    allowed_extensions = {"jpg", "jpeg", "png"}
                     filename = secure_filename(image.filename)
+                    base_filename, file_extension = os.path.splitext(filename)
+
+                    filename = f"{current_user.username}_{datetime.now().strftime('%Y%m%d%H%M%S')}_{base_filename}{file_extension}"
+
                     if (
                         "." in filename
                         and filename.rsplit(".", 1)[1].lower() in allowed_extensions
@@ -340,9 +347,8 @@ def adv_edit(id):
                 advertisement.category = category_name
                 advertisement.description = description
                 advertisement.price = int(price)
-                advertisement.image_path = os.path.join(
-                    current_app.config["UPLOAD_FOLDER"], filename
-                )
+                advertisement.image_path =filename
+                
                 db.session.commit()
                 flash("Hirdetés sikeresen szerkesztve!", category="success")
                 return redirect(url_for("views.home"))
@@ -488,7 +494,7 @@ def advById(id):
         id = id,
         advertisementsTypeText = f"{user.username} hirdetései"
     )
-    
+
 
 @hirdetes.route("/hirdetesfeladas", methods=["GET", "POST"])
 @login_required
