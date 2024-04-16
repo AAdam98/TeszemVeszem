@@ -108,7 +108,7 @@ def search():
         if max_price:
             params['max_price'] = max_price
             
-        if len(search_term) > 3 :
+        if len(search_term) >= 3 :
             return redirect(url_for('hirdetes.search', search_term=search_term ,**params))
         else:
             flash("Minimum 3 betűs legyen a keresés", category="error")
@@ -156,6 +156,7 @@ def search():
 
 @hirdetes.route("/<category>", methods=["GET", "POST"])
 def query(category):
+    
     
     endpoint_category = category
     
@@ -230,7 +231,7 @@ def query(category):
         min_price=min_price,
         max_price=max_price,
         category = endpoint_category,
-        advertisementsTypeText = f"Találatok a következőre: "+ category
+        advertisementsTypeText = f"Találatok a következőre: "+ name
     )
     else:
         flash("Nincs hirdetés a kiválasztott kategóriában.", category="error")
